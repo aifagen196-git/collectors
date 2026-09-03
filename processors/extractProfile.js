@@ -16,7 +16,7 @@ import extractSalary from "./salaryParser.js";
 import {
   EXTRACTION_SYSTEM,
   buildJobExtractionPrompt,
-} from "../../backend/src/prompts/prompts.js";
+} from "../vendor/prompts.js";
 
 const JOB_DEFAULTS = {
   skills_required: [],

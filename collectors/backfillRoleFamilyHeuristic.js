@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 import { createClient } from "@supabase/supabase-js";
-import { inferRoleFamily } from "../../backend/src/services/matching/scoreMatch.js";
+import { inferRoleFamily } from "../vendor/scoreMatch.js";
 
 dotenv.config({ path: ".env" });
 
