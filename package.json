@@ -79,10 +79,10 @@
     "axios": "^1.18.1",
     "cheerio": "^1.2.0",
     "dotenv": "^17.4.2",
-    "playwright": "^1.62.1"
+    "playwright": "1.62.1"
   },
   "devDependencies": {
-    "@playwright/test": "^1.61.1",
+    "@playwright/test": "1.62.1",
     "@types/node": "^26.1.1"
   }
 }
