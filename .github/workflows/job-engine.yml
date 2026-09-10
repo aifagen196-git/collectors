@@ -110,3 +110,19 @@ jobs:
         # shouldn't also block the cleanup pass.
         if: always()
         run: npm run cleanup
+
+      - name: Run Workday (heavy — isolated, time-boxed, best-effort)
+        # Workday is NOT in `npm run all` — a single big tenant (a global
+        # pharma) has thousands of postings, and workday.js fetches details
+        # for every listing before filtering to US-only, so an uncapped run
+        # spends 80+ minutes here and blew the whole job's 180-min timeout
+        # (it was the very last collector in the chain, so 41 others had
+        # already run fine — see the run from 2026-09-10). Given its own
+        # step with `if: always()` it can't block the reliable collectors or
+        # the cleanup above; MAX_LISTINGS_PER_COMPANY caps each tenant and
+        # `timeout` hard-stops the step. `|| true` so a timeout/failure here
+        # doesn't fail the whole workflow.
+        if: always()
+        env:
+          MAX_LISTINGS_PER_COMPANY: "300"
+        run: timeout 30m npm run workday || true
