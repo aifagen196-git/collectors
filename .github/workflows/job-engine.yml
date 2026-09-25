@@ -36,10 +36,28 @@ name: job-engine collectors
 # PostJobFree, RemoteOK, Web3Career, WorkingNomads, Workday, Jobicy,
 # Jobvertise, Arbeitnow, HiringCafe) also need no secrets and are folded into
 # `npm run all` via `npm run all-new-free` — verified live, each returns real
-# postings. 6 more (Adzuna, Careerjet, Findwork, Jooble, JSearch, USAJobs)
-# need a free-tier API key each; they abort cleanly if unset, so they're kept
-# out of `npm run all` and run individually below once configured — add their
-# secrets when ready and add a line for each to the step below.
+# postings.
+#
+# Indeed needs Playwright (already installed above for simplyhired/dice) but
+# no API key. It's NOT folded into `npm run all` — its detail-page fetch
+# relies on a slow click-through-from-search trick to dodge Cloudflare (see
+# the comment at the top of collectors/indeed.js), so it's given its own
+# step with `if: always()` and a timeout, same reasoning as the Workday step
+# below: one fragile source shouldn't be able to block the other 43 or the
+# cleanup pass.
+#
+# 6 more (Adzuna, Careerjet, Findwork, Jooble, JSearch, USAJobs) need a
+# free-tier API key each; `npm run all-new-paid` (package.json) already
+# chains all six with `|| true` after each, so a source with no key configured
+# yet just skips itself instead of failing the step. Add secrets as you get
+# them — an unconfigured source is a clean no-op, not a broken workflow:
+#   ADZUNA_APP_ID, ADZUNA_APP_KEY   — https://developer.adzuna.com
+#   CAREERJET_API_KEY               — https://www.careerjet.com/partners/api/
+#   FINDWORK_API_KEY                — https://findwork.dev/developers/
+#   JOOBLE_API_KEY                  — https://jooble.org/api/about
+#   JSEARCH_API_KEY                 — RapidAPI (JSearch) or OpenWebNinja
+#   USAJOBS_API_KEY, USAJOBS_USER_AGENT (the email you registered with)
+#                                    — https://developer.usajobs.gov
 #
 # Adjust the schedule below to taste; every 6 hours is a starting point, not
 # a measured requirement.
@@ -61,6 +79,14 @@ jobs:
       ZIPRECRUITER_API_KEY: ${{ secrets.ZIPRECRUITER_API_KEY }}
       BRIGHTDATA_API_KEY: ${{ secrets.BRIGHTDATA_API_KEY }}
       BRIGHTDATA_MONSTER_DATASET_ID: ${{ secrets.BRIGHTDATA_MONSTER_DATASET_ID }}
+      ADZUNA_APP_ID: ${{ secrets.ADZUNA_APP_ID }}
+      ADZUNA_APP_KEY: ${{ secrets.ADZUNA_APP_KEY }}
+      CAREERJET_API_KEY: ${{ secrets.CAREERJET_API_KEY }}
+      FINDWORK_API_KEY: ${{ secrets.FINDWORK_API_KEY }}
+      JOOBLE_API_KEY: ${{ secrets.JOOBLE_API_KEY }}
+      JSEARCH_API_KEY: ${{ secrets.JSEARCH_API_KEY }}
+      USAJOBS_API_KEY: ${{ secrets.USAJOBS_API_KEY }}
+      USAJOBS_USER_AGENT: ${{ secrets.USAJOBS_USER_AGENT }}
     steps:
       - uses: actions/checkout@v4
 
@@ -89,6 +115,13 @@ jobs:
       - name: Run all collectors
         run: npm run all
 
+      - name: Run Indeed (isolated — slow click-through detail fetch, Cloudflare-fragile)
+        # Kept out of `npm run all` on purpose (see the top-of-file comment).
+        # `if: always()` and `|| true` so a block/timeout here can't stop the
+        # cleanup pass or the Workday step below, same pattern as those two.
+        if: always()
+        run: timeout 20m npm run indeed || true
+
       - name: Run sources that need a paid third-party account (ziprecruiter/monster)
         # Not folded into `npm run all` — both need a paid account this repo
         # doesn't have configured yet (ZipRecruiter: pending partner
@@ -103,6 +136,13 @@ jobs:
         run: |
           npm run ziprecruiter || true
           npm run monster || true
+
+      - name: Run sources that need a free-tier API key (Adzuna/Careerjet/Findwork/Jooble/JSearch/USAJobs)
+        # `all-new-paid` already chains all six with `|| true` after each
+        # (package.json), so any source whose secret hasn't been added yet
+        # just skips itself cleanly instead of failing the step.
+        if: always()
+        run: npm run all-new-paid
 
       - name: Deactivate expired jobs and purge old inactive rows
         # Still run this even if one collector above failed partway through
