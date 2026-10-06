@@ -42,6 +42,23 @@ const ALLOWED_COMPANIES = new Set(
   allowedCompanies.map((c) => c.trim().toLowerCase()),
 );
 
+// The company allowlist alone dropped ~95% of the feed (94 of 99 on
+// 2026-10-06), including real employers. Jobs from other companies are kept
+// too when the title is in one of the site's areas of interest — spam
+// postings rarely carry a real engineering/analyst title.
+const RELEVANT_TITLE = new RegExp(
+  [
+    "devops", "site reliability", "\\bsre\\b", "platform engineer", "cloud",
+    "supply chain", "logistics", "procurement",
+    "machine learning", "\\bml\\b", "\\bai\\b", "data scien", "data engineer", "data analyst", "analytics",
+    "data cent(?:er|re)", "network", "business analyst",
+    "full[- ]?stack", "software", "developer", "engineer", "frontend", "front[- ]end", "backend", "back[- ]end",
+    "\\bqa\\b", "quality", "test automation", "\\bsdet\\b",
+    "it support", "help ?desk", "service desk", "desktop support", "\\bsap\\b",
+  ].join("|"),
+  "i",
+);
+
 // =============================================
 // SAVE JOBS
 // =============================================
@@ -108,7 +125,11 @@ async function run() {
 
   const normalized = [];
   for (const job of jobs) {
-    if (ALLOWED_COMPANIES.size && !ALLOWED_COMPANIES.has(String(job.company || "").trim().toLowerCase())) {
+    if (
+      ALLOWED_COMPANIES.size &&
+      !ALLOWED_COMPANIES.has(String(job.company || "").trim().toLowerCase()) &&
+      !RELEVANT_TITLE.test(String(job.position || ""))
+    ) {
       stats.offAllowlist++;
       continue;
     }

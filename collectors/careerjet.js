@@ -140,7 +140,7 @@ async function run() {
   if (!CAREERJET_API_KEY) {
     console.error("❌ Missing CAREERJET_API_KEY in .env — aborting");
     console.error("   Register at https://www.careerjet.com/partners/api/ (free, manual approval).");
-    return;
+    return { skipped: "CAREERJET_API_KEY not set" };
   }
 
   if (ONLY_QUERIES.length) {

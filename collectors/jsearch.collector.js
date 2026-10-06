@@ -181,7 +181,7 @@ async function run() {
 
   if (!JSEARCH_API_KEY) {
     console.error("❌ Missing JSEARCH_API_KEY in .env — aborting");
-    return;
+    return { skipped: "JSEARCH_API_KEY not set" };
   }
 
   const seen = new Set();

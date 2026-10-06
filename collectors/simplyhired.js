@@ -164,6 +164,8 @@ export default async function collectSimplyHiredJobs() {
   console.log("==========================================");
   console.table(stats);
   console.log("==========================================\n");
+  // Counts for the run log (runLog.js), including how many searches were blocked.
+  return stats;
 }
 
 runCollector(import.meta.url, collectSimplyHiredJobs);

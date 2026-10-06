@@ -134,7 +134,7 @@ async function run() {
   if (!ADZUNA_APP_ID || !ADZUNA_APP_KEY) {
     console.error("❌ Missing ADZUNA_APP_ID / ADZUNA_APP_KEY in .env — aborting");
     console.error("   Register at https://developer.adzuna.com/ (free, instant).");
-    return;
+    return { skipped: "ADZUNA_APP_ID / ADZUNA_APP_KEY not set" };
   }
 
   if (ONLY_QUERIES.length) {

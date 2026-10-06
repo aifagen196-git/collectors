@@ -66,7 +66,7 @@ export default async function collectZipRecruiterJobs() {
       "⏭  ZIPRECRUITER_API_KEY not set — skipping. Requires ZipRecruiter partner " +
         "approval (email atsintegrations@ziprecruiter.com); see job-engine/.env.example.",
     );
-    return;
+    return { skipped: "ZIPRECRUITER_API_KEY not set" };
   }
 
   const cutoff = new Date(Date.now() - SCRAPE_LAST_HOURS * 60 * 60 * 1000);

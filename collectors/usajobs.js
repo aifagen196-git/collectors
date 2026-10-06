@@ -132,7 +132,7 @@ async function run() {
   if (!USAJOBS_API_KEY || !USAJOBS_USER_AGENT) {
     console.error("❌ Missing USAJOBS_API_KEY / USAJOBS_USER_AGENT in .env — aborting");
     console.error("   Register at https://developer.usajobs.gov/apirequest/ (free, instant).");
-    return;
+    return { skipped: "USAJOBS_API_KEY / USAJOBS_USER_AGENT not set" };
   }
 
   if (ONLY_KEYWORDS.length) {

@@ -24,6 +24,25 @@ function client() {
   return supabase;
 }
 
+async function countSavedSince(db, source, since) {
+  try {
+    const iso = since.toISOString();
+    const count = async (column) => {
+      const { count: n, error } = await db
+        .from("jobs")
+        .select("id", { count: "exact", head: true })
+        .eq("source", source)
+        .gte(column, iso);
+      if (error) throw error;
+      return n ?? 0;
+    };
+    return { saved: await count("last_seen"), created: await count("created_at") };
+  } catch (err) {
+    console.error(`⚠ collector_runs: couldn't count saved jobs for ${source}: ${err.message}`);
+    return null;
+  }
+}
+
 /**
  * Wraps a collector's main function with start/end run logging.
  *
@@ -62,17 +81,42 @@ export async function withRunLog(source, fn) {
   }
 
   if (runId) {
+    // Most collectors don't return counts, which left "saved" empty and made
+    // a run that saved nothing look identical to a healthy one. Every save
+    // stamps last_seen (and new rows get created_at), so count from the jobs
+    // table instead: what this source touched since the run started.
+    const counts = await countSavedSince(db, source, startedAt);
+    const row = {
+      finished_at: new Date().toISOString(),
+      success: !caught,
+      saved:
+        result && typeof result.saved === "number" ? result.saved : counts ? counts.saved : null,
+      failed: result && typeof result.failed === "number" ? result.failed : null,
+      // A collector that can't run (e.g. its API key isn't set) returns
+      // { skipped: "<reason>" }; record why, so the admin page can show
+      // "Skipped" instead of a success that saved nothing.
+      error: caught
+        ? String(caught.message || caught).slice(0, 2000)
+        : typeof result?.skipped === "string"
+          ? `Skipped: ${result.skipped}`
+          : null,
+    };
+    // Browser-based collectors (Indeed, SimplyHired) count searches that hit
+    // a bot-check page. If that's why nothing was saved, say so.
+    if (!row.error && result?.blocked > 0 && !row.saved) {
+      row.error = `Blocked by the site's bot protection (${result.blocked} searches)`;
+    }
     try {
-      await db
+      let { error } = await db
         .from("collector_runs")
-        .update({
-          finished_at: new Date().toISOString(),
-          success: !caught,
-          saved: result && typeof result.saved === "number" ? result.saved : null,
-          failed: result && typeof result.failed === "number" ? result.failed : null,
-          error: caught ? String(caught.message || caught).slice(0, 2000) : null,
-        })
+        .update({ ...row, new_jobs: counts ? counts.created : null })
         .eq("id", runId);
+      // new_jobs arrives with main-repo migration 0023; until it's applied,
+      // log everything else.
+      if (error && /new_jobs/.test(error.message)) {
+        ({ error } = await db.from("collector_runs").update(row).eq("id", runId));
+      }
+      if (error) throw error;
     } catch (err) {
       console.error(`⚠ collector_runs: failed to log run end for ${source}: ${err.message}`);
     }

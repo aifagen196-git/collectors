@@ -59,7 +59,7 @@ export default async function collectMonsterJobs() {
         "Requires a Bright Data account and the Monster Jobs product's dataset_id; " +
         "see job-engine/.env.example.",
     );
-    return;
+    return { skipped: "BRIGHTDATA_API_KEY / BRIGHTDATA_MONSTER_DATASET_ID not set" };
   }
 
   const cutoff = new Date(Date.now() - SCRAPE_LAST_HOURS * 60 * 60 * 1000);

@@ -129,7 +129,7 @@ async function run() {
   if (!JOOBLE_API_KEY) {
     console.error("❌ Missing JOOBLE_API_KEY in .env — aborting");
     console.error("   Register at https://jooble.org/api/about (free, instant).");
-    return;
+    return { skipped: "JOOBLE_API_KEY not set" };
   }
 
   if (ONLY_QUERIES.length) {

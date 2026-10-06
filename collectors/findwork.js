@@ -121,7 +121,7 @@ async function run() {
   if (!FINDWORK_API_KEY) {
     console.error("❌ Missing FINDWORK_API_KEY in .env — aborting");
     console.error("   Register at https://findwork.dev (free).");
-    return;
+    return { skipped: "FINDWORK_API_KEY not set" };
   }
 
   if (ONLY_QUERIES.length) {
