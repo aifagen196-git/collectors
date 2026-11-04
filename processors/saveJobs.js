@@ -149,6 +149,76 @@ async function updateIdsWithSplit(sb, ids) {
 }
 
 /**
+ * Hide this source's live jobs that are no longer listed on their board.
+ *
+ * For collectors that save only recently UPDATED postings (Greenhouse and
+ * other ATS boards with a time window). Their older postings are still open
+ * but never get a fresh last_seen, so deactivateStale() would hide them.
+ * Instead this compares against the full listing fetched this run.
+ *
+ * @param {string} source
+ * @param {Set<string>} listedIds - source_job_id of every posting listed this
+ *   run, from every board that answered
+ * @param {Set<string>} [skipCompanies] - stored company names of boards whose
+ *   fetch FAILED this run; their jobs are left alone
+ * @returns {Promise<number>} rows hidden
+ */
+export async function deactivateMissing(source, listedIds, skipCompanies = new Set()) {
+  if (!source) throw new Error("deactivateMissing requires a source");
+  if (!listedIds?.size) {
+    console.log(`⏭ Skipping deactivation for ${source}: nothing was listed this run`);
+    return 0;
+  }
+  // No failed-save guard here (unlike deactivateWhere): this compares with
+  // the listing, not last_seen, so a job that failed to save but is still
+  // listed is never hidden.
+
+  const sb = getSupabase();
+  const live = [];
+  const PAGE = 1000;
+  for (let from = 0; ; from += PAGE) {
+    const { data, error } = await sb
+      .from("jobs")
+      .select("id, source_job_id, company")
+      .eq("source", source)
+      .eq("is_active", true)
+      .order("id")
+      .range(from, from + PAGE - 1);
+    if (error) {
+      console.error(`⚠ Deactivation lookup failed: ${error.message}`);
+      return 0;
+    }
+    live.push(...data);
+    if (data.length < PAGE) break;
+  }
+
+  const missing = live.filter(
+    (r) => !listedIds.has(String(r.source_job_id)) && !skipCompanies.has(r.company),
+  );
+  // A sudden mass disappearance is far more likely a fetch problem than real
+  // closures; leave it for a human to look at.
+  if (live.length >= 200 && missing.length > live.length * 0.5) {
+    console.error(
+      `⚠ Not deactivating: ${missing.length} of ${live.length} live ${source} jobs look unlisted, which suggests a fetch problem`,
+    );
+    return 0;
+  }
+
+  const ids = missing.map((r) => r.id);
+  let done = 0;
+  for (let i = 0; i < ids.length; i += DEACTIVATE_CHUNK) {
+    const r = await updateIdsWithSplit(sb, ids.slice(i, i + DEACTIVATE_CHUNK));
+    done += r.done;
+    if (r.error) {
+      console.error(`⚠ Deactivation failed after ${done} rows: ${r.error}`);
+      break;
+    }
+  }
+  console.log(`🗑 Deactivated ${done} ${source} jobs no longer listed (of ${live.length} live)`);
+  return done;
+}
+
+/**
  * Set is_active = false on every active job matching `filter`, in small
  * batches. `filter` adds the conditions to a query builder, e.g.
  * (q) => q.eq("source", "kforce").lt("last_seen", cutoff).

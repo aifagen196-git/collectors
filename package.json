@@ -26,7 +26,6 @@
     "simplyhired": "node collectors/simplyhired.js",
     "dice": "node collectors/dice.js",
     "jobright": "node collectors/jobright.js",
-
     "arbeitnow": "node collectors/arbeitnow.js",
     "avature": "node collectors/avature.js",
     "bamboohr": "node collectors/bamboohr.js",
@@ -58,16 +57,18 @@
     "weworkremotely": "node collectors/weworkremotely.js",
     "workday": "node collectors/workday.js",
     "workingnomads": "node collectors/workingnomads.js",
-
     "adzuna": "node collectors/adzuna.js",
     "careerjet": "node collectors/careerjet.js",
     "findwork": "node collectors/findwork.js",
     "jooble": "node collectors/jooble.js",
     "jsearch": "node collectors/jsearch.collector.js",
     "usajobs": "node collectors/usajobs.js",
-
-    "all-new-free": "node collectors/arbeitnow.js && node collectors/avature.js && node collectors/bamboohr.js && node collectors/breezyhr.js && node collectors/builtin.js && node collectors/comeet.js && node collectors/dailyremote.js && node collectors/hackernews.js && node collectors/himalayas.js && node collectors/hiringcafe.js && node collectors/icims.js && node collectors/jazzhr.js && node collectors/jobicy.js && node collectors/jobvertise.js && node collectors/jobvite.js && node collectors/kforce.js && node collectors/muse.js && node collectors/oracle.js && node collectors/pinpoint.js && node collectors/postjobfree.js && node collectors/recruitee.js && node collectors/remoteok.js && node collectors/remotive.js && node collectors/successfactors.js && node collectors/teamtailor.js && node collectors/ukg.js && node collectors/web3career.js && node collectors/weworkremotely.js && node collectors/workingnomads.js",
-    "all-new-paid": "node collectors/adzuna.js || true && node collectors/careerjet.js || true && node collectors/findwork.js || true && node collectors/jooble.js || true && node collectors/jsearch.collector.js || true && node collectors/usajobs.js || true"
+    "all-new-free": "node collectors/arbeitnow.js && node collectors/avature.js && node collectors/bamboohr.js && node collectors/breezyhr.js && node collectors/builtin.js && node collectors/comeet.js && node collectors/dailyremote.js && node collectors/hackernews.js && node collectors/himalayas.js && node collectors/hiringcafe.js && node collectors/icims.js && node collectors/jazzhr.js && node collectors/jobicy.js && node collectors/jobvertise.js && node collectors/jobvite.js && node collectors/kforce.js && node collectors/muse.js && node collectors/oracle.js && node collectors/pinpoint.js && node collectors/postjobfree.js && node collectors/recruitee.js && node collectors/remoteok.js && node collectors/remotive.js && node collectors/successfactors.js && node collectors/teamtailor.js && node collectors/ukg.js && node collectors/web3career.js && node collectors/weworkremotely.js && node collectors/workingnomads.js && node collectors/personio.js && node collectors/rippling.js && node collectors/remotelanders.js && node collectors/authenticjobs.js",
+    "all-new-paid": "node collectors/adzuna.js || true && node collectors/careerjet.js || true && node collectors/findwork.js || true && node collectors/jooble.js || true && node collectors/jsearch.collector.js || true && node collectors/usajobs.js || true",
+    "rippling": "node collectors/rippling.js",
+    "remotelanders": "node collectors/remotelanders.js",
+    "authenticjobs": "node collectors/authenticjobs.js",
+    "verify-rippling": "node collectors/verifyRipplingBoards.js"
   },
   "keywords": [],
   "author": "",

@@ -4,7 +4,8 @@ import { normalizeJob } from "../processors/normalizeJobs.js";
 import companies from "../config/greenhouseCompanies.js";
 import runPool from "../processors/workerPool.js";
 import withRetry from "../processors/retry.js";
-import { saveJobs, deactivateStale } from "../processors/saveJobs.js";
+import { saveJobs, deactivateMissing } from "../processors/saveJobs.js";
+import normalizeCompany from "../processors/companyNormalizer.js";
 import {
   resolveCompanyName,
   persistCompanyCache,
@@ -46,7 +47,9 @@ async function fetchCompanyJobs(company) {
     return response.data.jobs || [];
   } catch (err) {
     console.error(`❌ Failed to fetch ${company}`);
-    return [];
+    // null, not []: a board that failed to load must not look like a board
+    // whose jobs all closed (see deactivateMissing below).
+    return null;
   }
 }
 
@@ -78,11 +81,24 @@ export default async function collectGreenhouseJobs() {
 
   const cutoff = new Date(Date.now() - SCRAPE_LAST_HOURS * 60 * 60 * 1000);
 
+  // Every posting listed this run, and the boards that failed to load. Only
+  // jobs updated inside the window are re-saved, so last_seen cannot tell
+  // open jobs from closed ones here; the pass at the end hides only jobs
+  // that left a board that did load.
+  const listedIds = new Set();
+  const failedCompanies = new Set();
+
   for (const company of companies) {
     try {
       stats.companies++;
 
       const jobs = await fetchCompanyJobs(company);
+      if (jobs === null) {
+        const name = await resolveCompanyName(company, "greenhouse");
+        failedCompanies.add(normalizeCompany(name) || name);
+        continue;
+      }
+      for (const job of jobs) listedIds.add(String(job.id));
 
       stats.fetched += jobs.length;
 
@@ -136,7 +152,7 @@ export default async function collectGreenhouseJobs() {
   // Retire only OUR stale postings. This pass previously had no source
   // filter, so one Greenhouse run deactivated every job in the table that
   // any other collector had not refreshed within the window.
-  await deactivateStale("greenhouse", SCRAPE_LAST_HOURS);
+  await deactivateMissing("greenhouse", listedIds, failedCompanies);
 
   console.log("\n==========================================");
   console.log("✅ Greenhouse Collector Finished");

@@ -58,6 +58,8 @@ const NON_US_MARKERS_RE = new RegExp(
       "South Korea", "UAE", "United Arab Emirates", "Philippines",
       "Ukraine", "Serbia", "Romania", "Czech Republic", "Greece",
       "Estonia", "Latvia", "Lithuania", "Luxembourg", "Malta",
+      // Regions, as in "remote (EU)" / "Remote - EMEA"
+      "EU", "Europe", "EMEA", "APAC", "LATAM",
     ].join("|") +
     ")\\b",
   "i",
@@ -68,18 +70,23 @@ const NON_US_MARKERS_RE = new RegExp(
  * @returns {boolean}
  */
 export function isUsJob(job) {
+  const location = String(job.location || "").trim();
+
+  // A location that names another country or region and nothing American
+  // wins over the inferred fields: extractJobProfile reads "DE - Stuttgart"
+  // (Personio's office format) as Delaware and sets country = United States,
+  // which let German jobs through (2026-11-04).
+  const hasUsSignal =
+    US_MARKERS_RE.test(location) || US_BARE_RE.test(location) || US_STATE_NAME_RE.test(location);
+  if (location && NON_US_MARKERS_RE.test(location) && !hasUsSignal) return false;
+
   if (job.is_remote_us === true) return true;
 
   if (job.country && /^(us|usa|united states)$/i.test(String(job.country).trim())) {
     return true;
   }
 
-  const location = String(job.location || "").trim();
   if (!location) return false;
-
-  if (NON_US_MARKERS_RE.test(location) && !US_MARKERS_RE.test(location)) {
-    return false;
-  }
 
   if (US_MARKERS_RE.test(location)) return true;
   if (US_BARE_RE.test(location)) return true;
