@@ -7,6 +7,7 @@ import { createClient } from "@supabase/supabase-js";
 import { normalizeMuse } from "./normalize/normalizeMuse.js";
 import categories from "./config/museCategories.js";
 import { isUsJob } from "./lib/isUsJob.js";
+import { saveJobs as saveJobRows, deactivateWhere } from "../processors/saveJobs.js";
 
 dotenv.config({ path: ".env" });
 
@@ -67,19 +68,9 @@ const stats = {
 
 async function saveJobs(jobs) {
   if (!jobs.length) return;
-  const CHUNK = Number(process.env.SAVE_CHUNK || 200);
-  for (let i = 0; i < jobs.length; i += CHUNK) {
-    const batch = jobs.slice(i, i + CHUNK);
-    const { error } = await supabase
-      .from("jobs")
-      .upsert(batch, { onConflict: "source,source_job_id" });
-    if (error) {
-      stats.failed += batch.length;
-      console.error(`❌ batch of ${batch.length} failed: ${error.message}`);
-      continue;
-    }
-    stats.saved += batch.length;
-  }
+  // Shared helper: 100-row batches, split and retried on statement timeout.
+  // A failed save also blocks the deactivation pass (see deactivateWhere).
+  await saveJobRows(jobs, stats, { dedupe: false });
 }
 
 // =============================================
@@ -180,15 +171,12 @@ async function run() {
     console.log("⏭ Skipping deactivation pass (partial run — rows carry no per-query column to scope it safely)");
   } else {
     const staleCutoff = new Date(Date.now() - SCRAPE_LAST_HOURS * 60 * 60 * 1000).toISOString();
-    const { error: deErr, count } = await supabase
-      .from("jobs")
-      .update({ is_active: false })
-      .lt("last_seen", staleCutoff)
-      .eq("source", "muse")
-      .eq("is_active", true)
-      .select("id", { count: "exact", head: true });
-    if (deErr) console.error(`⚠ Deactivation pass failed: ${deErr.message}`);
-    else console.log(`🗑 Deactivated ${count ?? 0} stale jobs`);
+    // Batched (shared helper): a single UPDATE trips the statement timeout.
+    const { done: count, error: deErr } = await deactivateWhere((q) =>
+      q.lt("last_seen", staleCutoff).eq("source", "muse"),
+    );
+    if (deErr) console.error(`⚠ Deactivation pass failed after ${count} rows: ${deErr}`);
+    console.log(`🗑 Deactivated ${count} stale jobs`);
   }
 
   console.log("\n==========================================");

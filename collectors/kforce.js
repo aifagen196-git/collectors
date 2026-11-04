@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 import { createClient } from "@supabase/supabase-js";
 import { normalizeKforce } from "./normalize/normalizeKforce.js";
 import { isUsJob } from "./lib/isUsJob.js";
+import { saveJobs, deactivateStale } from "../processors/saveJobs.js";
 
 dotenv.config({ path: ".env" });
 
@@ -65,27 +66,6 @@ const stats = {
   failed: 0,
   nonUs: 0,
 };
-
-// =============================================
-// SAVE JOB
-// =============================================
-
-async function saveJobs(jobs) {
-  if (!jobs.length) return;
-  const CHUNK = 500;
-  for (let i = 0; i < jobs.length; i += CHUNK) {
-    const batch = jobs.slice(i, i + CHUNK);
-    const { error } = await supabase
-      .from("jobs")
-      .upsert(batch, { onConflict: "source,source_job_id" });
-    if (error) {
-      stats.failed += batch.length;
-      console.error(`❌ batch of ${batch.length} failed: ${error.message}`);
-      continue;
-    }
-    stats.saved += batch.length;
-  }
-}
 
 // =============================================
 // FETCH JOBS
@@ -179,8 +159,10 @@ async function run() {
       stats.processed++;
     }
 
-    await saveJobs(normalized);
-    if (normalized.length) console.log(`   💾 saved ${normalized.length}`);
+    // Shared helper: 100-row batches, split on statement timeout (500-row
+    // batches lost 648 of 1,148 jobs on 2026-11-04).
+    await saveJobs(normalized, stats, { dedupe: false });
+    if (normalized.length) console.log(`   💾 saved ${stats.saved} / ${normalized.length}`);
   } catch (err) {
     console.error("\n❌ Kforce fetch failed");
     console.error(err.message);
@@ -190,22 +172,12 @@ async function run() {
   // DEACTIVATE STALE JOBS
   // =============================================
 
-  const staleCutoff = new Date(
-    Date.now() - SCRAPE_LAST_HOURS * 60 * 60 * 1000,
-  ).toISOString();
-
-  const { error: deErr, count } = await supabase
-    .from("jobs")
-    .update({ is_active: false })
-    .lt("last_seen", staleCutoff)
-    .eq("source", "kforce")
-    .eq("is_active", true)
-    .select("id", { count: "exact", head: true });
-
-  if (deErr) {
-    console.error(`⚠ Deactivation failed: ${deErr.message}`);
+  // Only after a run that fetched and saved everything: a failed fetch must
+  // not hide every Kforce job.
+  if (stats.saved > 0 && !stats.failed) {
+    await deactivateStale("kforce", SCRAPE_LAST_HOURS);
   } else {
-    console.log(`🗑 Deactivated ${count ?? 0} stale jobs`);
+    console.log("⏭ Skipping deactivation (nothing saved this run, or some saves failed)");
   }
 
   console.log("\n==========================================");
@@ -215,6 +187,9 @@ async function run() {
   console.table(stats);
 
   console.log("==========================================\n");
+
+  // Lets withRunLog record failed saves instead of a clean-looking run.
+  return { saved: stats.saved, failed: stats.failed };
 }
 
 // CLI-only guard — this file used to call run() unconditionally at

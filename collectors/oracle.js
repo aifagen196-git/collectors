@@ -7,6 +7,7 @@ import { createClient } from "@supabase/supabase-js";
 import { normalizeOracle } from "./normalize/normalizeOracle.js";
 import companies from "./config/oracleCompanies.js";
 import { isUsJob } from "./lib/isUsJob.js";
+import { saveJobs as saveJobRows, deactivateWhere } from "../processors/saveJobs.js";
 
 dotenv.config({ path: ".env" });
 
@@ -65,24 +66,9 @@ const stats = {
 
 async function saveJobs(jobs) {
   if (!jobs.length) return;
-  // Oracle descriptions run long (full HTML postings, same as Workday) —
-  // smaller chunks to stay clear of Postgres's statement timeout. 100 is
-  // still too large for some tenants: Dell's postings are long enough that a
-  // 100-row upsert reliably fails with "canceling statement due to statement
-  // timeout", losing the whole batch. Tune down per-tenant via SAVE_CHUNK.
-  const CHUNK = Number(process.env.SAVE_CHUNK || 100);
-  for (let i = 0; i < jobs.length; i += CHUNK) {
-    const batch = jobs.slice(i, i + CHUNK);
-    const { error } = await supabase
-      .from("jobs")
-      .upsert(batch, { onConflict: "source,source_job_id" });
-    if (error) {
-      stats.failed += batch.length;
-      console.error(`❌ batch of ${batch.length} failed: ${error.message}`);
-      continue;
-    }
-    stats.saved += batch.length;
-  }
+  // Shared helper: 100-row batches, split and retried on statement timeout.
+  // A failed save also blocks the deactivation pass (see deactivateWhere).
+  await saveJobRows(jobs, stats, { dedupe: false });
 }
 
 // =============================================
@@ -252,30 +238,17 @@ async function run() {
     Date.now() - SCRAPE_LAST_HOURS * 60 * 60 * 1000,
   ).toISOString();
 
-  let deactivation = supabase
-    .from("jobs")
-    .update({ is_active: false })
-    .lt("last_seen", staleCutoff)
-    .eq("source", "oracle")
-    .eq("is_active", true);
-
-  if (ONLY_COMPANIES.length) {
-    deactivation = deactivation.in(
-      "company",
-      selectedCompanies.map((c) => c.company),
-    );
-  }
-
-  const { error: deErr, count } = await deactivation.select("id", {
-    count: "exact",
-    head: true,
+  // Batched (shared helper): one UPDATE over this many rows trips the
+  // statement timeout, which left ~2,000 closed Oracle jobs live.
+  const { done: count, error: deErr } = await deactivateWhere((q) => {
+    q = q.lt("last_seen", staleCutoff).eq("source", "oracle");
+    return ONLY_COMPANIES.length
+      ? q.in("company", selectedCompanies.map((c) => c.company))
+      : q;
   });
 
-  if (deErr) {
-    console.error(`⚠ Deactivation failed: ${deErr.message}`);
-  } else {
-    console.log(`🗑 Deactivated ${count ?? 0} stale jobs`);
-  }
+  if (deErr) console.error(`⚠ Deactivation failed after ${count} rows: ${deErr}`);
+  console.log(`🗑 Deactivated ${count} stale jobs`);
 
   console.log("\n==========================================");
   console.log("✅ Oracle Recruiting Cloud Collector Finished");

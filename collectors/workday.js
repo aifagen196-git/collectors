@@ -7,6 +7,7 @@ import { createClient } from "@supabase/supabase-js";
 import { normalizeWorkday } from "./normalize/normalizeWorkday.js";
 import companies from "./config/workdayCompanies.js";
 import { isUsJob } from "./lib/isUsJob.js";
+import { saveJobs as saveJobRows, deactivateWhere } from "../processors/saveJobs.js";
 
 dotenv.config({ path: ".env" });
 
@@ -80,24 +81,9 @@ const stats = {
 
 async function saveJobs(jobs) {
   if (!jobs.length) return;
-  // Smaller than the other collectors' 500-row CHUNK: Workday descriptions
-  // run much longer (full HTML job postings), and 500-row batches of those
-  // were hitting Postgres's statement timeout during testing. Tenants with
-  // especially long descriptions (CVS averages ~23k chars) can still time out
-  // at 100 — drop SAVE_CHUNK for those rather than losing whole batches.
-  const CHUNK = Number(process.env.SAVE_CHUNK || 100);
-  for (let i = 0; i < jobs.length; i += CHUNK) {
-    const batch = jobs.slice(i, i + CHUNK);
-    const { error } = await supabase
-      .from("jobs")
-      .upsert(batch, { onConflict: "source,source_job_id" });
-    if (error) {
-      stats.failed += batch.length;
-      console.error(`❌ batch of ${batch.length} failed: ${error.message}`);
-      continue;
-    }
-    stats.saved += batch.length;
-  }
+  // Shared helper: 100-row batches, split and retried on statement timeout.
+  // A failed save also blocks the deactivation pass (see deactivateWhere).
+  await saveJobRows(jobs, stats, { dedupe: false });
 }
 
 // =============================================
@@ -359,28 +345,18 @@ async function run() {
   const staleCutoff = new Date(
     Date.now() - SCRAPE_LAST_HOURS * 60 * 60 * 1000,
   ).toISOString();
-  let deactivation = supabase
-    .from("jobs")
-    .update({ is_active: false })
-    .lt("last_seen", staleCutoff)
-    .eq("is_active", true)
-    .eq("source", "workday");
-
   // A filtered run only refreshed `last_seen` for the selected tenants, so
   // deactivating on source alone would retire every other tenant's jobs.
-  if (ONLY_COMPANIES.length) {
-    deactivation = deactivation.in(
-      "company",
-      selectedCompanies.map((c) => c.company),
-    );
-  }
-
-  const { error: deErr, count } = await deactivation.select("id", {
-    count: "exact",
-    head: true,
+  // Batched (shared helper): one UPDATE over this many rows trips the
+  // statement timeout, which left ~5,000 closed Workday jobs live.
+  const { done: count, error: deErr } = await deactivateWhere((q) => {
+    q = q.lt("last_seen", staleCutoff).eq("source", "workday");
+    return ONLY_COMPANIES.length
+      ? q.in("company", selectedCompanies.map((c) => c.company))
+      : q;
   });
-  if (deErr) console.error(`⚠ Deactivation pass failed: ${deErr.message}`);
-  else console.log(`🗑 Deactivated ${count ?? 0} stale jobs`);
+  if (deErr) console.error(`⚠ Deactivation pass failed after ${count} rows: ${deErr}`);
+  console.log(`🗑 Deactivated ${count} stale jobs`);
 
   console.log("\n==========================================");
   console.log("✅ Workday Collector Finished");

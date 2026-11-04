@@ -117,20 +117,69 @@ export async function dropAlreadyStored(source, rows) {
 export async function retireExpired(source) {
   if (!source) throw new Error("retireExpired requires a source");
 
-  const { error, count } = await getSupabase()
-    .from("jobs")
-    .update({ is_active: false })
-    .eq("source", source)
-    .lt("expires_at", new Date().toISOString())
-    .eq("is_active", true)
-    .select("id", { count: "exact", head: true });
+  const now = new Date().toISOString();
+  const { done, error } = await deactivateWhere((q) =>
+    q.eq("source", source).lt("expires_at", now),
+  );
+  if (error) console.error(`⚠ Expiry pass failed after ${done} rows: ${error}`);
+  console.log(`⌛ Retired ${done} expired ${source} jobs`);
+  return done;
+}
 
-  if (error) {
-    console.error(`⚠ Expiry pass failed: ${error.message}`);
-    return 0;
+// Setting is_active on a row rewrites its entries in every index, including
+// the trigram index on the long description column, so one UPDATE over a few
+// hundred rows trips statement_timeout: 214 Kforce rows took over 8s and was
+// cancelled, and about 16,000 closed jobs stayed live that way (2026-11-04).
+// So matching ids are fetched in pages and updated a small batch at a time,
+// halving a batch that still times out.
+const DEACTIVATE_CHUNK = Number(process.env.DEACTIVATE_CHUNK || 50);
+const DEACTIVATE_PAGE = 1000;
+
+async function updateIdsWithSplit(sb, ids) {
+  const { error } = await sb.from("jobs").update({ is_active: false }).in("id", ids);
+  if (!error) return { done: ids.length, error: null };
+  if (isStatementTimeout(error) && ids.length > 1) {
+    const mid = Math.ceil(ids.length / 2);
+    const a = await updateIdsWithSplit(sb, ids.slice(0, mid));
+    if (a.error) return a;
+    const b = await updateIdsWithSplit(sb, ids.slice(mid));
+    return { done: a.done + b.done, error: b.error };
   }
-  console.log(`⌛ Retired ${count ?? 0} expired ${source} jobs`);
-  return count ?? 0;
+  return { done: 0, error: error.message };
+}
+
+/**
+ * Set is_active = false on every active job matching `filter`, in small
+ * batches. `filter` adds the conditions to a query builder, e.g.
+ * (q) => q.eq("source", "kforce").lt("last_seen", cutoff).
+ *
+ * @param {(q: any) => any} filter
+ * @returns {Promise<{done: number, error: string|null}>}
+ */
+export async function deactivateWhere(filter) {
+  if (failedSavesThisRun > 0) {
+    return {
+      done: 0,
+      error: `skipped: ${failedSavesThisRun} jobs failed to save this run, so their last_seen is out of date`,
+    };
+  }
+  const sb = getSupabase();
+  let done = 0;
+  for (;;) {
+    const { data, error } = await filter(
+      sb.from("jobs").select("id").eq("is_active", true),
+    ).limit(DEACTIVATE_PAGE);
+    if (error) return { done, error: error.message };
+    if (!data?.length) return { done, error: null };
+
+    const ids = data.map((r) => r.id);
+    for (let i = 0; i < ids.length; i += DEACTIVATE_CHUNK) {
+      const r = await updateIdsWithSplit(sb, ids.slice(i, i + DEACTIVATE_CHUNK));
+      done += r.done;
+      if (r.error) return { done, error: r.error };
+    }
+    if (data.length < DEACTIVATE_PAGE) return { done, error: null };
+  }
 }
 
 // 500-row upserts of full job descriptions intermittently trip
@@ -174,8 +223,16 @@ async function upsertWithSplit(sb, batch, stats, result) {
 
   result.failed += batch.length;
   stats.failed = (stats.failed || 0) + batch.length;
+  failedSavesThisRun += batch.length;
   console.error(`❌ batch of ${batch.length} failed: ${error.message}`);
 }
+
+// Each collector runs as its own process, so this counts failed saves for
+// the current run. deactivateWhere() refuses to run when it is non-zero: jobs
+// in a failed batch kept their old last_seen, so a deactivation pass would
+// hide postings that are still open (it hid 519 open Muse jobs that way on
+// 2026-11-04; the next good save restored them).
+let failedSavesThisRun = 0;
 
 /**
  * De-duplicate then batch-upsert a set of normalized job rows.
@@ -222,20 +279,12 @@ export async function deactivateStale(source, hours) {
   if (!source) throw new Error("deactivateStale requires a source");
 
   const staleCutoff = new Date(Date.now() - hours * 60 * 60 * 1000).toISOString();
-  const { error, count } = await getSupabase()
-    .from("jobs")
-    .update({ is_active: false })
-    .eq("source", source)
-    .lt("last_seen", staleCutoff)
-    .eq("is_active", true)
-    .select("id", { count: "exact", head: true });
-
-  if (error) {
-    console.error(`⚠ Deactivation pass failed: ${error.message}`);
-    return 0;
-  }
-  console.log(`🗑 Deactivated ${count ?? 0} stale ${source} jobs`);
-  return count ?? 0;
+  const { done, error } = await deactivateWhere((q) =>
+    q.eq("source", source).lt("last_seen", staleCutoff),
+  );
+  if (error) console.error(`⚠ Deactivation pass failed after ${done} rows: ${error}`);
+  console.log(`🗑 Deactivated ${done} stale ${source} jobs`);
+  return done;
 }
 
 export default saveJobs;
