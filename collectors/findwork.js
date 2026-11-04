@@ -20,25 +20,16 @@ const supabase = createClient(
 // =============================================
 //
 // Findwork.dev API — smaller tech/remote-focused aggregator, free key
-// after signup at https://findwork.dev. Auth is `Authorization: Token
-// <key>` (confirmed live: an unauthenticated GET to
-// https://findwork.dev/api/jobs/ returns 401
-// {"detail":"Authentication credentials were not provided."}, standard
-// Django REST Framework token-auth shape). The response *field names*
-// below are from Findwork's public docs, not from a real authenticated
-// response — findwork.dev's docs page requires a logged-in account, so
-// this repo couldn't confirm them the way Careerjet's schema was
-// confirmed. Run once with a real key and check the console output
-// against normalizeFindwork.js before trusting a full pass.
-//
-// This repo cannot register that account for you — set FINDWORK_API_KEY
-// in .env once you have one.
+// after signup (the key is on https://findwork.dev/developers/ when signed
+// in). Auth is `Authorization: Token <key>`. The response fields used in
+// normalizeFindwork.js were checked against a real authenticated response
+// on 2026-11-04. Set FINDWORK_API_KEY in .env (GitHub secret for the cron).
 
 const FINDWORK_API_KEY = process.env.FINDWORK_API_KEY;
 
 const SCRAPE_LAST_HOURS = Number(process.env.SCRAPE_LAST_HOURS || 24);
-const REQUEST_DELAY_MS = Number(process.env.FINDWORK_REQUEST_DELAY_MS || 500);
-const MAX_REQUESTS_PER_RUN = Number(process.env.FINDWORK_MAX_REQUESTS_PER_RUN || 40);
+const REQUEST_DELAY_MS = Number(process.env.FINDWORK_REQUEST_DELAY_MS || 6000);
+const MAX_REQUESTS_PER_RUN = Number(process.env.FINDWORK_MAX_REQUESTS_PER_RUN || 60);
 
 const ONLY_QUERIES = (process.env.ONLY_QUERIES || "")
   .split(",")
@@ -64,26 +55,42 @@ const stats = {
   saved: 0,
   failed: 0,
   nonUs: 0,
+  skippedNonIt: 0,
 };
+
+const NON_IT_PUBLISHERS = new Set(["coroflot", "dribbble"]);
 
 // =============================================
 // SAVE JOBS
 // =============================================
 
+// Findwork descriptions are long (whole Hacker News posts), and 200 of them
+// in one upsert timed out on the description search index (2026-11-04). So
+// batches are small, and a batch that still times out is split in half and
+// retried.
+async function saveBatch(batch) {
+  const { error } = await supabase
+    .from("jobs")
+    .upsert(batch, { onConflict: "source,source_job_id" });
+  if (!error) {
+    stats.saved += batch.length;
+    return;
+  }
+  if (/statement timeout/i.test(error.message) && batch.length > 5) {
+    const mid = Math.ceil(batch.length / 2);
+    await saveBatch(batch.slice(0, mid));
+    await saveBatch(batch.slice(mid));
+    return;
+  }
+  stats.failed += batch.length;
+  console.error(`❌ batch of ${batch.length} failed: ${error.message}`);
+}
+
 async function saveJobs(jobs) {
   if (!jobs.length) return;
-  const CHUNK = Number(process.env.SAVE_CHUNK || 200);
+  const CHUNK = Number(process.env.SAVE_CHUNK || 50);
   for (let i = 0; i < jobs.length; i += CHUNK) {
-    const batch = jobs.slice(i, i + CHUNK);
-    const { error } = await supabase
-      .from("jobs")
-      .upsert(batch, { onConflict: "source,source_job_id" });
-    if (error) {
-      stats.failed += batch.length;
-      console.error(`❌ batch of ${batch.length} failed: ${error.message}`);
-      continue;
-    }
-    stats.saved += batch.length;
+    await saveBatch(jobs.slice(i, i + CHUNK));
   }
 }
 
@@ -95,11 +102,33 @@ async function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+// Findwork throttles hard: 5 quick requests got a 429 with "Retry-After: 19"
+// (2026-11-04). So every request waits REQUEST_DELAY_MS, and a 429 waits for
+// the time Findwork asks for and tries again, up to MAX_429_RETRIES times.
+const MAX_429_RETRIES = 4;
+
 async function fetchPage(search, url) {
+  for (let attempt = 0; ; attempt++) {
+    try {
+      return await fetchPageOnce(search, url);
+    } catch (err) {
+      if (err.response?.status !== 429 || attempt >= MAX_429_RETRIES) throw err;
+      const waitS = Math.min(Number(err.response.headers?.["retry-after"]) || 30, 120);
+      console.log(`   ⏳ throttled, waiting ${waitS}s`);
+      await sleep((waitS + 1) * 1000);
+    }
+  }
+}
+
+async function fetchPageOnce(search, url) {
   const { data } = await axios.get(url || "https://findwork.dev/api/jobs/", {
     timeout: 20000,
     headers: { Authorization: `Token ${FINDWORK_API_KEY}` },
-    params: url ? undefined : { search, location: "United States" },
+    // No location param: Findwork matches it against free text, so
+    // "United States" returned 2 of 173 devops jobs (2026-11-04) and missed
+    // "Remote (US Only)", "Jacksonville, FL" and the like. isUsJob() below
+    // does the US check instead.
+    params: url ? undefined : { search },
   });
 
   return {
@@ -146,6 +175,7 @@ async function run() {
 
       let result;
       try {
+        if (stats.requestsUsed > 0) await sleep(REQUEST_DELAY_MS);
         stats.requestsUsed++;
         result = await fetchPage(search, nextUrl);
       } catch (err) {
@@ -155,7 +185,7 @@ async function run() {
           break outer;
         }
         if (status === 429) {
-          console.error("🚫 Rate limited by Findwork — stopping.");
+          console.error("🚫 Still rate limited by Findwork after retries — stopping.");
           break outer;
         }
         console.error(`❌ Page ${page} failed: ${status || err.message}`);
@@ -173,6 +203,14 @@ async function run() {
         }
         seen.add(id);
 
+        // Hacker News posts can come without a role (saved with a blank
+        // title), and Coroflot/Dribbble list design and mechanical jobs
+        // that Findwork's loose search still returns for IT keywords.
+        if (!String(job.role || "").trim() || NON_IT_PUBLISHERS.has(String(job.source || "").toLowerCase())) {
+          stats.skippedNonIt++;
+          continue;
+        }
+
         const normalizedJob = await normalizeFindwork(job);
         if (!isUsJob(normalizedJob)) {
           stats.nonUs++;
@@ -188,7 +226,6 @@ async function run() {
       }
 
       nextUrl = result.next;
-      if (nextUrl) await sleep(REQUEST_DELAY_MS);
     } while (nextUrl);
   }
 
@@ -219,6 +256,10 @@ async function run() {
   console.log("==========================================");
   console.table(stats);
   console.log("==========================================\n");
+
+  // Lets withRunLog record the failed count, so a run whose save failed no
+  // longer looks like a clean run that found nothing.
+  return { saved: stats.saved, failed: stats.failed };
 }
 
 // CLI-only guard — this file used to call run() unconditionally at
