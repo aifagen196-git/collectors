@@ -54,6 +54,11 @@ name: job-engine collectors
 # yet just skips itself instead of failing the step. Add secrets as you get
 # them — an unconfigured source is a clean no-op, not a broken workflow:
 #   ADZUNA_APP_ID, ADZUNA_APP_KEY   — https://developer.adzuna.com
+#     NOT in all-new-paid (2026-11-10): Adzuna's terms allow a revenue-
+#     generating product only a 14-day trial (for checking the data), then a
+#     licence agreement, and every job shown must carry an "Adzuna" link.
+#     Put adzuna.js back in all-new-paid once there is a licence and job
+#     cards show that link.
 #   CAREERJET_API_KEY               — https://www.careerjet.com/partners/api/
 #   FINDWORK_API_KEY                — https://findwork.dev/developers/
 #   JOOBLE_API_KEY                  — https://jooble.org/api/about

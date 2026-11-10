@@ -7,6 +7,7 @@ import { createClient } from "@supabase/supabase-js";
 import { normalizeAdzuna } from "./normalize/normalizeAdzuna.js";
 import searches from "./config/adzunaSearches.js";
 import { isUsJob } from "./lib/isUsJob.js";
+import { isDomainJob } from "./lib/isDomainJob.js";
 
 dotenv.config({ path: ".env" });
 
@@ -180,6 +181,10 @@ async function run() {
         seen.add(id);
 
         const normalizedJob = await normalizeAdzuna(job);
+        if (!isDomainJob(normalizedJob.title)) {
+          stats.offDomain = (stats.offDomain || 0) + 1;
+          continue;
+        }
         if (!isUsJob(normalizedJob)) {
           stats.nonUs++;
           continue;
