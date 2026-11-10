@@ -75,6 +75,15 @@ export default async function collectJobrightJobs() {
       continue;
     }
 
+    // Since 2026-11-09 Jobright answers with a Cloudflare "Security check"
+    // page. Count it so collector_runs says "blocked" instead of a silent 0.
+    if (/challenges\.cloudflare\.com|<title>Security check/i.test(String(html))) {
+      console.error("   🚫 blocked by the site's bot protection");
+      stats.blocked = (stats.blocked || 0) + 1;
+      await delay(SEARCH_DELAY_MS);
+      continue;
+    }
+
     const jobList = extractJobList(html);
     if (!Array.isArray(jobList)) {
       console.error("   ⚠ __NEXT_DATA__ jobList not found — site markup may have changed");
@@ -115,6 +124,8 @@ export default async function collectJobrightJobs() {
   console.log("==========================================");
   console.table(stats);
   console.log("==========================================\n");
+
+  return { saved: stats.saved, failed: stats.failed, blocked: stats.blocked || 0 };
 }
 
 runCollector(import.meta.url, collectJobrightJobs);
