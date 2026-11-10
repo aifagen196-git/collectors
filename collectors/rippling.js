@@ -11,7 +11,7 @@ import { saveJobs, deactivateMissing } from "../processors/saveJobs.js";
 // API, no key:
 //   GET /platform/api/ats/v1/board/{slug}/jobs         -> [{uuid, name, url, workLocation, department}]
 //   GET /platform/api/ats/v1/board/{slug}/jobs/{uuid}  -> full posting
-// The company list comes from verifyRipplingBoards.js. Every listed IT job is
+// The company list comes from verifyBoards.js (npm run verify-rippling). Every listed IT job is
 // re-saved each run, and jobs that leave a board are hidden at the end.
 
 const API = "https://api.rippling.com/platform/api/ats/v1/board";

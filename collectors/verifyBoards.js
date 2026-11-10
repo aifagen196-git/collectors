@@ -1,0 +1,155 @@
+// collectors/verifyBoards.js
+//
+// Builds config/{provider}Companies.js for the job-board providers that have
+// no public list of their customers (Rippling, Gem, Personio). It takes every
+// company slug from the other collectors' config/*Companies.js lists (plus the
+// provider's current list) and keeps the ones whose public board answers with
+// at least one job:
+//
+//   node collectors/verifyBoards.js rippling
+//   node collectors/verifyBoards.js gem
+//   node collectors/verifyBoards.js personio
+//
+// Re-run now and then to pick up new companies and drop closed boards.
+
+import axios from "axios";
+import * as cheerio from "cheerio";
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath, pathToFileURL } from "node:url";
+import { isUsJob } from "./lib/isUsJob.js";
+
+const dir = path.dirname(fileURLToPath(import.meta.url));
+const CONFIG_DIR = path.join(dir, "config");
+const CONCURRENCY = Number(process.env.VERIFY_CONCURRENCY || 4);
+const UA = "AIFAGenJobCollector/1.0 (+https://aifagenlabs.com)";
+
+const http = axios.create({ timeout: 15000, validateStatus: null, headers: { "User-Agent": UA } });
+
+// Each check returns the number of jobs worth collecting (0 = drop the slug),
+// or "rate-limited".
+const PROVIDERS = {
+  rippling: {
+    url: "https://ats.rippling.com/{slug}/jobs",
+    async check(slug) {
+      const res = await http.get(`https://api.rippling.com/platform/api/ats/v1/board/${slug}/jobs`);
+      if (res.status === 429) return "rate-limited";
+      return res.status === 200 && Array.isArray(res.data) ? res.data.length : 0;
+    },
+  },
+  gem: {
+    url: "https://jobs.gem.com/{slug}",
+    async check(slug) {
+      const res = await http.get(`https://api.gem.com/job_board/v0/${slug}/job_posts/`);
+      if (res.status === 429) return "rate-limited";
+      return res.status === 200 && Array.isArray(res.data) ? res.data.length : 0;
+    },
+  },
+  personio: {
+    url: "https://{slug}.jobs.personio.de",
+    note: "Only boards with at least one US office are kept; the number is US jobs.",
+    async check(slug) {
+      for (const domain of ["jobs.personio.de", "jobs.personio.com"]) {
+        const res = await http.get(`https://${slug}.${domain}/xml`);
+        if (res.status === 429) return "rate-limited";
+        if (res.status !== 200 || typeof res.data !== "string" || !res.data.includes("<position>")) continue;
+        const $ = cheerio.load(res.data, { xmlMode: true });
+        let us = 0;
+        $("position").each((_, el) => {
+          const offices = [$(el).find("office").first().text(), ...$(el).find("additionalOffices > office").map((__, o) => $(o).text()).get()];
+          if (offices.some((o) => isUsJob({ location: o.trim() }))) us++;
+        });
+        return us;
+      }
+      return 0;
+    },
+  },
+};
+
+const toSlug = (s) =>
+  String(s).toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+
+async function candidateSlugs() {
+  const slugs = new Set();
+  for (const f of fs.readdirSync(CONFIG_DIR).filter((f) => /Companies\.js$/.test(f))) {
+    let list;
+    try {
+      const m = await import(pathToFileURL(path.join(CONFIG_DIR, f)).href);
+      list = m.default || Object.values(m)[0];
+    } catch {
+      continue;
+    }
+    if (!Array.isArray(list)) continue;
+    for (const x of list) {
+      for (const c of [typeof x === "string" ? x : null, x?.slug, x?.board, x?.token, x?.company, x?.name]) {
+        if (!c) continue;
+        const s = toSlug(c);
+        if (s && s.length < 40) slugs.add(s);
+        // "Acme Inc" -> also try "acme"
+        const first = s.split("-")[0];
+        if (first && first.length > 2) slugs.add(first);
+      }
+    }
+  }
+  return [...slugs].sort();
+}
+
+async function main() {
+  const name = process.argv[2];
+  const provider = PROVIDERS[name];
+  if (!provider) {
+    console.error(`Usage: node collectors/verifyBoards.js <${Object.keys(PROVIDERS).join("|")}>`);
+    process.exit(1);
+  }
+  const out = path.join(CONFIG_DIR, `${name}Companies.js`);
+
+  const slugs = await candidateSlugs();
+  console.log(`Checking ${slugs.length} candidate slugs against ${name}...`);
+  const alive = [];
+  let i = 0;
+  let checked = 0;
+  let limited = 0;
+  await Promise.all(
+    Array.from({ length: CONCURRENCY }, async () => {
+      while (i < slugs.length) {
+        const slug = slugs[i++];
+        let n = 0;
+        try {
+          n = await provider.check(slug);
+        } catch {
+          // DNS failure (Personio subdomains), timeout, bad JSON: not a board.
+        }
+        checked++;
+        if (n === "rate-limited") limited++;
+        else if (n > 0) {
+          alive.push({ slug, jobs: n });
+          console.log(`  ✅ ${slug}: ${n} jobs`);
+        }
+        if (checked % 250 === 0) console.log(`  ...${checked}/${slugs.length}`);
+      }
+    }),
+  );
+  alive.sort((a, b) => a.slug.localeCompare(b.slug));
+
+  const body = `// collectors/config/${name}Companies.js
+//
+// ${name} job-board slugs (${provider.url}), generated by
+// collectors/verifyBoards.js on ${new Date().toISOString().slice(0, 10)}. Each one answered
+// with at least one job; the number is the job count at that time.${provider.note ? `\n// ${provider.note}` : ""}
+
+const companies = [
+${alive.map((a) => `  "${a.slug}", // ${a.jobs}`).join("\n")}
+];
+
+export default companies;
+`;
+  if (!alive.length) {
+    console.log(`\nNo boards found; ${out} left unchanged. Rate-limited: ${limited}.`);
+    return;
+  }
+  fs.writeFileSync(out, body);
+  const total = alive.reduce((s, a) => s + a.jobs, 0);
+  console.log(`\n${alive.length} boards with jobs (${total} jobs). Rate-limited: ${limited}. Wrote ${out}`);
+}
+
+main();
