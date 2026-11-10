@@ -33,13 +33,16 @@ const supabase = createClient(
 const JOOBLE_API_KEY = process.env.JOOBLE_API_KEY;
 const JOOBLE_LOCATION = process.env.JOOBLE_LOCATION || "United States";
 
-const SCRAPE_LAST_HOURS = Number(process.env.SCRAPE_LAST_HOURS || 24);
-const MAX_PAGES_PER_SEARCH = Number(process.env.JOOBLE_MAX_PAGES || 4);
+// Jooble's free key allows 100 requests a day (reset at midnight UTC, 429
+// after that; per its REST API documentation). The schedule runs up to four
+// times a day, so each run spends at most 24: one page per search, and each
+// run starts where the last one stopped, so all searches are covered every
+// two runs. A job is hidden once no search has returned it for STALE_HOURS.
+const STALE_HOURS = Number(process.env.JOOBLE_STALE_HOURS || 72);
+const MAX_PAGES_PER_SEARCH = Number(process.env.JOOBLE_MAX_PAGES || 1);
+const RESULTS_PER_PAGE = Number(process.env.JOOBLE_RESULTS_PER_PAGE || 50);
 const REQUEST_DELAY_MS = Number(process.env.JOOBLE_REQUEST_DELAY_MS || 500);
-// Jooble's free tier is commonly capped around 500 calls/day — cap the
-// whole run the same way adzuna.js caps its own quota, so a misconfigured
-// search list can't blow through a small daily allowance.
-const MAX_REQUESTS_PER_RUN = Number(process.env.JOOBLE_MAX_REQUESTS_PER_RUN || 40);
+const MAX_REQUESTS_PER_RUN = Number(process.env.JOOBLE_MAX_REQUESTS_PER_RUN || 24);
 
 // Optional comma-separated substring allowlist over configured `keywords`
 // terms, for testing a single new search without spending the whole run's
@@ -49,9 +52,18 @@ const ONLY_QUERIES = (process.env.ONLY_QUERIES || "")
   .map((q) => q.trim().toLowerCase())
   .filter(Boolean);
 
+// Each 6-hour slot starts at a different search, so a budget smaller than
+// the search list still reaches every search over a few runs.
+const rotate = (list) => {
+  if (!list.length) return list;
+  const slot = Math.floor(Date.now() / (6 * 60 * 60 * 1000));
+  const start = (slot * MAX_REQUESTS_PER_RUN) % list.length;
+  return [...list.slice(start), ...list.slice(0, start)];
+};
+
 const selectedSearches = ONLY_QUERIES.length
   ? searches.filter(({ keywords }) => ONLY_QUERIES.some((q) => keywords.toLowerCase().includes(q)))
-  : searches;
+  : rotate(searches);
 
 // Optional hard cap on total postings collected this run, for a small test
 // slice before a full pass — mirrors MAX_LISTINGS_PER_COMPANY in workday.js.
@@ -108,6 +120,7 @@ async function fetchPage(keywords, page) {
       keywords,
       location: JOOBLE_LOCATION,
       page: String(page),
+      ResultOnPage: String(RESULTS_PER_PAGE),
     },
     { timeout: 20000 },
   );
@@ -208,7 +221,7 @@ async function run() {
   if (ONLY_QUERIES.length || MAX_RESULTS_TOTAL) {
     console.log("⏭ Skipping deactivation pass (partial run — rows carry no per-query column to scope it safely)");
   } else {
-    const staleCutoff = new Date(Date.now() - SCRAPE_LAST_HOURS * 60 * 60 * 1000).toISOString();
+    const staleCutoff = new Date(Date.now() - STALE_HOURS * 60 * 60 * 1000).toISOString();
     const { error: deErr, count } = await supabase
       .from("jobs")
       .update({ is_active: false })
