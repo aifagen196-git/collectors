@@ -3,13 +3,13 @@ import { getSupabase, runCollector } from "./runtime.js";
 import { normalizeAshby } from "../processors/normalizeAshby.js";
 import companies from "../config/ashbyCompanies.js";
 import withRetry from "../processors/retry.js";
-import { saveJobs, deactivateStale } from "../processors/saveJobs.js";
+import normalizeCompany from "../processors/companyNormalizer.js";
+import { isDomainJob } from "./lib/isDomainJob.js";
+import { saveJobs, deactivateMissing } from "../processors/saveJobs.js";
 
-// =============================================
-// CONFIG
-// =============================================
-
-const SCRAPE_LAST_HOURS = Number(process.env.SCRAPE_LAST_HOURS || 24);
+// Every open US IT job on each board is saved each run, and jobs that leave a
+// board are hidden at the end. Until 2026-11-10 only jobs posted in the last
+// 24 hours were kept, so most open jobs never showed.
 
 // =============================================
 // STATS
@@ -44,7 +44,7 @@ async function fetchCompanyJobs(company) {
     return response.data.jobs || [];
   } catch (err) {
     console.error(`❌ Failed to fetch ${company}`);
-    return [];
+    return null; // unlike [], tells the caller not to hide this board's jobs
   }
 }
 
@@ -139,13 +139,19 @@ export default async function collectAshbyJobs() {
   console.log("🚀 Ashby Collector Started");
   console.log("==========================================\n");
 
-  const cutoff = new Date(Date.now() - SCRAPE_LAST_HOURS * 60 * 60 * 1000);
+  const listedIds = new Set();
+  const failedCompanies = new Set();
 
   for (const company of companies) {
     try {
       stats.companies++;
 
       const jobs = await fetchCompanyJobs(company);
+      if (!jobs) {
+        failedCompanies.add(normalizeCompany(company) || company);
+        continue;
+      }
+      for (const job of jobs) listedIds.add(String(job.id));
 
       stats.fetched += jobs.length;
 
@@ -153,17 +159,7 @@ export default async function collectAshbyJobs() {
 
       const normalized = [];
       for (const job of jobs) {
-        const postedDate = new Date(
-          job.publishedAt || job.postedAt || job.createdAt || job.updatedAt,
-        );
-
-        // Skip old jobs BEFORE normalizing
-        if (!isNaN(postedDate) && postedDate < cutoff) {
-          stats.skipped++;
-          continue;
-        }
-
-        if (!isUSJob(job)) {
+        if (!isDomainJob(job.title) || !isUSJob(job)) {
           stats.skipped++;
           continue;
         }
@@ -179,10 +175,11 @@ export default async function collectAshbyJobs() {
       console.error(`\n❌ Company failed: ${company}`);
 
       console.error(err.message);
+      failedCompanies.add(normalizeCompany(company) || company);
     }
   }
 
-  await deactivateStale("ashby", SCRAPE_LAST_HOURS);
+  await deactivateMissing("ashby", listedIds, failedCompanies);
 
   console.log("\n==========================================");
   console.log("✅ Ashby Collector Finished");

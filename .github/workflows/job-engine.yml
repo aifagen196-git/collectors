@@ -30,13 +30,15 @@ name: job-engine collectors
 # that doesn't need a paid account. All three now search the 13 target
 # domains for real.
 #
-# 30 more sources (Comeet, TeamTailor, BreezyHR, WeWorkRemotely, HackerNews,
+# More sources (Comeet, TeamTailor, BreezyHR, WeWorkRemotely, HackerNews,
 # Jobvite, Recruitee, Pinpoint, Personio, Remotive, Kforce, BambooHR, UKG,
-# Avature, iCIMS, JazzHR, Oracle, SuccessFactors, BuiltIn, DailyRemote, Muse,
-# PostJobFree, RemoteOK, Web3Career, WorkingNomads, Workday, Jobicy,
-# Jobvertise, Arbeitnow, HiringCafe) also need no secrets and are folded into
-# `npm run all` via `npm run all-new-free` — verified live, each returns real
-# postings.
+# Avature, iCIMS, JazzHR, Oracle, SAP, BuiltIn, DailyRemote, PostJobFree,
+# RemoteOK, Web3Career, WorkingNomads, Jobicy, Jobvertise, Arbeitnow,
+# Rippling, RemoteLanders, AuthenticJobs, Gem) also need no secrets and are
+# folded into `npm run all` via `npm run all-new-free`. Workday runs as its
+# own step below. Off the schedule (2026-11-10): Muse (public API shut down),
+# HiringCafe (Cloudflare challenge; robots.txt disallows its search pages),
+# SuccessFactors (SAP left it; sap.js replaces it).
 #
 # Indeed needs Playwright (already installed above for simplyhired/dice) but
 # no API key. It's NOT folded into `npm run all` — its detail-page fetch

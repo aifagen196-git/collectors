@@ -1,193 +1,121 @@
 import axios from "axios";
-import { withRunLog } from "./runLog.js";
-import path from "node:path";
-import { pathToFileURL } from "node:url";
 import * as cheerio from "cheerio";
-import dotenv from "dotenv";
-import { createClient } from "@supabase/supabase-js";
+import { runCollector } from "./runtime.js";
 import { normalizeWeWorkRemotelyJob, splitTitle } from "./normalize/normalizeWeworkremotely.js";
 import { isUsJob } from "./lib/isUsJob.js";
 import { isGigListing } from "./lib/isGigListing.js";
-import allowedCompanies from "./config/weworkremotelyCompanies.js";
+import { isDomainJob } from "./lib/isDomainJob.js";
+import { saveJobs, deactivateMissing } from "../processors/saveJobs.js";
 
-dotenv.config({ path: ".env" });
+// We Work Remotely publishes RSS only (no JSON API). The IT category feeds
+// are read instead of the site-wide one, which holds just the newest 100
+// listings of every kind. Postings are paid for by the employer, so the feed
+// has little spam; jobs are kept by IT title rather than by a company
+// allowlist (until 2026-11-10 an allowlist dropped 86 of 100 jobs). Jobs that
+// leave the feeds are hidden at the end.
 
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY,
-);
+const FEEDS = [
+  "remote-full-stack-programming-jobs",
+  "remote-back-end-programming-jobs",
+  "remote-front-end-programming-jobs",
+  "remote-programming-jobs",
+  "remote-devops-sysadmin-jobs",
+  "remote-product-jobs",
+].map((c) => `https://weworkremotely.com/categories/${c}.rss`);
 
-// =============================================
-// CONFIG
-// =============================================
-
-const SCRAPE_LAST_HOURS = Number(process.env.SCRAPE_LAST_HOURS || 24);
-const FEED_URL = "https://weworkremotely.com/remote-jobs.rss";
-
-// =============================================
-// STATS
-// =============================================
+const UA = "AIFAGenJobCollector/1.0 (+https://aifagenlabs.com)";
 
 const stats = {
+  feedsFailed: 0,
   fetched: 0,
+  offDomain: 0,
+  gigListing: 0,
+  nonUs: 0,
   processed: 0,
   saved: 0,
+  deduped: 0,
   failed: 0,
-  nonUs: 0,
-  offAllowlist: 0,
 };
 
-// Empty allowlist = no filtering (default). Case-insensitive exact match on
-// the company name parsed out of the RSS <title> ("Company: Job Title").
-const ALLOWED_COMPANIES = new Set(
-  allowedCompanies.map((c) => c.trim().toLowerCase()),
-);
-
-// =============================================
-// SAVE JOBS
-// =============================================
-
-async function saveJobs(jobs) {
-  if (!jobs.length) return;
-  const CHUNK = 500;
-  for (let i = 0; i < jobs.length; i += CHUNK) {
-    const batch = jobs.slice(i, i + CHUNK);
-    const { error } = await supabase
-      .from("jobs")
-      .upsert(batch, { onConflict: "source,source_job_id" });
-    if (error) {
-      stats.failed += batch.length;
-      console.error(`❌ batch of ${batch.length} failed: ${error.message}`);
-      continue;
-    }
-    stats.saved += batch.length;
-  }
-}
-
-// =============================================
-// FETCH FEED
-// =============================================
-
-/**
- * WWR only publishes an official RSS feed (no JSON API), covering the
- * newest listings site-wide across all categories.
- */
-async function fetchFeedItems() {
-  const { data } = await axios.get(FEED_URL, {
+async function fetchFeedItems(url) {
+  const { data } = await axios.get(url, {
     timeout: 15000,
-    headers: {
-      "User-Agent": "Mozilla/5.0 (compatible; AIFAGenBot/1.0)",
-      Accept: "application/rss+xml, application/xml, text/xml",
-    },
+    headers: { "User-Agent": UA, Accept: "application/rss+xml, application/xml, text/xml" },
   });
-
   const $ = cheerio.load(data, { xmlMode: true });
-
-  const items = [];
-  $("item").each((_, el) => {
-    const $el = $(el);
-    items.push({
-      title: $el.find("title").first().text(),
-      link: $el.find("link").first().text(),
-      guid: $el.find("guid").first().text(),
-      region: $el.find("region").first().text(),
-      country: $el.find("country").first().text(),
-      state: $el.find("state").first().text(),
-      skills: $el.find("skills").first().text(),
-      category: $el.find("category").first().text(),
-      type: $el.find("type").first().text(),
-      description: $el.find("description").first().text(),
-      pubDate: $el.find("pubDate").first().text(),
-    });
-  });
-
-  return items;
+  return $("item")
+    .map((_, el) => {
+      const $el = $(el);
+      const text = (tag) => $el.find(tag).first().text();
+      return {
+        title: text("title"),
+        link: text("link"),
+        guid: text("guid"),
+        region: text("region"),
+        country: text("country"),
+        state: text("state"),
+        skills: text("skills"),
+        category: text("category"),
+        type: text("type"),
+        description: text("description"),
+        pubDate: text("pubDate"),
+      };
+    })
+    .get();
 }
 
-// =============================================
-// MAIN
-// =============================================
-
-async function run() {
+export default async function collectWeWorkRemotelyJobs() {
   console.log("\n==========================================");
   console.log("🚀 We Work Remotely Collector Started");
   console.log("==========================================\n");
 
-  let items = [];
-  try {
-    items = await fetchFeedItems();
-  } catch (err) {
-    console.error(`❌ Failed to fetch WWR feed: ${err.message}`);
-  }
-
-  stats.fetched = items.length;
-  console.log(`📥 ${items.length} jobs fetched`);
-
-  const normalized = [];
-  for (const item of items) {
-    if (ALLOWED_COMPANIES.size) {
-      const { company } = splitTitle(item.title);
-      if (!ALLOWED_COMPANIES.has(company.trim().toLowerCase())) {
-        stats.offAllowlist++;
-        continue;
-      }
+  const byId = new Map();
+  for (const url of FEEDS) {
+    try {
+      const items = await fetchFeedItems(url);
+      for (const item of items) byId.set(String(item.guid || item.link), item);
+      console.log(`📥 ${items.length} from ${url.split("/").pop()}`);
+    } catch (err) {
+      stats.feedsFailed++;
+      console.error(`❌ ${url}: ${err.response?.status || err.message}`);
     }
+  }
+  stats.fetched = byId.size;
 
-    console.log(`➡ ${item.title}`);
-
-    const normalizedJob = await normalizeWeWorkRemotelyJob(item);
-    if (isGigListing(normalizedJob)) {
-      stats.gigListing = (stats.gigListing || 0) + 1;
+  const rows = [];
+  for (const item of byId.values()) {
+    if (!isDomainJob(splitTitle(item.title).title)) {
+      stats.offDomain++;
       continue;
     }
-    if (!isUsJob(normalizedJob)) {
+    const row = await normalizeWeWorkRemotelyJob(item);
+    if (isGigListing(row)) {
+      stats.gigListing++;
+      continue;
+    }
+    if (!isUsJob(row)) {
       stats.nonUs++;
       continue;
     }
-    normalized.push(normalizedJob);
+    rows.push(row);
     stats.processed++;
   }
 
-  await saveJobs(normalized);
-  if (normalized.length) console.log(`   💾 saved ${normalized.length}`);
+  await saveJobs(rows, stats);
 
-  // =============================================
-  // DEACTIVATE STALE JOBS
-  // =============================================
-
-  const staleCutoff = new Date(
-    Date.now() - SCRAPE_LAST_HOURS * 60 * 60 * 1000,
-  ).toISOString();
-
-  const { error: deErr, count } = await supabase
-    .from("jobs")
-    .update({ is_active: false })
-    .lt("last_seen", staleCutoff)
-    .eq("source", "weworkremotely")
-    .eq("is_active", true)
-    .select("id", { count: "exact", head: true });
-
-  if (deErr) {
-    console.error(`⚠ Deactivation failed: ${deErr.message}`);
+  if (stats.feedsFailed) {
+    console.log(`⏭ Skipping deactivation: ${stats.feedsFailed} feed(s) failed`);
   } else {
-    console.log(`🗑 Deactivated ${count ?? 0} stale jobs`);
+    await deactivateMissing("weworkremotely", new Set(byId.keys()));
   }
 
   console.log("\n==========================================");
   console.log("✅ We Work Remotely Collector Finished");
   console.log("==========================================");
-
   console.table(stats);
-
   console.log("==========================================\n");
+
+  return { saved: stats.saved, failed: stats.failed };
 }
 
-// CLI-only guard — this file used to call run() unconditionally at
-// import time, which meant `import()`-ing it for any reason (a test
-// harness, a future registry, etc.) triggered a real scrape/save run as a
-// side effect. Only run when invoked directly (node collectors/weworkremotely.js),
-// matching every other collector in this repo (see runtime.js).
-const entrypoint = process.argv[1];
-if (entrypoint && import.meta.url === pathToFileURL(path.resolve(entrypoint)).href) {
-  withRunLog("weworkremotely", run);
-}
+runCollector(import.meta.url, collectWeWorkRemotelyJobs);

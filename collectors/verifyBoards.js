@@ -1,7 +1,7 @@
 // collectors/verifyBoards.js
 //
 // Builds config/{provider}Companies.js for the job-board providers that have
-// no public list of their customers (Rippling, Gem, Personio). It takes every
+// no public list of their customers (Rippling, Gem, Personio, BreezyHR). It takes every
 // company slug from the other collectors' config/*Companies.js lists (plus the
 // provider's current list) and keeps the ones whose public board answers with
 // at least one job:
@@ -9,6 +9,7 @@
 //   node collectors/verifyBoards.js rippling
 //   node collectors/verifyBoards.js gem
 //   node collectors/verifyBoards.js personio
+//   node collectors/verifyBoards.js breezyhr
 //
 // Re-run now and then to pick up new companies and drop closed boards.
 
@@ -43,6 +44,20 @@ const PROVIDERS = {
       const res = await http.get(`https://api.gem.com/job_board/v0/${slug}/job_posts/`);
       if (res.status === 429) return "rate-limited";
       return res.status === 200 && Array.isArray(res.data) ? res.data.length : 0;
+    },
+  },
+  breezyhr: {
+    url: "https://{slug}.breezy.hr",
+    note: "Only boards with at least one US job are kept; the number is US jobs.",
+    async check(slug) {
+      const res = await http.get(`https://${slug}.breezy.hr/json`);
+      if (res.status === 429) return "rate-limited";
+      if (res.status !== 200 || !Array.isArray(res.data)) return 0;
+      return res.data.filter((j) => {
+        const l = j.location || {};
+        const text = [l.name, l.city, l.state?.name, l.country?.name].filter(Boolean).join(", ");
+        return l.country?.id === "US" || isUsJob({ location: text });
+      }).length;
     },
   },
   personio: {

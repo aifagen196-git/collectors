@@ -3,13 +3,15 @@ import { getSupabase, runCollector } from "./runtime.js";
 import { normalizeLever } from "../processors/normalizeLever.js";
 import companies from "../config/leverCompanies.js";
 import withRetry from "../processors/retry.js";
-import { saveJobs, deactivateStale } from "../processors/saveJobs.js";
+import normalizeCompany from "../processors/companyNormalizer.js";
+import { isDomainJob } from "./lib/isDomainJob.js";
+import { isUsJob } from "./lib/isUsJob.js";
+import { saveJobs, deactivateMissing } from "../processors/saveJobs.js";
 
-// =============================================
-// CONFIG
-// =============================================
-
-const SCRAPE_LAST_HOURS = Number(process.env.SCRAPE_LAST_HOURS || 24);
+// Every open US IT job on each board is saved each run, and jobs that leave a
+// board are hidden at the end. Until 2026-11-10 only jobs posted in the last
+// 24 hours were kept (so most open jobs never showed), and there was no US
+// filter.
 
 // =============================================
 // STATS
@@ -46,7 +48,7 @@ async function fetchCompanyJobs(company) {
   } catch (err) {
     console.error(`❌ Failed to fetch ${company}`);
 
-    return [];
+    return null; // unlike [], tells the caller not to hide this board's jobs
   }
 }
 
@@ -59,13 +61,19 @@ export default async function collectLeverJobs() {
   console.log("🚀 Lever Collector Started");
   console.log("==========================================\n");
 
-  const cutoff = new Date(Date.now() - SCRAPE_LAST_HOURS * 60 * 60 * 1000);
+  const listedIds = new Set();
+  const failedCompanies = new Set();
 
   for (const company of companies) {
     try {
       stats.companies++;
 
       const jobs = await fetchCompanyJobs(company);
+      if (!Array.isArray(jobs)) {
+        failedCompanies.add(normalizeCompany(company) || company);
+        continue;
+      }
+      for (const job of jobs) listedIds.add(String(job.id));
 
       stats.fetched += jobs.length;
 
@@ -73,14 +81,20 @@ export default async function collectLeverJobs() {
 
       const normalized = [];
       for (const job of jobs) {
-        const updatedAt = job.createdAt ? new Date(job.createdAt) : new Date();
-
-        if (updatedAt < cutoff) {
+        if (!isDomainJob(job.text)) {
           stats.skipped++;
           continue;
         }
 
-        normalized.push(await normalizeLever(job, company));
+        const row = await normalizeLever(job, company);
+        // Lever's own country code covers postings whose location text has no
+        // state ("San Francisco").
+        if (!isUsJob(row) && job.country !== "US") {
+          stats.skipped++;
+          continue;
+        }
+
+        normalized.push(row);
         stats.processed++;
       }
 
@@ -91,14 +105,15 @@ export default async function collectLeverJobs() {
       console.error(`\n❌ Company failed: ${company}`);
 
       console.error(err.message);
+      failedCompanies.add(normalizeCompany(company) || company);
     }
   }
 
   // =============================================
-  // DEACTIVATE STALE JOBS
+  // DEACTIVATE JOBS NO LONGER LISTED
   // =============================================
 
-  await deactivateStale("lever", SCRAPE_LAST_HOURS);
+  await deactivateMissing("lever", listedIds, failedCompanies);
 
   console.log("\n==========================================");
   console.log("✅ Lever Collector Finished");
