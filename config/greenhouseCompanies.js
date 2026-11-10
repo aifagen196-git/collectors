@@ -1,443 +1,804 @@
-// collectors/config/greenhouseCompanies.js
+// config/greenhouseCompanies.js
 //
-// Canonical list of Greenhouse board slugs the collector scrapes.
-// Generated from verify/greenhouse.json (boards confirmed reachable).
+// greenhouse board slugs (https://boards.greenhouse.io/{slug}), checked by collectors/verifyBoards.js
+// on 2026-11-10. The number is the board's count of US IT jobs then.
 //
-// 432 companies.
+// 793 boards.
 
 const companies = [
-  "abacus",
-  "abbyy",
-  "abnormalsecurity",
-  "acquia",
-  "actblue",
-  "acuitymd",
-  "adahealth",
-  "adyen",
-  "aerospike",
-  "affinipay",
-  "affirm",
-  "afresh",
-  "aftership",
-  "airship",
-  "airtable",
-  "alertmedia",
-  "algolia",
-  "alloy",
-  "alpaca",
-  "altruist",
-  "amarok",
-  "amity",
-  "amount",
-  "amperity",
-  "amplitude",
-  "amwell",
-  "anaplan",
-  "anthropic",
-  "apollo",
-  "apolloio",
-  "appdirect",
-  "appfire",
-  "appian",
-  "aptoslabs",
-  "armissecurity",
-  "armorcode",
-  "asana",
-  "ascend",
-  "astranis",
-  "atomwise",
-  "attentive",
-  "augury",
-  "aurorainnovation",
-  "automox",
-  "avathon",
-  "avetta",
-  "aviatrix",
-  "axiom",
-  "axon",
-  "axonius",
-  "backblaze",
-  "baselayer",
-  "beam",
-  "betterment",
-  "beyondidentity",
-  "bigid",
-  "bitgo",
-  "bitmovin",
-  "bitwarden",
-  "blackduck",
-  "blend",
-  "branch",
-  "braze",
-  "brex",
-  "bringg",
-  "bugcrowd",
-  "buildkite",
-  "buildops",
-  "calendly",
-  "calm",
-  "cambridgemobiletelematics",
-  "carbonrobotics",
-  "carta",
-  "celonis",
-  "censys",
-  "chainguard",
-  "checkr",
-  "chime",
-  "circleci",
-  "clever",
-  "clickhouse",
-  "cloudflare",
-  "coast",
-  "cockroachlabs",
-  "collibra",
-  "comet",
-  "commercetools",
-  "complyadvantage",
-  "connectwise",
-  "consensys",
-  "contentful",
-  "contentstack",
-  "conviva",
-  "corelight",
-  "cortex",
-  "coursera",
-  "cribl",
-  "crowdbotics",
-  "cybereason",
-  "cymulate",
-  "dagger",
-  "dashlane",
-  "databento",
-  "databricks",
-  "datacamp",
-  "dataiku",
-  "datarails",
-  "deepmind",
-  "degreed",
-  "descope",
-  "descript",
-  "devrev",
-  "dfinity",
-  "dialpad",
-  "digicert",
-  "diligent",
-  "discord",
-  "distrokid",
-  "dnsfilter",
-  "doubleverify",
-  "dragos",
-  "dremio",
-  "dropbox",
-  "duolingo",
-  "elastic",
-  "embrace",
-  "embroker",
-  "encore",
-  "endorlabs",
-  "energyhub",
-  "ensemble",
-  "epicgames",
-  "epirus",
-  "equalexperts",
-  "espresa",
-  "esri",
-  "ethos",
-  "ethoslife",
-  "eucalyptus",
-  "everlaw",
-  "everquote",
-  "evolutioniq",
-  "exabeam",
-  "exiger",
-  "extend",
-  "fal",
-  "falconx",
-  "farfetch",
-  "fastly",
-  "fender",
-  "fieldwire",
-  "figma",
-  "fingerprint",
-  "fireblocks",
-  "fivetran",
-  "fleetio",
-  "flexe",
-  "flexport",
-  "flipdish",
-  "flipp",
-  "foliahealth",
-  "form3",
-  "formlabs",
-  "forwardnetworks",
-  "found",
-  "foundry",
-  "freenome",
-  "freenow",
-  "freestar",
-  "galaxy",
-  "galileo",
-  "gather",
-  "genea",
-  "genesis",
-  "getyourguide",
-  "ghost",
-  "gitlab",
-  "glossier",
-  "gocardless",
-  "godaddy",
-  "gongio",
-  "goodfire",
-  "goodtime",
-  "graphcore",
-  "gravity",
-  "gremlin",
-  "growthloop",
-  "gusto",
-  "hackerrank",
-  "halcyon",
-  "harbor",
-  "harnessinc",
-  "helium",
-  "helloalice",
-  "helloheart",
-  "hiddenlayer",
-  "highradius",
-  "hightouch",
-  "hive",
-  "honeycomb",
-  "hopscotch",
-  "hopskipdrive",
-  "horizen",
-  "hover",
-  "humaninterest",
-  "huntress",
-  "hyperproof",
-  "hypr",
-  "icon",
-  "immersive",
-  "impact",
-  "imply",
-  "incidentiq",
-  "incode",
-  "inmobi",
-  "instabase",
-  "instacart",
-  "instawork",
-  "intercom",
-  "intersystems",
-  "invoca",
-  "ionq",
-  "iterable",
-  "jamf",
-  "jetbrains",
-  "jfrog",
-  "jumio",
-  "justworks",
-  "karat",
-  "karbon",
-  "keepersecurity",
-  "klaviyo",
-  "knock",
-  "labelbox",
-  "lattice",
-  "launchdarkly",
-  "leaflink",
-  "liftoff",
-  "lightmatter",
-  "lightningai",
-  "liquibase",
-  "litify",
-  "liveperson",
-  "logicgate",
-  "logicmonitor",
-  "lokalise",
-  "lookout",
-  "lunarenergy",
-  "lyft",
-  "mabl",
-  "magic",
-  "manifest",
-  "mantl",
-  "mark43",
-  "materialbank",
-  "mattermost",
-  "mavenclinic",
-  "maymobility",
-  "melio",
-  "mercury",
-  "merge",
-  "metronome",
-  "mindbody",
-  "mirakl",
-  "missionlane",
-  "mixpanel",
-  "mobius",
-  "modernhealth",
-  "moduscreate",
-  "moloco",
-  "mongodb",
-  "monograph",
-  "monzo",
-  "morty",
-  "motional",
-  "motive",
-  "movableink",
-  "myfitnesspal",
-  "nanonets",
-  "nearform",
-  "nectar",
-  "neo4j",
-  "netlify",
-  "netskope",
-  "newrelic",
-  "newsela",
-  "nexhealth",
-  "nexla",
-  "nextdoor",
-  "nomadhealth",
-  "nubank",
-  "nuro",
-  "okta",
-  "onespan",
-  "onyx",
-  "opswat",
-  "optiver",
-  "orca",
-  "orcasecurity",
-  "orkes",
-  "osano",
-  "osmosis",
-  "otter",
-  "otterai",
-  "pagerduty",
-  "pagerhealth",
-  "pairwise",
-  "pantheon",
-  "papaya",
-  "paradigm",
-  "parallel",
-  "parloa",
-  "patch",
-  "payoneer",
-  "paystand",
-  "peloton",
-  "pingcap",
-  "pingidentity",
-  "planetlabs",
-  "planetscale",
-  "postman",
-  "precisionaq",
-  "prisma",
-  "project44",
-  "prolific",
-  "prophero",
-  "public",
-  "pubnub",
-  "purestorage",
-  "qualio",
-  "qualtrics",
-  "radar",
-  "recordedfuture",
-  "redventures",
-  "remote",
-  "remotecom",
-  "resilience",
-  "riskified",
-  "roadie",
-  "rocketchat",
-  "rubrik",
-  "runpod",
-  "safebreach",
-  "salesloft",
-  "samsara",
-  "scaleai",
-  "scandit",
-  "seatgeek",
-  "securitycompass",
-  "securityscorecard",
-  "seekout",
-  "sendbird",
-  "shadow",
-  "sharegate",
-  "shipwell",
-  "sigmacomputing",
-  "singlestore",
-  "skyscanner",
-  "smartasset",
-  "smartbear",
-  "smartling",
-  "smartsheet",
-  "snorkelai",
-  "socket",
-  "solarwinds",
-  "spycloud",
-  "stackadapt",
-  "stackblitz",
-  "stacklok",
-  "starburst",
-  "stitchfix",
-  "streamnative",
-  "stripe",
-  "submittable",
-  "sumologic",
-  "surveymonkey",
-  "synack",
-  "tailscale",
-  "tanium",
-  "testlio",
-  "thena",
-  "thetradeDesk",
-  "thoropass",
-  "threatlocker",
-  "tigera",
-  "tigergraph",
-  "tines",
-  "toast",
-  "togetherai",
-  "torq",
-  "trace3",
-  "tripactions",
-  "triplelift",
-  "truecaller",
-  "truefoundry",
-  "trustpilot",
-  "truveta",
-  "turing",
-  "twilio",
-  "typeface",
-  "udacity",
-  "udemy",
-  "unqork",
-  "upbound",
-  "upstart",
-  "usergems",
-  "valimail",
-  "vectara",
-  "vercel",
-  "verkada",
-  "via",
-  "virtru",
-  "vonage",
-  "warp",
-  "weave",
-  "webflow",
-  "workato",
-  "workboard",
-  "xendit",
-  "xometry",
-  "yext",
-  "yotpo",
-  "youcom",
-  "yugabyte",
-  "zenoti",
-  "ziprecruiter",
-  "zocdoc",
-  "zoominfo",
-  "zora",
-  "zscaler",
-  "zuora",
-  "zwift",
+  "6sense", // 9
+  "84674th44metrea9999", // 18
+  "8thlightrebuild", // 2
+  "a1msolutions", // 2
+  "abacus", // 20
+  "abbyy", // 0
+  "abc", // 2
+  "abclegalservices", // 99
+  "abnormalsecurity", // 11
+  "accela", // 2
+  "accenturefederalservices", // 534
+  "aclu", // 7
+  "acluinternships", // 38
+  "acquia", // 0
+  "actblue", // 0
+  "acuitymd", // 7
+  "adahealth", // 0
+  "adyen", // 55
+  "aegisventures", // 5
+  "affinipay", // 0
+  "affirm", // 64
+  "afresh", // 6
+  "aftership", // 2
+  "agero", // 1
+  "agilityrobotics", // 35
+  "airbnb", // 57
+  "airship", // 2
+  "airtable", // 1
+  "akumeninc", // 7
+  "albedo", // 1
+  "alertmedia", // 5
+  "algolia", // 0
+  "alloy", // 19
+  "alpaca", // 26
+  "alphasense", // 30
+  "altruist", // 40
+  "amarok", // 2
+  "americaninstitutesforresearch", // 2
+  "amity", // 0
+  "amount", // 2
+  "amperity", // 5
+  "amwell", // 2
+  "anaplan", // 10
+  "andurilindustries", // 1153
+  "anthropic", // 297
+  "aperiatechnologies", // 2
+  "apollo", // 0
+  "apolloio", // 15
+  "appdirect", // 3
+  "appfire", // 0
+  "appian", // 39
+  "apptronik", // 35
+  "aptoslabs", // 5
+  "arcadiascience", // 2
+  "arcesiumllc", // 7
+  "arizeai", // 8
+  "armada", // 14
+  "armissecurity", // 0
+  "armorcode", // 0
+  "array", // 6
+  "asana", // 13
+  "asm", // 108
+  "assemblyai", // 8
+  "astranis", // 60
+  "astspacemobile", // 46
+  "atomicobject", // 1
+  "attain", // 5
+  "attaintalent", // 7
+  "attentive", // 16
+  "augury", // 1
+  "aura", // 1
+  "automox", // 1
+  "avante", // 5
+  "avathon", // 22
+  "avetta", // 3
+  "aviatrix", // 7
+  "avride", // 23
+  "axiom", // 2
+  "axios", // 6
+  "axle", // 17
+  "axon", // 182
+  "axonius", // 3
+  "babylist", // 8
+  "backblaze", // 14
+  "bandwidth", // 12
+  "banyansoftware", // 9
+  "baselayer", // 5
+  "baton", // 6
+  "beaconbiosignals", // 5
+  "beam", // 0
+  "betterment", // 15
+  "beyondidentity", // 0
+  "beyondtrust", // 15
+  "bigid", // 2
+  "billcom", // 18
+  "billtrust", // 7
+  "binance", // 5
+  "bitgo", // 14
+  "bitmovin", // 3
+  "bitwarden", // 6
+  "blackduck", // 4
+  "blacksky", // 19
+  "blend", // 4
+  "block", // 45
+  "bloomerang", // 4
+  "blueroseresearch", // 7
+  "bluestone", // 1
+  "blumira", // 1
+  "boulevard", // 6
+  "branch", // 1
+  "braze", // 90
+  "brex", // 108
+  "bridgeway", // 5
+  "bringg", // 0
+  "broadwayventures", // 3
+  "bugcrowd", // 5
+  "buildkite", // 2
+  "buildops", // 4
+  "butterflynetwork", // 7
+  "calendly", // 5
+  "calm", // 2
+  "cambridgemobiletelematics", // 13
+  "canonical", // 76
+  "capco", // 23
+  "careerteam", // 4
+  "cargurus", // 17
+  "carta", // 13
+  "casa", // 1
+  "caylent", // 7
+  "celigo", // 5
+  "celonis", // 19
+  "censys", // 12
+  "centralreach", // 7
+  "centriaautism", // 1
+  "chainguard", // 32
+  "chargepoint", // 8
+  "checkr", // 14
+  "chime", // 36
+  "chowbus", // 2
+  "chronograph", // 4
+  "cie", // 1
+  "circleci", // 7
+  "classpass", // 6
+  "clear", // 26
+  "clearwater", // 2
+  "clerkie", // 5
+  "clever", // 2
+  "cloudbeds", // 4
+  "cloudflare", // 249
+  "cloverhealth", // 10
+  "coalition", // 13
+  "coast", // 6
+  "cockroachlabs", // 5
+  "codeforamerica", // 6
+  "codepath", // 6
+  "coherehealth", // 11
+  "coinbase", // 115
+  "colabsoftware", // 9
+  "collibra", // 6
+  "comet", // 0
+  "commercetools", // 2
+  "commvault", // 4
+  "complyadvantage", // 0
+  "conga", // 9
+  "connectwise", // 6
+  "consensys", // 2
+  "contentful", // 2
+  "contentstack", // 2
+  "convene", // 3
+  "conviva", // 3
+  "corelight", // 2
+  "coreweave", // 181
+  "cortex", // 2
+  "coursera", // 2
+  "credible", // 6
+  "cresta", // 20
+  "cribl", // 26
+  "crowdbotics", // 0
+  "crunchyroll", // 21
+  "cultureamp", // 1
+  "current", // 4
+  "customerio", // 12
+  "cybersheath", // 5
+  "cymulate", // 1
+  "dagger", // 0
+  "darkwolfsolutions", // 45
+  "dashlane", // 1
+  "databento", // 8
+  "databricks", // 319
+  "datacamp", // 16
+  "datadog", // 77
+  "datagrail", // 1
+  "dataiku", // 0
+  "datarails", // 1
+  "degreed", // 0
+  "descope", // 0
+  "descript", // 4
+  "devrev", // 3
+  "dfinity", // 0
+  "dialpad", // 2
+  "didi", // 7
+  "digible", // 2
+  "digicert", // 14
+  "diligent", // 0
+  "discord", // 22
+  "distrokid", // 1
+  "divergehealth", // 1
+  "divergent", // 38
+  "doma", // 1
+  "dominodatalab", // 8
+  "doppel", // 7
+  "doubleverify", // 0
+  "doximity", // 6
+  "dragos", // 23
+  "dremio", // 1
+  "dropbox", // 7
+  "druva", // 6
+  "dscout", // 7
+  "duolingo", // 29
+  "edb", // 4
+  "elastic", // 53
+  "elationhealth", // 4
+  "encore", // 0
+  "endorlabs", // 7
+  "energycx", // 2
+  "energyhub", // 7
+  "engine", // 17
+  "enova", // 9
+  "ensemble", // 0
+  "ensono", // 25
+  "epicgames", // 54
+  "epirus", // 13
+  "eplusinc", // 22
+  "equalexperts", // 0
+  "espresa", // 0
+  "esri", // 196
+  "ethos", // 0
+  "ethoslife", // 12
+  "eucalyptus", // 6
+  "eulerity", // 7
+  "everlaw", // 17
+  "everquote", // 4
+  "evio", // 3
+  "evolutioniq", // 18
+  "exabeam", // 0
+  "exiger", // 27
+  "expel", // 4
+  "extend", // 7
+  "faire", // 29
+  "falconx", // 4
+  "fanaticsfbg", // 43
+  "fanduel", // 45
+  "faradayfuture", // 21
+  "fastly", // 23
+  "fender", // 3
+  "fetch", // 1
+  "fictiv", // 23
+  "fieldwire", // 6
+  "figma", // 50
+  "figure", // 5
+  "figureai", // 33
+  "fingerprint", // 12
+  "fireblocks", // 2
+  "five9", // 15
+  "fivetran", // 60
+  "flatironhealth", // 9
+  "fleet", // 7
+  "fleetio", // 12
+  "flex", // 12
+  "flexe", // 1
+  "flexport", // 24
+  "flipdish", // 0
+  "flipp", // 0
+  "flowdesk", // 1
+  "flowtraders", // 7
+  "flumehealth", // 1
+  "fluxx", // 3
+  "flyzipline", // 104
+  "foliahealth", // 0
+  "form3", // 1
+  "formlabs", // 64
+  "forter", // 1
+  "forwardnetworks", // 6
+  "found", // 0
+  "foundry", // 1
+  "fourkites", // 3
+  "freenome", // 8
+  "freenow", // 0
+  "freestar", // 1
+  "galaxy", // 0
+  "galileo", // 0
+  "gapinternational", // 4
+  "garnerhealth", // 29
+  "gather", // 0
+  "gelbergroup", // 2
+  "gemini", // 15
+  "genea", // 2
+  "generatebiomedicines", // 6
+  "genesis", // 0
+  "getyourguide", // 0
+  "ghost", // 0
+  "ginkgobioworks", // 11
+  "gitlab", // 59
+  "givedirectly", // 6
+  "glossier", // 1
+  "goatgroup", // 11
+  "gocardless", // 0
+  "godaddy", // 6
+  "gofundme", // 7
+  "gongio", // 4
+  "goodfire", // 12
+  "goodtime", // 0
+  "gradientai", // 1
+  "grafanalabs", // 27
+  "graphcore", // 25
+  "gravity", // 0
+  "greenhouse", // 2
+  "gremlin", // 3
+  "growthloop", // 3
+  "grvty", // 123
+  "guidepoint", // 6
+  "guidepointsecurity", // 35
+  "gusto", // 47
+  "hackerrank", // 4
+  "halcyon", // 2
+  "happymoney", // 1
+  "harbor", // 0
+  "harnessinc", // 22
+  "hawkeye360", // 9
+  "healthie", // 12
+  "helium", // 0
+  "helloalice", // 0
+  "hellofresh", // 18
+  "helloheart", // 3
+  "hiddenlayer", // 3
+  "highradius", // 5
+  "himarley", // 4
+  "hive", // 1
+  "honeycomb", // 6
+  "hopscotch", // 0
+  "hopskipdrive", // 3
+  "horizen", // 0
+  "housecall", // 7
+  "hover", // 8
+  "hovercraft", // 2
+  "hpiq", // 26
+  "humaninterest", // 6
+  "hungryroot", // 2
+  "huntress", // 15
+  "hyperproof", // 1
+  "hypr", // 3
+  "icon", // 0
+  "idmeuniversityrecruiting", // 3
+  "imaginepediatrics", // 5
+  "imc", // 33
+  "immersive", // 0
+  "impact", // 18
+  "imply", // 3
+  "incidentiq", // 4
+  "incode", // 3
+  "inflectionai", // 2
+  "inmarket", // 4
+  "inmobi", // 6
+  "innodatainc", // 75
+  "insight", // 2
+  "inspiraeducation", // 6
+  "instacart", // 30
+  "instawork", // 5
+  "instridehealth", // 1
+  "intellidyne", // 4
+  "intercom", // 12
+  "intersystems", // 16
+  "ionq", // 26
+  "island", // 11
+  "isomorphiclabs", // 4
+  "itd", // 15
+  "iterable", // 0
+  "ivalua", // 6
+  "jamf", // 3
+  "janestreet", // 48
+  "jensenhughes", // 7
+  "jetbrains", // 1
+  "jfrog", // 14
+  "jumio", // 3
+  "justworks", // 40
+  "juullabs", // 2
+  "k2spacecorporation", // 75
+  "kairospower", // 18
+  "kapitus", // 11
+  "karat", // 1
+  "karbon", // 0
+  "kaseya", // 11
+  "katalyst", // 11
+  "keepersecurity", // 41
+  "ketch", // 4
+  "kettle", // 4
+  "keyfactorinc", // 4
+  "klaviyo", // 67
+  "knit", // 4
+  "knock", // 1
+  "knowbe4", // 7
+  "koalafi", // 5
+  "kodiak", // 22
+  "komodohealth", // 7
+  "labelbox", // 7
+  "later", // 10
+  "latitude", // 14
+  "lattice", // 3
+  "launchdarkly", // 6
+  "launchpotato", // 7
+  "leaflink", // 1
+  "legalservicesnyc", // 13
+  "legion", // 2
+  "lendingtree", // 11
+  "levelaccess", // 1
+  "life360", // 16
+  "liftoff", // 8
+  "lightmatter", // 9
+  "lightningai", // 31
+  "lincoln", // 4
+  "link", // 3
+  "liquibase", // 2
+  "lithic", // 4
+  "litify", // 8
+  "liveperson", // 0
+  "locusrobotics", // 1
+  "logicgate", // 4
+  "logicmonitor", // 4
+  "lokalise", // 0
+  "lookout", // 0
+  "lovable", // 1
+  "lucidmotors", // 86
+  "lunarenergy", // 6
+  "lyft", // 48
+  "mabl", // 0
+  "magic", // 0
+  "malbon", // 1
+  "manifest", // 2
+  "mantl", // 0
+  "mark43", // 21
+  "materialbank", // 4
+  "mattermost", // 4
+  "mavenclinic", // 13
+  "maymobility", // 18
+  "medium", // 3
+  "medsien", // 1
+  "melio", // 0
+  "merceradvisors", // 8
+  "mercury", // 42
+  "merge", // 0
+  "method", // 2
+  "metronome", // 0
+  "metrostarsystems", // 52
+  "microsoftcorporation", // 30
+  "midihealth", // 12
+  "mill", // 15
+  "mindbody", // 7
+  "mineralystherapeutics", // 4
+  "mirakl", // 0
+  "missionlane", // 3
+  "mithril", // 3
+  "mixpanel", // 14
+  "mobius", // 5
+  "modernhealth", // 1
+  "moduscreate", // 2
+  "moloco", // 16
+  "momentus", // 4
+  "mongodb", // 54
+  "monograph", // 0
+  "monzo", // 0
+  "motional", // 47
+  "motive", // 1
+  "movableink", // 5
+  "mozilla", // 11
+  "myfitnesspal", // 6
+  "nametag", // 7
+  "nasuni", // 4
+  "natera", // 28
+  "navapbc", // 12
+  "nearform", // 4
+  "nebius", // 74
+  "neo4j", // 7
+  "netdocuments", // 6
+  "netlify", // 1
+  "netskope", // 19
+  "neuralink", // 35
+  "newrelic", // 6
+  "newsbreak", // 24
+  "newsela", // 1
+  "newtonresearch", // 9
+  "nexamp", // 5
+  "nexhealth", // 18
+  "nexla", // 2
+  "nextdoor", // 10
+  "nexus", // 1
+  "ninjaone", // 43
+  "nmi", // 3
+  "nomadhealth", // 0
+  "northbeam", // 12
+  "nubank", // 0
+  "nuro", // 79
+  "nuvem", // 2
+  "observeai", // 2
+  "obsidiansecurity", // 4
+  "ocrolusinc", // 2
+  "octave", // 3
+  "octus", // 5
+  "oddball", // 9
+  "okta", // 73
+  "okx", // 20
+  "omadahealth", // 10
+  "ondofinance", // 12
+  "onespan", // 4
+  "onetrust", // 25
+  "onyx", // 0
+  "openspace", // 4
+  "opentable", // 3
+  "oportun", // 4
+  "opswat", // 14
+  "optiver", // 0
+  "orca", // 0
+  "orcasecurity", // 2
+  "orenda", // 8
+  "orkes", // 8
+  "osano", // 2
+  "oscar", // 43
+  "osmosis", // 0
+  "otter", // 10
+  "otterai", // 14
+  "oura", // 46
+  "pagaya", // 2
+  "pagerduty", // 8
+  "pagerhealth", // 2
+  "pairwise", // 0
+  "pallet", // 11
+  "panthalassa", // 15
+  "pantheon", // 6
+  "parachutehealth", // 6
+  "parallel", // 7
+  "patch", // 0
+  "pathai", // 12
+  "payoneer", // 1
+  "paystand", // 0
+  "pelago", // 6
+  "peloton", // 6
+  "pendo", // 7
+  "penninteractive", // 14
+  "perfectserve", // 4
+  "phizenix", // 12
+  "pingcap", // 0
+  "pingidentity", // 10
+  "pinterest", // 89
+  "planetlabs", // 30
+  "planetscale", // 7
+  "platformscience", // 5
+  "playlist", // 10
+  "plume", // 3
+  "pontera", // 1
+  "postscript", // 2
+  "praxent", // 11
+  "precisionaq", // 4
+  "precisionmedicinegroup", // 6
+  "privacy", // 3
+  "prizepicks", // 18
+  "project44", // 4
+  "prolific", // 3
+  "prophero", // 0
+  "prophet", // 2
+  "propublica", // 2
+  "prove", // 3
+  "public", // 1
+  "pubnub", // 0
+  "purestorage", // 105
+  "qualio", // 1
+  "qualtrics", // 28
+  "quince", // 37
+  "qventus", // 7
+  "radar", // 3
+  "rapidsos", // 2
+  "rcxsports", // 3
+  "reactivate", // 1
+  "realchemistry", // 9
+  "rebuildmanufacturing", // 35
+  "recordedfuture", // 12
+  "redcellpartners", // 20
+  "reddit", // 106
+  "redventures", // 13
+  "redwoodmaterials", // 34
+  "reflex", // 1
+  "relativity", // 77
+  "remote", // 0
+  "remotecom", // 0
+  "renttherunway", // 5
+  "resilience", // 1
+  "resolvetosavelives", // 1
+  "revolutionmedicines", // 32
+  "riotgames", // 60
+  "ripple", // 25
+  "riskified", // 0
+  "rithum", // 2
+  "roadie", // 3
+  "robinhood", // 67
+  "roblox", // 206
+  "roboforce", // 8
+  "rocketchat", // 0
+  "rocketlab", // 160
+  "roku", // 52
+  "rstudio", // 2
+  "rubrik", // 35
+  "rushdownstudios", // 3
+  "rxsense", // 3
+  "safebreach", // 1
+  "salesloft", // 5
+  "sambanovasystems", // 24
+  "samsara", // 86
+  "samsungresearchamerica", // 16
+  "samsungsemiconductor", // 34
+  "scaleai", // 69
+  "scalellp", // 2
+  "scandit", // 3
+  "schrdinger", // 8
+  "scopely", // 10
+  "scowtt", // 3
+  "seatgeek", // 28
+  "securitycompass", // 0
+  "securityscorecard", // 6
+  "seekout", // 1
+  "selffinancial", // 5
+  "sendbird", // 0
+  "sezzle", // 23
+  "shadow", // 1
+  "sharegate", // 0
+  "shopmy", // 10
+  "showpad", // 5
+  "sidecarhealth", // 4
+  "sigmacomputing", // 45
+  "similarweb", // 7
+  "simplextrading", // 2
+  "singlestore", // 13
+  "skhynixmemorysolutionsamericainc", // 14
+  "smartasset", // 2
+  "smartbear", // 0
+  "smartling", // 2
+  "smartsheet", // 17
+  "snorkelai", // 23
+  "socket", // 0
+  "sofi", // 20
+  "solarwinds", // 16
+  "sothebys", // 9
+  "space", // 13
+  "spacex", // 1076
+  "speechify", // 246
+  "sphinxdefense", // 12
+  "spire", // 10
+  "splashfinancial", // 3
+  "splitero", // 2
+  "spoileralert", // 1
+  "sproutsocial", // 1
+  "spycloud", // 4
+  "spyretherapeutics", // 1
+  "squarespace", // 8
+  "srm", // 1
+  "stackadapt", // 10
+  "stackblitz", // 3
+  "stacklok", // 2
+  "standardmetrics", // 1
+  "starburst", // 14
+  "step", // 12
+  "stitchfix", // 4
+  "stockx", // 2
+  "storyblok", // 5
+  "streamnative", // 1
+  "stripe", // 209
+  "striveworks", // 29
+  "submittable", // 2
+  "suki", // 2
+  "summittherapeutics", // 11
+  "sumologic", // 2
+  "supplyhouse", // 8
+  "sureify", // 2
+  "surveymonkey", // 0
+  "swordhealth", // 5
+  "synack", // 5
+  "system", // 2
+  "tabapay", // 9
+  "taboola", // 5
+  "tailscale", // 21
+  "talkspace", // 5
+  "tanium", // 25
+  "taskrabbit", // 10
+  "tds", // 16
+  "tebra", // 4
+  "tekmetric", // 9
+  "testlio", // 4
+  "thatsnomoonentertainment", // 3
+  "themotleyfool", // 3
+  "thena", // 0
+  "thetradedesk", // 29
+  "thetradeDesk", // 29
+  "thewilshiregroup", // 2
+  "thoropass", // 2
+  "thoughtworks", // 2
+  "thrive", // 2
+  "thrivemarket", // 9
+  "tia", // 1
+  "tigera", // 1
+  "tines", // 4
+  "toast", // 30
+  "togetherai", // 36
+  "tomorrow", // 4
+  "torcrobotics", // 34
+  "torq", // 6
+  "trace3", // 50
+  "treasuryprime", // 2
+  "tribalscale", // 6
+  "tripactions", // 25
+  "triplelift", // 4
+  "truecaller", // 0
+  "truefoundry", // 5
+  "trumid", // 3
+  "trustpilot", // 3
+  "truveta", // 7
+  "tulip", // 23
+  "turing", // 10
+  "twilio", // 20
+  "twinhealth", // 13
+  "twistbioscience", // 8
+  "twitch", // 32
+  "typeface", // 14
+  "udacity", // 10
+  "udemy", // 0
+  "underdog", // 3
+  "uniteus", // 2
+  "unqork", // 0
+  "upbound", // 2
+  "upstart", // 46
+  "ursamajor", // 29
+  "usergems", // 0
+  "vailexa", // 31
+  "valimail", // 1
+  "vannevarlabs", // 16
+  "vast", // 62
+  "vectara", // 2
+  "veeamsoftware", // 32
+  "veracode", // 2
+  "veracyte", // 5
+  "vercel", // 42
+  "veriff", // 2
+  "verkada", // 149
+  "verramobility", // 30
+  "versaterm", // 2
+  "vetto", // 3
+  "via", // 29
+  "vialogic", // 12
+  "virtru", // 6
+  "vonage", // 0
+  "voyagertechnologiesinc", // 63
+  "vynyl", // 6
+  "warp", // 5
+  "wasabi", // 5
+  "watchmakergenomics", // 7
+  "watershed", // 5
+  "waymo", // 191
+  "weave", // 0
+  "webflow", // 0
+  "wikimedia", // 9
+  "wisetack", // 2
+  "wizinc", // 15
+  "wongdoody", // 2
+  "woolpert", // 31
+  "workato", // 8
+  "workboard", // 0
+  "workstream", // 2
+  "wrike", // 3
+  "xai", // 114
+  "xairatherapeutics", // 13
+  "xendit", // 1
+  "xometry", // 129
+  "xphealth", // 1
+  "yext", // 9
+  "yipitdata", // 10
+  "yotpo", // 0
+  "youcom", // 4
+  "yubico", // 3
+  "yugabyte", // 7
+  "zenoti", // 2
+  "zetaglobal", // 27
+  "ziprecruiter", // 48
+  "zocdoc", // 25
+  "zoominfo", // 30
+  "zscaler", // 79
+  "zuora", // 13
+  "zwift", // 2
 ];
 
 export default companies;

@@ -73,7 +73,12 @@
     "verify-personio": "node collectors/verifyBoards.js personio",
     "gem": "node collectors/gem.js",
     "sap": "node collectors/sap.js",
-    "verify-breezyhr": "node collectors/verifyBoards.js breezyhr"
+    "verify-breezyhr": "node collectors/verifyBoards.js breezyhr",
+    "verify-greenhouse": "node collectors/verifyBoards.js greenhouse --from-db",
+    "verify-lever": "node collectors/verifyBoards.js lever --from-db",
+    "verify-ashby": "node collectors/verifyBoards.js ashby --from-db",
+    "verify-smartrecruiters": "node collectors/verifyBoards.js smartrecruiters --from-db",
+    "verify-recruitee": "node collectors/verifyBoards.js recruitee --from-db"
   },
   "keywords": [],
   "author": "",

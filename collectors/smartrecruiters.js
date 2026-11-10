@@ -68,6 +68,9 @@ export default async function collectSmartRecruitersJobs() {
   console.log("🚀 SmartRecruiters Collector Started");
   console.log("==========================================\n");
 
+  // Every posting listed, and the IT ones: listed jobs that aren't IT are
+  // hidden too.
+  const listed = new Set();
   const listedIds = new Set();
   const candidates = [];
 
@@ -82,9 +85,11 @@ export default async function collectSmartRecruitersJobs() {
       }
       stats.listed += jobs.length;
       for (const job of jobs) {
-        listedIds.add(String(job.id));
-        if (isDomainJob(job.name)) candidates.push(job);
-        else stats.offDomain++;
+        listed.add(String(job.id));
+        if (isDomainJob(job.name)) {
+          listedIds.add(String(job.id));
+          candidates.push(job);
+        } else stats.offDomain++;
       }
     },
     LIST_CONCURRENCY,
@@ -114,7 +119,7 @@ export default async function collectSmartRecruitersJobs() {
   if (stats.companiesFailed) {
     console.log(`⏭ Skipping deactivation: ${stats.companiesFailed} company listing(s) failed`);
   } else {
-    await deactivateMissing("smartrecruiters", listedIds);
+    await deactivateMissing("smartrecruiters", listedIds, new Set(), { listed });
   }
 
   console.log("\n==========================================");

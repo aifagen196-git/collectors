@@ -157,15 +157,19 @@ async function updateIdsWithSplit(sb, ids) {
  * Instead this compares against the full listing fetched this run.
  *
  * @param {string} source
- * @param {Set<string>} listedIds - source_job_id of every posting listed this
- *   run, from every board that answered
+ * @param {Set<string>} listedIds - source_job_id of every posting that should
+ *   stay live: listed this run (from every board that answered) and passing
+ *   the collector's filters
  * @param {Set<string>} [skipCompanies] - stored company names of boards whose
  *   fetch FAILED this run; their jobs are left alone
+ * @param {{listed?: Set<string>}} [opts] - `listed`: every posting listed this
+ *   run before filtering, so the mass-disappearance guard counts only jobs
+ *   that really left their board
  * @returns {Promise<number>} rows hidden
  */
-export async function deactivateMissing(source, listedIds, skipCompanies = new Set()) {
+export async function deactivateMissing(source, listedIds, skipCompanies = new Set(), { listed } = {}) {
   if (!source) throw new Error("deactivateMissing requires a source");
-  if (!listedIds?.size) {
+  if (!(listed || listedIds)?.size) {
     console.log(`⏭ Skipping deactivation for ${source}: nothing was listed this run`);
     return 0;
   }
@@ -196,10 +200,16 @@ export async function deactivateMissing(source, listedIds, skipCompanies = new S
     (r) => !listedIds.has(String(r.source_job_id)) && !skipCompanies.has(r.company),
   );
   // A sudden mass disappearance is far more likely a fetch problem than real
-  // closures; leave it for a human to look at.
-  if (live.length >= 200 && missing.length > live.length * 0.5) {
+  // closures; leave it for a human to look at. When the caller passes
+  // `listed` (every posting the source listed, before its own filters), only
+  // jobs missing from that count here: jobs still listed but now filtered
+  // out (not IT, not in the US) are hidden however many there are.
+  const unlisted = listed
+    ? missing.filter((r) => !listed.has(String(r.source_job_id)))
+    : missing;
+  if (live.length >= 200 && unlisted.length > live.length * 0.5) {
     console.error(
-      `⚠ Not deactivating: ${missing.length} of ${live.length} live ${source} jobs look unlisted, which suggests a fetch problem`,
+      `⚠ Not deactivating: ${unlisted.length} of ${live.length} live ${source} jobs look unlisted, which suggests a fetch problem`,
     );
     return 0;
   }

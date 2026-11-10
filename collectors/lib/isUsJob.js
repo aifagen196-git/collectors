@@ -35,7 +35,9 @@ const US_STATE_NAMES = [
 // remote-location marker ("Remote - US", "Remote (US)"), but lowercase
 // "us" is also the common English pronoun, so only the all-caps form is
 // treated as a country marker.
-const US_MARKERS_RE = /\b(United States|USA|U\.S\.A?\.?)\b/i;
+// The lookahead (not \b) lets "U.S." match before a space or bracket, as in
+// "U.S. (Remote)" and "Remote, U.S.", which \b after the dot never did.
+const US_MARKERS_RE = /\b(?:United States|USA|U\.S\.(?:A\.?)?)(?!\w)/i;
 const US_BARE_RE = /\bUS\b/;
 const US_STATE_NAME_RE = new RegExp(`\\b(${US_STATE_NAMES.join("|")})\\b`, "i");
 // "City, ST" / "City, ST 12345" — the most common ATS location format.
@@ -96,4 +98,88 @@ export function isUsJob(job) {
   if (abbrMatch && US_STATE_ABBR.has(abbrMatch[1])) return true;
 
   return false;
+}
+
+// Big US job markets that boards often name without a state ("San
+// Francisco", "NYC", "Remote - Seattle"). Names shared with a large foreign
+// city (Cambridge, Manchester, Birmingham, Dublin) are left out.
+const US_CITY_RE = new RegExp(
+  "\\b(?:" +
+    [
+      "San Francisco", "SF Bay Area", "Bay Area", "Silicon Valley", "NYC", "New York City",
+      "Seattle", "Bellevue", "Redmond", "Austin", "Boston", "Chicago", "Los Angeles",
+      "Denver", "Boulder", "Atlanta", "Miami", "Dallas", "Houston", "San Antonio",
+      "Phoenix", "Scottsdale", "Pittsburgh", "Philadelphia", "San Diego", "San Jose",
+      "Palo Alto", "Mountain View", "Menlo Park", "Sunnyvale", "Santa Clara",
+      "Redwood City", "Oakland", "Berkeley", "Raleigh", "Durham", "Salt Lake City",
+      "Lehi", "Minneapolis", "Detroit", "Nashville", "Columbus", "Cincinnati",
+      "Cleveland", "St\\.? Louis", "Kansas City", "Indianapolis", "Charlotte", "Tampa",
+      "Orlando", "Sacramento", "Las Vegas", "Baltimore", "Reston", "McLean", "Herndon",
+      "Irvine", "Santa Monica", "Brooklyn", "Manhattan", "Jersey City", "Hoboken",
+      "Stamford", "Portland",
+    ].join("|") +
+    ")\\b",
+  "i",
+);
+
+// Foreign cities and country codes that show up alone in board location
+// strings ("London", "Bangalore, IND", "Zürich, CH"). Two-letter codes that
+// are also US state abbreviations (CA, IN, DE, IL, ...) are left out.
+const NON_US_PLACE_RE = new RegExp(
+  "(?:^|[^\\p{L}])(?:" +
+    [
+      "London", "Toronto", "Vancouver", "Montr[eé]al", "Ottawa", "Calgary", "Edmonton",
+      "Waterloo", "Kitchener", "Ontario", "Qu[eé]bec", "British Columbia", "Alberta",
+      "Amsterdam", "Rotterdam", "Utrecht", "Eindhoven", "Berlin", "Munich", "M[uü]nchen",
+      "Hamburg", "Frankfurt", "Cologne", "K[oö]ln", "Stuttgart", "D[uü]sseldorf", "Paris",
+      "Lyon", "Brussels", "Antwerp", "Dublin", "Cork", "Galway", "Belfast", "Edinburgh",
+      "Glasgow", "Cardiff", "Bristol", "Leeds", "Milan", "Rome", "Madrid", "Barcelona",
+      "Valencia", "Lisbon", "Porto", "Z[uü]rich", "Geneva", "Lausanne", "Vienna",
+      "Stockholm", "Malm[oö]", "Gothenburg", "Copenhagen", "Aarhus", "Oslo", "Helsinki",
+      "Tallinn", "Riga", "Vilnius", "Warsaw", "Krak[oó]w", "Wroc[lł]aw", "Gda[nń]sk",
+      "Pozna[nń]", "Prague", "Brno", "Budapest", "Bucharest", "Cluj", "Timi[sș]oara",
+      "Sofia", "Belgrade", "Novi Sad", "Zagreb", "Ljubljana", "Kyiv", "Kiev", "Lviv",
+      "Istanbul", "Tel Aviv", "Herzliya", "Haifa", "Jerusalem", "Dubai", "Abu Dhabi",
+      "Riyadh", "Doha", "Kuwait", "Cairo", "Lagos", "Nairobi", "Cape Town", "Johannesburg",
+      "Bangalore", "Bengaluru", "Hyderabad", "Pune", "Chennai", "Mumbai", "Delhi",
+      "Gurgaon", "Gurugram", "Noida", "Kolkata", "Ahmedabad", "Mohali", "Lucknow",
+      "Jaipur", "Kochi", "Coimbatore", "Karachi", "Lahore", "Islamabad", "Dhaka",
+      "Colombo", "Kuala Lumpur", "Jakarta", "Bangkok", "Manila", "Ho Chi Minh", "Hanoi",
+      "Hong Kong", "Shanghai", "Beijing", "Shenzhen", "Guangzhou", "Hangzhou", "Taipei",
+      "Seoul", "Tokyo", "Osaka", "Sydney", "Melbourne", "Brisbane", "Perth", "Auckland",
+      "Wellington", "S[aã]o Paulo", "Rio de Janeiro", "Buenos Aires", "Santiago",
+      "Bogot[aá]", "Medell[ií]n", "Lima", "Mexico City", "Ciudad de M[eé]xico",
+      "Guadalajara", "Monterrey", "Montevideo", "Reykjav[ií]k", "Yerevan", "Tbilisi",
+      "Bratislava", "Nicosia", "Limassol", "Costa Rica", "Colombia", "Argentina", "Chile",
+      "Peru", "Uruguay", "Bulgaria", "Hungary", "Croatia", "Slovakia", "Slovenia",
+      "Turkey", "T[uü]rkiye", "Egypt", "Nigeria", "Kenya", "South Africa", "Saudi Arabia",
+      "Qatar", "Pakistan", "Bangladesh", "Sri Lanka", "Vietnam", "Thailand", "Malaysia",
+      "Indonesia", "Taiwan", "Korea", "ANZ",
+    ].join("|") +
+    ")(?![\\p{L}])",
+  "iu",
+);
+// ISO country codes after a comma: "Pune, IND", "Dublin, IE".
+const NON_US_CODE_RE =
+  /,\s*(?:IND|JPN|SGP|GBR|DEU|FRA|NLD|ESP|POL|PRT|BRA|MEX|AUS|NZL|KOR|HKG|CHN|TWN|ISR|IRL|CHE|SWE|NOR|DNK|FIN|AUT|BEL|CZE|ROU|BGR|UKR|SRB|GRC|TUR|ARE|ZAF|PHL|IDN|MYS|THA|VNM|CHL|COL|PER|URY|CRI|ARG|CAN|IE|CH|GB|NL|ES|PL|PT|BR|MX|AU|NZ|SG|JP|KR|HK|FR|SE|NO|DK|FI|AT|BE|CZ|RO|BG|UA|RS|GR|TR|AE|ZA|PH|MY|TH|VN|TW|CN|CL|PE|UY|CR)\b/;
+
+/**
+ * US or not, from a board's location string alone (no description to read):
+ * true for a US place, false for a foreign one, null when the string doesn't
+ * say ("Remote", "Hybrid", "In-Office", empty). A string naming both, like
+ * "London or New York, NY", counts as US.
+ *
+ * @param {string} location
+ * @returns {boolean|null}
+ */
+export function usFromLocation(location) {
+  const loc = String(location || "").trim();
+  if (!loc) return null;
+  if (isUsJob({ location: loc }) || US_CITY_RE.test(loc)) return true;
+  // "Remote - TX; Remote - GA". CA is skipped: it is as often Canada here.
+  for (const m of loc.matchAll(/\b(?:Remote|Hybrid)\s*[-–:]\s*([A-Z]{2})\b/g)) {
+    if (m[1] !== "CA" && US_STATE_ABBR.has(m[1])) return true;
+  }
+  if (NON_US_MARKERS_RE.test(loc) || NON_US_PLACE_RE.test(loc) || NON_US_CODE_RE.test(loc)) return false;
+  return null;
 }

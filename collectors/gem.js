@@ -78,6 +78,9 @@ export default async function collectGemJobs() {
   console.log("🚀 Gem Collector Started");
   console.log("==========================================\n");
 
+  // Every posting listed, and the ones kept (IT, US): listed jobs that are
+  // filtered out are hidden too.
+  const listed = new Set();
   const listedIds = new Set();
   let anyBoardFailed = false;
 
@@ -94,7 +97,7 @@ export default async function collectGemJobs() {
     }
     if (!Array.isArray(posts)) continue;
     stats.listed += posts.length;
-    for (const p of posts) listedIds.add(String(p.id));
+    for (const p of posts) listed.add(String(p.id));
 
     const candidates = posts.filter((p) => {
       if (!isDomainJob(p.title)) {
@@ -127,6 +130,7 @@ export default async function collectGemJobs() {
         continue;
       }
       stats.processed++;
+      listedIds.add(String(p.id));
       kept.push(row);
     }
 
@@ -140,7 +144,7 @@ export default async function collectGemJobs() {
   if (anyBoardFailed) {
     console.log(`⏭ Skipping deactivation: ${stats.boardsFailed} board(s) failed to load`);
   } else {
-    await deactivateMissing("gem", listedIds);
+    await deactivateMissing("gem", listedIds, new Set(), { listed });
   }
 
   console.log("\n==========================================");

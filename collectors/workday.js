@@ -6,7 +6,8 @@ import dotenv from "dotenv";
 import { createClient } from "@supabase/supabase-js";
 import { normalizeWorkday } from "./normalize/normalizeWorkday.js";
 import companies from "./config/workdayCompanies.js";
-import { isUsJob } from "./lib/isUsJob.js";
+import { isUsJob, usFromLocation } from "./lib/isUsJob.js";
+import { isDomainJob } from "./lib/isDomainJob.js";
 import { saveJobs as saveJobRows, deactivateWhere } from "../processors/saveJobs.js";
 
 dotenv.config({ path: ".env" });
@@ -293,7 +294,8 @@ async function run() {
     console.log(`⚙ ONLY_COMPANIES active — ${selectedCompanies.length} of ${companies.length} tenants\n`);
   }
 
-  for (const { company, host, siteId } of selectedCompanies) {
+  // `name` (optional) is what job cards show; `company` is the Workday tenant.
+  for (const { company, host, siteId, name } of selectedCompanies) {
     try {
       stats.companies++;
 
@@ -316,13 +318,23 @@ async function run() {
         Array.from({ length: Math.min(DETAIL_CONCURRENCY, listings.length) }, async () => {
           while (idx < listings.length) {
             const listing = listings[idx++];
+            if (!isDomainJob(listing.title)) {
+              stats.offDomain = (stats.offDomain || 0) + 1;
+              continue;
+            }
+            // "Bangalore, India" on the list row: no need for the details.
+            // ("3 Locations" and the like say nothing, so those are fetched.)
+            if (usFromLocation(listing.locationsText) === false) {
+              stats.nonUs++;
+              continue;
+            }
             const details = await fetchJobDetails(tenantBase, listing.externalPath);
             if (!details) {
               stats.failed++;
               continue;
             }
             const applyUrl = `${applyBase}${listing.externalPath}`;
-            const normalizedJob = await normalizeWorkday(listing, details, company, applyUrl);
+            const normalizedJob = await normalizeWorkday(listing, details, name || company, applyUrl);
             if (!isUsJob(normalizedJob)) {
               stats.nonUs++;
               continue;
@@ -352,7 +364,7 @@ async function run() {
   const { done: count, error: deErr } = await deactivateWhere((q) => {
     q = q.lt("last_seen", staleCutoff).eq("source", "workday");
     return ONLY_COMPANIES.length
-      ? q.in("company", selectedCompanies.map((c) => c.company))
+      ? q.in("company", selectedCompanies.map((c) => c.name || c.company))
       : q;
   });
   if (deErr) console.error(`⚠ Deactivation pass failed after ${count} rows: ${deErr}`);

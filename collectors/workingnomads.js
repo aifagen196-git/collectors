@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 import { createClient } from "@supabase/supabase-js";
 import { normalizeWorkingnomads } from "./normalize/normalizeWorkingnomads.js";
 import { isUsJob } from "./lib/isUsJob.js";
+import { isDomainJob } from "./lib/isDomainJob.js";
 
 dotenv.config({ path: ".env" });
 
@@ -96,6 +97,10 @@ async function run() {
     console.log(`➡ ${job.title} @ ${job.company_name}`);
 
     const normalizedJob = await normalizeWorkingnomads(job);
+    if (!isDomainJob(normalizedJob.title)) {
+      stats.offDomain = (stats.offDomain || 0) + 1;
+      continue;
+    }
     if (!isUsJob(normalizedJob)) {
       stats.nonUs++;
       continue;

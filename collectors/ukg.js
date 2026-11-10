@@ -7,6 +7,8 @@ import { createClient } from "@supabase/supabase-js";
 import { normalizeUkg } from "./normalize/normalizeUkg.js";
 import companies from "./config/ukgCompanies.js";
 import { isUsJob } from "./lib/isUsJob.js";
+import { isDomainJob } from "./lib/isDomainJob.js";
+import { deactivateWhere } from "../processors/saveJobs.js";
 
 dotenv.config({ path: ".env" });
 
@@ -229,6 +231,10 @@ async function run() {
         Array.from({ length: Math.min(DETAIL_CONCURRENCY, listings.length) }, async () => {
           while (idx < listings.length) {
             const listing = listings[idx++];
+            if (!isDomainJob(listing.Title)) {
+              stats.offDomain = (stats.offDomain || 0) + 1;
+              continue;
+            }
 
             const opportunity = await fetchOpportunityDetail(boardBase, listing.Id);
             if (!opportunity) {
@@ -264,18 +270,15 @@ async function run() {
     Date.now() - SCRAPE_LAST_HOURS * 60 * 60 * 1000,
   ).toISOString();
 
-  const { error: deErr, count } = await supabase
-    .from("jobs")
-    .update({ is_active: false })
-    .lt("last_seen", staleCutoff)
-    .eq("source", "ukg")
-    .eq("is_active", true)
-    .select("id", { count: "exact", head: true });
-
+  // Batched (shared helper): one UPDATE over thousands of rows trips the
+  // statement timeout.
+  const { done: count, error: deErr } = await deactivateWhere((q) =>
+    q.lt("last_seen", staleCutoff).eq("source", "ukg"),
+  );
   if (deErr) {
-    console.error(`⚠ Deactivation failed: ${deErr.message}`);
+    console.error(`⚠ Deactivation failed after ${count} rows: ${deErr}`);
   } else {
-    console.log(`🗑 Deactivated ${count ?? 0} stale jobs`);
+    console.log(`🗑 Deactivated ${count} stale jobs`);
   }
 
   console.log("\n==========================================");

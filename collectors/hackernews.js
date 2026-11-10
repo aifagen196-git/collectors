@@ -7,6 +7,7 @@ import { createClient } from "@supabase/supabase-js";
 import { normalizeHackernews } from "./normalize/normalizeHackernews.js";
 import searches from "./config/hackernewsSearches.js";
 import { isUsJob } from "./lib/isUsJob.js";
+import { isDomainJob } from "./lib/isDomainJob.js";
 import { saveJobs as saveJobRows, deactivateWhere } from "../processors/saveJobs.js";
 
 dotenv.config({ path: ".env" });
@@ -178,6 +179,10 @@ async function run() {
     }
 
     const normalizedJob = await normalizeHackernews(comment);
+    if (!isDomainJob(normalizedJob.title)) {
+      stats.offDomain = (stats.offDomain || 0) + 1;
+      continue;
+    }
     if (!isUsJob(normalizedJob)) {
       stats.nonUs++;
       continue;

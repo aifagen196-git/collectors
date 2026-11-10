@@ -7,6 +7,7 @@ import { createClient } from "@supabase/supabase-js";
 import { normalizeOracle } from "./normalize/normalizeOracle.js";
 import companies from "./config/oracleCompanies.js";
 import { isUsJob } from "./lib/isUsJob.js";
+import { isDomainJob } from "./lib/isDomainJob.js";
 import { saveJobs as saveJobRows, deactivateWhere } from "../processors/saveJobs.js";
 
 dotenv.config({ path: ".env" });
@@ -193,6 +194,10 @@ async function run() {
         Array.from({ length: Math.min(DETAIL_CONCURRENCY, listings.length) }, async () => {
           while (idx < listings.length) {
             const listing = listings[idx++];
+            if (!isDomainJob(listing.Title)) {
+              stats.offDomain = (stats.offDomain || 0) + 1;
+              continue;
+            }
 
             // Country is already reliable on the list row -- skip the
             // detail fetch entirely for obviously non-US reqs rather than

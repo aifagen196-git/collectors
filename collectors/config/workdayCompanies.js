@@ -42,6 +42,45 @@ const companies = [
   // the cxs `/jobs` endpoint returns a non-zero total and a populated first
   // posting.
   { company: "intel", host: "wd1", siteId: "External" }, // ~609 reqs
+
+  // Added 2026-11-10. Each answered the cxs `/jobs` endpoint with postings;
+  // the note is how many of the first 20 had IT titles (the only ones the
+  // collector keeps), after the total for the big boards. `name` is what job
+  // cards show; `company` stays the Workday tenant.
+  { company: "amat", host: "wd1", siteId: "External", name: "Applied Materials" }, // 2,000+, 20/20 IT
+  { company: "crowdstrike", host: "wd5", siteId: "crowdstrikecareers", name: "CrowdStrike" }, // 19/20
+  { company: "kyndryl", host: "wd5", siteId: "KyndrylProfessionalCareers", name: "Kyndryl" }, // 17/20
+  { company: "workday", host: "wd5", siteId: "Workday", name: "Workday" }, // 15/20
+  { company: "statestreet", host: "wd1", siteId: "Global", name: "State Street" }, // 1,175, 14/20
+  { company: "caci", host: "wd1", siteId: "External", name: "CACI" }, // 1,789, 13/20
+  { company: "hp", host: "wd5", siteId: "ExternalCareerSite", name: "HP" }, // 13/20
+  { company: "motorolasolutions", host: "wd5", siteId: "Careers", name: "Motorola Solutions" }, // 12/20
+  { company: "bah", host: "wd1", siteId: "BAH_Jobs", name: "Booz Allen Hamilton" }, // 2,000+, 11/20
+  { company: "disney", host: "wd5", siteId: "disneycareer", name: "Disney" }, // 11/20
+  { company: "leidos", host: "wd5", siteId: "External", name: "Leidos" }, // 2,000+, 11/20
+  { company: "equinix", host: "wd1", siteId: "External", name: "Equinix" }, // 10/20
+  { company: "cardinalhealth", host: "wd1", siteId: "EXT", name: "Cardinal Health" }, // 9/20
+  { company: "ebay", host: "wd5", siteId: "apply", name: "eBay" }, // 9/20
+  { company: "micron", host: "wd1", siteId: "External", name: "Micron" }, // 2,889, 9/20
+  { company: "homedepot", host: "wd5", siteId: "CareerDepot", name: "The Home Depot" }, // 8/20
+  { company: "paypal", host: "wd1", siteId: "jobs", name: "PayPal" }, // 8/20
+  { company: "vanguard", host: "wd5", siteId: "vanguard_external", name: "Vanguard" }, // 8/20
+  { company: "accenture", host: "wd103", siteId: "AccentureCareers", name: "Accenture" }, // 2,000+, 7/20
+  { company: "blackrock", host: "wd1", siteId: "BlackRock_Professional", name: "BlackRock" }, // 7/20
+  { company: "centene", host: "wd5", siteId: "Centene_External", name: "Centene" }, // 7/20
+  { company: "fmr", host: "wd1", siteId: "FidelityCareers", name: "Fidelity Investments" }, // 858, 7/20
+  { company: "lowes", host: "wd5", siteId: "LWS_External_CS", name: "Lowe's" }, // 13,051, 7/20
+  { company: "ngc", host: "wd1", siteId: "Northrop_Grumman_External_Site", name: "Northrop Grumman" }, // 3,623, 7/20
+  { company: "zoom", host: "wd5", siteId: "Zoom", name: "Zoom" }, // 7/20
+  { company: "analogdevices", host: "wd1", siteId: "External", name: "Analog Devices" }, // 6/20
+  { company: "chevron", host: "wd5", siteId: "jobs", name: "Chevron" }, // 6/20
+  { company: "ciena", host: "wd5", siteId: "Careers", name: "Ciena" }, // 6/20
+  { company: "humana", host: "wd5", siteId: "Humana_External_Career_Site", name: "Humana" }, // 6/20
+  { company: "travelers", host: "wd5", siteId: "External", name: "Travelers" }, // 6/20
+  { company: "cigna", host: "wd5", siteId: "cignacareers", name: "Cigna" }, // 5/20
+  { company: "marvell", host: "wd1", siteId: "MarvellCareers", name: "Marvell" }, // 5/20
+  { company: "sonyglobal", host: "wd1", siteId: "SonyGlobalCareers", name: "Sony" }, // 5/20
+  { company: "warnerbros", host: "wd5", siteId: "global", name: "Warner Bros. Discovery" }, // 5/20
 ];
 
 export default companies;

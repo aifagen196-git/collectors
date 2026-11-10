@@ -1,161 +1,275 @@
-// collectors/config/leverCompanies.js
+// config/leverCompanies.js
 //
-// Canonical list of Lever account slugs the collector scrapes.
-// Generated from verify/lever.json (boards confirmed reachable).
+// lever board slugs (https://jobs.lever.co/{slug}), checked by collectors/verifyBoards.js
+// on 2026-11-10. The number is the board's count of US IT jobs then.
 //
-// 150 companies.
+// 264 boards.
 
 const companies = [
-  "acceldata",
-  "actian",
-  "agiloft",
-  "aircall",
-  "alloy",
-  "alluxio",
-  "anchorage",
-  "anjuna",
-  "anomali",
-  "anyscale",
-  "arcadia",
-  "articulate",
-  "ataccama",
-  "azul",
-  "beam",
-  "benchsci",
-  "brightwheel",
-  "captivateiq",
-  "carbonhealth",
-  "celestia",
-  "centrifuge",
-  "certik",
-  "clari",
-  "cloudinary",
-  "connectly",
-  "contentsquare",
-  "controlup",
-  "copilotkit",
-  "deliverect",
-  "deputy",
-  "devcycle",
-  "docebo",
-  "drivetrain",
-  "emburse",
-  "emitwise",
-  "enable",
-  "enablecomp",
-  "epsilon3",
-  "everbridge",
-  "ezcater",
-  "farfetch",
-  "finch",
-  "finix",
-  "firstup",
-  "flatfile",
-  "floqast",
-  "freshworks",
-  "genesis",
-  "goodleap",
-  "gopuff",
-  "greenlight",
-  "hermeus",
-  "highspot",
-  "hive",
-  "hostinger",
-  "humata",
-  "immuta",
-  "impossiblecloud",
-  "incorta",
-  "inductiveautomation",
-  "inkitt",
-  "integrate",
-  "jumpcloud",
-  "kapwing",
-  "kepler",
-  "kraken",
-  "labelbox",
-  "ledger",
-  "lemon",
-  "lendbuzz",
-  "loadsmart",
-  "logrocket",
-  "lucidworks",
-  "lyrahealth",
-  "manifest",
-  "matillion",
-  "meroxa",
-  "metabase",
-  "metaview",
-  "mindtickle",
-  "mistplay",
-  "moonpay",
-  "nango",
-  "narmi",
-  "neon",
-  "netomi",
-  "nominal",
-  "normalyze",
-  "oak9",
-  "odaseva",
-  "offchainlabs",
-  "omnidian",
-  "openx",
-  "orum",
-  "ottertune",
-  "outreach",
-  "pachama",
-  "panopto",
-  "paralleldomain",
-  "parallelwireless",
-  "paytm",
-  "perforce",
-  "pipedream",
-  "pipedrive",
-  "plaid",
-  "playco",
-  "plivo",
-  "pocketfm",
-  "prosper",
-  "quantcast",
-  "quantumcircuits",
-  "quantummetric",
-  "rackspace",
-  "redoxengine",
-  "relay",
-  "revinate",
-  "saviynt",
-  "scaleway",
-  "secureframe",
-  "shadow",
-  "shakudo",
-  "sitetracker",
-  "snaplogic",
-  "sonatype",
-  "stackblitz",
-  "stackhawk",
-  "strongcompute",
-  "superannotate",
-  "sysdig",
-  "tackle",
-  "tecton",
-  "teleport",
-  "tinybird",
-  "tonic",
-  "topazlabs",
-  "tractian",
-  "transcarent",
-  "trellis",
-  "unify",
-  "veeva",
-  "verdigris",
-  "viget",
-  "voltus",
-  "xepelin",
-  "zerotier",
-  "zeta",
-  "zilliz",
-  "zimperium",
-  "zoox",
-  "zopa",
+  "15five", // 1
+  "acceldata", // 3
+  "actian", // 0
+  "additionwealth", // 1
+  "agile-defense", // 115
+  "agiloft", // 10
+  "aledade", // 11
+  "alloy", // 1
+  "alluxio", // 6
+  "anavationllc", // 53
+  "anchorage", // 5
+  "angellist", // 14
+  "anomali", // 4
+  "apolloresearch", // 6
+  "arcadia", // 6
+  "arrivelogistics", // 5
+  "articulate", // 0
+  "ataccama", // 1
+  "automatiq", // 1
+  "azul", // 4
+  "backerkit", // 1
+  "bazaarvoice", // 1
+  "beam", // 0
+  "bellese", // 8
+  "benchsci", // 0
+  "blue", // 3
+  "bluecore-energy", // 1
+  "bluesight", // 3
+  "bogaardgroup", // 6
+  "bounteous", // 5
+  "brightmachines", // 3
+  "brightwheel", // 0
+  "brilliant", // 3
+  "canvasmedical", // 3
+  "captivateiq", // 10
+  "carbonhealth", // 0
+  "celestia", // 0
+  "centrifuge", // 0
+  "certik", // 8
+  "cfsenergy", // 33
+  "cgsfederal", // 792
+  "chownow", // 3
+  "cin7", // 2
+  "clearcapital", // 3
+  "cloudinary", // 0
+  "cmgx", // 3
+  "coalfire", // 4
+  "cologix", // 10
+  "contentsquare", // 2
+  "controlup", // 2
+  "convergentresearch", // 3
+  "copilotkit", // 0
+  "coupa", // 2
+  "crypto", // 16
+  "cyara", // 2
+  "dadavidson", // 6
+  "deleteme", // 2
+  "deliverect", // 0
+  "deputy", // 0
+  "devcycle", // 0
+  "dexterity", // 3
+  "dilitrust", // 3
+  "disher", // 25
+  "distro", // 39
+  "docebo", // 0
+  "drivemode", // 6
+  "drivetrain", // 3
+  "egen", // 13
+  "eleks", // 3
+  "ellevationeducation", // 3
+  "emburse", // 3
+  "emitwise", // 0
+  "enable", // 0
+  "enablecomp", // 2
+  "endpointclinical", // 3
+  "epsilon3", // 2
+  "ethena", // 1
+  "everbridge", // 3
+  "everlywell", // 2
+  "ezcater", // 0
+  "fantom-corporation", // 42
+  "farfetch", // 0
+  "filevine", // 29
+  "finch", // 5
+  "findem", // 3
+  "finix", // 9
+  "firstup", // 2
+  "flatfile", // 0
+  "floqast", // 15
+  "fly", // 2
+  "foodsmart", // 7
+  "foth", // 10
+  "freshworks", // 0
+  "fullscript", // 3
+  "fundrise", // 1
+  "genesis", // 0
+  "gohighlevel", // 8
+  "goodleap", // 9
+  "gopuff", // 6
+  "greenlight", // 4
+  "gridline", // 1
+  "h1", // 8
+  "hatchit", // 18
+  "havenparkcommunities", // 4
+  "healthcare", // 1
+  "hermeus", // 27
+  "highspot", // 0
+  "hiringourheroes", // 3
+  "hive", // 47
+  "hmbl-tech", // 1
+  "honkforhelp", // 3
+  "humata", // 1
+  "immuta", // 4
+  "impossiblecloud", // 0
+  "includedhealth", // 5
+  "incorta", // 0
+  "inductivehealth", // 2
+  "inkitt", // 5
+  "integrate", // 0
+  "jumpcloud", // 2
+  "kapwing", // 0
+  "kepler", // 0
+  "kitware", // 13
+  "klearnow", // 3
+  "kobie", // 8
+  "kraken", // 0
+  "labelbox", // 0
+  "lemon", // 0
+  "lendbuzz", // 6
+  "lightship", // 2
+  "loadsmart", // 2
+  "loftorbital", // 36
+  "logrocket", // 3
+  "lucidworks", // 1
+  "luxurypresence", // 4
+  "lwolf", // 1
+  "lyrahealth", // 13
+  "mactores", // 2
+  "matchgroup", // 25
+  "matillion", // 0
+  "meroxa", // 0
+  "metabase", // 8
+  "metaview", // 0
+  "mindtickle", // 0
+  "mistplay", // 0
+  "moonpay", // 3
+  "nango", // 0
+  "narmi", // 0
+  "neon", // 0
+  "netomi", // 4
+  "nextech", // 3
+  "nomihealth", // 1
+  "nominal", // 0
+  "normalyze", // 0
+  "oak9", // 0
+  "odaseva", // 0
+  "offchainlabs", // 4
+  "oliverwyman", // 1
+  "olo", // 1
+  "omnidian", // 0
+  "onit", // 1
+  "openx", // 0
+  "optionmetrics", // 5
+  "ottertune", // 0
+  "outreach", // 2
+  "pachama", // 0
+  "palantir", // 182
+  "panopto", // 1
+  "paralleldomain", // 0
+  "parallelwireless", // 7
+  "patchmypc", // 5
+  "paytm", // 0
+  "peerspace", // 2
+  "perforce", // 0
+  "pigment", // 10
+  "pipedream", // 0
+  "pipedrive", // 0
+  "pivotal", // 14
+  "playco", // 0
+  "pocketfm", // 0
+  "prosper", // 4
+  "protective", // 14
+  "pryon", // 1
+  "quantcast", // 0
+  "quantummetric", // 0
+  "questanalytics", // 4
+  "rackspace", // 0
+  "rainfocus", // 6
+  "rapidai", // 4
+  "raya", // 7
+  "redhorsecorp", // 50
+  "redoxengine", // 2
+  "relay", // 3
+  "restaurant365", // 4
+  "revinate", // 1
+  "rigetti", // 6
+  "ro", // 28
+  "rover", // 7
+  "safe", // 3
+  "saviynt", // 13
+  "scaleway", // 0
+  "secureframe", // 4
+  "sep", // 7
+  "serverfarm", // 32
+  "shadow", // 0
+  "shakudo", // 2
+  "sierraclub", // 2
+  "sila", // 10
+  "sitetracker", // 1
+  "skywarditsolutions", // 5
+  "slate", // 1
+  "smiledigitalhealth", // 1
+  "snaplogic", // 3
+  "sonatype", // 2
+  "spear-ai", // 10
+  "spotify", // 14
+  "spreedly", // 3
+  "stackhawk", // 1
+  "standtogether", // 13
+  "strongcompute", // 0
+  "superannotate", // 0
+  "synergyecp", // 43
+  "synthego", // 1
+  "sysdig", // 7
+  "system1", // 4
+  "tala", // 2
+  "tecton", // 0
+  "tevora", // 18
+  "thinkahead", // 41
+  "thunkable", // 1
+  "tinybird", // 0
+  "tonic", // 1
+  "topazlabs", // 4
+  "toptal", // 2
+  "tractian", // 0
+  "transcarent", // 0
+  "treering", // 1
+  "trellis", // 1
+  "trueml", // 2
+  "unify", // 9
+  "uvcyber", // 9
+  "veeva", // 141
+  "verdigris", // 2
+  "versapay", // 9
+  "verygoodsecurity", // 12
+  "vida", // 7
+  "viget", // 5
+  "voltai", // 1
+  "voltus", // 5
+  "waabi", // 32
+  "wealthfront", // 10
+  "weloglobal", // 11
+  "workwave", // 1
+  "woven-by-toyota", // 19
+  "wpromote", // 6
+  "xepelin", // 0
+  "xsolla", // 15
+  "zaimler", // 6
+  "zerotier", // 0
+  "zeta", // 1
+  "zilliz", // 5
+  "zimperium", // 4
+  "zoox", // 154
+  "zopa", // 0
 ];
 
 export default companies;

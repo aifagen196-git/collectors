@@ -1,2516 +1,2602 @@
-// collectors/config/smartrecruitersCompanies.js
+// config/smartrecruitersCompanies.js
 //
-// Canonical list of SmartRecruiters company slugs.
-// NOTE: low yield — only ~1 in 15 has any live postings.
-// Generated from verify/smartrecruiters.json (boards confirmed reachable).
+// smartrecruiters board slugs (https://jobs.smartrecruiters.com/{slug}), checked by collectors/verifyBoards.js
+// on 2026-11-10. The number is the board's count of US IT jobs then.
+// SmartRecruiters answers any slug, so a slug with no US posting can't be told from a typo.
 //
-// 2504 companies.
+// 2590 boards.
 
 const companies = [
-  "1password",
-  "a10networks",
-  "abacus",
-  "abbyy",
-  "ably",
-  "ablycloud",
-  "ablyio",
-  "abnormal",
-  "abnormalsecurity",
-  "acceldata",
-  "acceledata",
-  "accelq",
-  "accenture",
-  "accolade",
-  "accruent",
-  "acornlabs",
-  "acorns",
-  "acoustic",
-  "acquia",
-  "acquiacloud",
-  "actblue",
-  "actian",
-  "actiancloud",
-  "actifio",
-  "actimize",
-  "actyx",
-  "actzero",
-  "acuant",
-  "acuitymd",
-  "ada",
-  "adahealth",
-  "adaptive",
-  "adaptivecards",
-  "addeco",
-  "addepar",
-  "addeparhq",
-  "addevent",
-  "adlumin",
-  "adluminhq",
-  "adlumininc",
-  "adluminsecurity",
-  "adyen",
-  "aembit",
-  "aembitsecurity",
-  "aerospike",
-  "aerospikehq",
-  "affinipay",
-  "affirm",
-  "afresh",
-  "aftership",
-  "agenta",
-  "agentops",
-  "agiloft",
-  "agiloftinc",
-  "agora",
-  "airbridge",
-  "airbyte",
-  "aircall",
-  "aircloak",
-  "airfocus",
-  "airkit",
-  "airmeet",
-  "airplane",
-  "airship",
-  "airtable",
-  "airtablehq",
-  "airtame",
-  "airwallex",
-  "aisera",
-  "aiven",
-  "akamai",
-  "akana",
-  "akasa",
-  "akeneo",
-  "akeneoio",
-  "akiflow",
-  "akka",
-  "akkio",
-  "akompli",
-  "akool",
-  "alation",
-  "alertlogic",
-  "alertmedia",
-  "algolia",
-  "algosec",
-  "alkami",
-  "alkira",
-  "alloy",
-  "alloyautomation",
-  "allstacks",
-  "alluxio",
-  "alluxiocloud",
-  "almanac",
-  "alpaca",
-  "alpacaai",
-  "alpine",
-  "altair",
-  "altana",
-  "alteryx",
-  "altinity",
-  "altinitycloud",
-  "altostra",
-  "altruist",
-  "amarin",
-  "amarintech",
-  "amaris",
-  "amarok",
-  "amity",
-  "amount",
-  "amperity",
-  "amplitude",
-  "ampt",
-  "amwell",
-  "anaconda",
-  "anaplan",
-  "anchor",
-  "anchorage",
-  "anchore",
-  "anduril",
-  "anjuna",
-  "anomali",
-  "anomalo",
-  "ansys",
-  "anthropic",
-  "anyrun",
-  "anyscale",
-  "anysphere",
-  "apexai",
-  "apica",
-  "apollo",
-  "apollograph",
-  "apolloio",
-  "appcircle",
-  "appcues",
-  "appdirect",
-  "appdynamics",
-  "appfire",
-  "appflowy",
-  "appian",
-  "appiancloud",
-  "appsmith",
-  "appsmithhq",
-  "apptio",
-  "appwrite",
-  "appwritecloud",
-  "aptible",
-  "aptoslabs",
-  "aquant",
-  "aquasec",
-  "aquasecurity",
-  "arangocloud",
-  "arangodb",
-  "arc",
-  "arcadia",
-  "arcjet",
-  "arcticwolf",
-  "ardent",
-  "argoproj",
-  "arista",
-  "arize",
-  "armis",
-  "armissecurity",
-  "armorblox",
-  "armorcode",
-  "armory",
-  "armosec",
-  "arrcus",
-  "arrikto",
-  "articulate",
-  "artifact",
-  "artifactai",
-  "artifacthub",
-  "asana",
-  "asanahq",
-  "ascend",
-  "astradb",
-  "astranis",
-  "astranis-space",
-  "astrill",
-  "astronomer",
-  "astronomerhq",
-  "astronomerio",
-  "ataccama",
-  "atera",
-  "athenahealth",
-  "atlan",
-  "atlancloud",
-  "atlanhq",
-  "atomic",
-  "atomist",
-  "atomwise",
-  "attackiq",
-  "attentive",
-  "auditboard",
-  "augmedix",
-  "augment",
-  "augmentcode",
-  "augury",
-  "aurorainnovation",
-  "auth0",
-  "authentik",
-  "authgear",
-  "authzed",
-  "authzedhq",
-  "autify",
-  "autoblocks",
-  "autodesk",
-  "autodeskforge",
-  "autogen",
-  "automox",
-  "autonolas",
-  "ava",
-  "avaamo",
-  "avalabs",
-  "avalara",
-  "avalon",
-  "avanan",
-  "avathon",
-  "avetta",
-  "aviatrix",
-  "aviz",
-  "avocadoml",
-  "awslabs",
-  "axelar",
-  "axiom",
-  "axiomhq",
-  "axissecurity",
-  "axon",
-  "axoniq",
-  "axoniqhq",
-  "axonius",
-  "azion",
-  "aziontech",
-  "azul",
-  "backbase",
-  "backblaze",
-  "backstage",
-  "baffle",
-  "bairesdev",
-  "balena",
-  "ballerine",
-  "bamboohr",
-  "banked",
-  "barracuda",
-  "base10",
-  "baselayer",
-  "baserow",
-  "basetenai",
-  "basetencloud",
-  "basetenhq",
-  "bastionzero",
-  "beacon",
-  "beam",
-  "beamery",
-  "beehiiv",
-  "beekeeper",
-  "beeks",
-  "belvo",
-  "benchling",
-  "benchsci",
-  "benepass",
-  "bento",
-  "berachain",
-  "betterauth",
-  "bettercloud",
-  "betterment",
-  "betterstack",
-  "betterstackhq",
-  "betterup",
-  "beyondidentity",
-  "bigcommerce",
-  "bigcommercehq",
-  "bigeye",
-  "bigid",
-  "bigidsecurity",
-  "bigpanda",
-  "bill",
-  "bindplane",
-  "bindplanehq",
-  "bitgo",
-  "bitmovin",
-  "bitquery",
-  "bitrise",
-  "bitriseio",
-  "bitsai",
-  "bitwarden",
-  "bitwardenhq",
-  "bitwardeninc",
-  "blackduck",
-  "blackkite",
-  "blackline",
-  "blacksmith",
-  "blameless",
-  "blamelesshq",
-  "blend",
-  "blinkist",
-  "blinkops",
-  "blitzy",
-  "blockdaemon",
-  "bluecore",
-  "blueground",
-  "bluehexagon",
-  "bluesky",
-  "bluevoyant",
-  "bluevoyantinc",
-  "bolt",
-  "boltnew",
-  "boomi",
-  "boostsecurity",
-  "boundary",
-  "boundaryml",
-  "boxboat",
-  "brainboard",
-  "braintrust",
-  "braintrustai",
-  "braintrustdata",
-  "braintrusthq",
-  "branch",
-  "branchio",
-  "braze",
-  "brex",
-  "brexhq",
-  "bridgecrew",
-  "bridgecrewhq",
-  "brightcove",
-  "brightdata",
-  "brightflag",
-  "brightinsight",
-  "brightwheel",
-  "bringg",
-  "broadcom",
-  "broadlume",
-  "browserstack",
-  "browseruse",
-  "bugcrowd",
-  "buildkite",
-  "buildops",
-  "buildopsinc",
-  "buildpulse",
-  "buildship",
-  "bun",
-  "bunnyshell",
-  "bunnyshellhq",
-  "bunq",
-  "bytebase",
-  "bytebasehq",
-  "bytewax",
-  "c3ai",
-  "cadence",
-  "cairo",
-  "calcom",
-  "caldera",
-  "calendly",
-  "calix",
-  "calixa",
-  "calm",
-  "calypsoai",
-  "cambridgemobiletelematics",
-  "camunda",
-  "camunda8",
-  "camundaio",
-  "canva",
-  "captaindata",
-  "captainstack",
-  "captivateiq",
-  "captivateiqhq",
-  "carbonblack",
-  "carbonhealth",
-  "carbonrobotics",
-  "carta",
-  "cartesia",
-  "cascade",
-  "caspio",
-  "castai",
-  "castaihq",
-  "castor",
-  "castorhq",
-  "catchpoint",
-  "catchpointsystems",
-  "celerdata",
-  "celestia",
-  "celonis",
-  "censys",
-  "centrifuge",
-  "cerby",
-  "cerebras",
-  "cerebrium",
-  "certik",
-  "chainalysis",
-  "chainbase",
-  "chainguard",
-  "chainguard-dev",
-  "chainguarddev",
-  "chainlinklabs",
-  "chainlit",
-  "chalk",
-  "chaossearch",
-  "chaossearchhq",
-  "checkhq",
-  "checkly",
-  "checkmarx",
-  "checkr",
-  "chime",
-  "choir",
-  "chroma",
-  "chromadb",
-  "chronicle",
-  "chroniclehq",
-  "chroniclelabs",
-  "chroniclesecurity",
-  "chronosphere",
-  "chronospherehq",
-  "circle",
-  "circleci",
-  "circlecihq",
-  "circleup",
-  "cirruslogic",
-  "clari",
-  "clarifai",
-  "claroty",
-  "clarotyhq",
-  "clay",
-  "clearbit",
-  "clearco",
-  "clearscore",
-  "clearspeed",
-  "clerk",
-  "clerkdev",
-  "clerkhq",
-  "clever",
-  "clickhouse",
-  "clickup",
-  "clio",
-  "cloudbees",
-  "cloudera",
-  "cloudflare",
-  "cloudinary",
-  "cloudnativepg",
-  "cloudquery",
-  "cloudsmith",
-  "cloudsploit",
-  "cloudtruth",
-  "cloudzero",
-  "cloudzerohq",
-  "clover",
-  "clumio",
-  "coast",
-  "cockroachdb",
-  "cockroachlabs",
-  "coda",
-  "code42",
-  "codecov",
-  "codefresh",
-  "codeium",
-  "coder",
-  "codesee",
-  "codiga",
-  "codium",
-  "cofactor",
-  "cohere",
-  "cohereai",
-  "cohesity",
-  "cohesityinc",
-  "cohesive",
-  "collibra",
-  "comet",
-  "cometml",
-  "commaai",
-  "commercetools",
-  "commonapp",
-  "commonroom",
-  "commonroomhq",
-  "compilerworks",
-  "complyadvantage",
-  "composio",
-  "conductorhq",
-  "conductorone",
-  "conductoronehq",
-  "configcat",
-  "confluent",
-  "connectly",
-  "connectwise",
-  "consensys",
-  "contentful",
-  "contentsquare",
-  "contentstack",
-  "continuedev",
-  "contrastsecurity",
-  "contrastsecurityinc",
-  "controlup",
-  "convex",
-  "convexcloud",
-  "convexdev",
-  "conviva",
-  "convoy",
-  "copilotkit",
-  "coralogix",
-  "coralogixcloud",
-  "coralogixhq",
-  "corelight",
-  "coro",
-  "coroot",
-  "cortex",
-  "corvus",
-  "cosmonic",
-  "coursera",
-  "craftdocs",
-  "crewai",
-  "cribl",
-  "criblhq",
-  "criblio",
-  "crowdbotics",
-  "crowdsec",
-  "crowdstrike",
-  "crowdstrikeinc",
-  "crunchydata",
-  "crusoe",
-  "crusoeenergy",
-  "cubist",
-  "cubistpharma",
-  "cyberark",
-  "cybereason",
-  "cyberhaven",
-  "cyberreason",
-  "cycloid",
-  "cycode",
-  "cycodehq",
-  "cyera",
-  "cyeraai",
-  "cyeraio",
-  "cymulate",
-  "cymulatehq",
-  "cyolo",
-  "cyoloio",
-  "dagger",
-  "daggerio",
-  "dagstercloud",
-  "daily",
-  "dailydev",
-  "dailypay",
-  "dandy",
-  "dapr",
-  "dashlane",
-  "databend",
-  "databento",
-  "databricks",
-  "databrickslabs",
-  "datacamp",
-  "datachain",
-  "datadome",
-  "datafold",
-  "datagran",
-  "dataiku",
-  "datapeople",
-  "datarails",
-  "datarobot",
-  "datastax",
-  "datastrato",
-  "datavant",
-  "dbtlabs",
-  "deel",
-  "deepchecks",
-  "deepgram",
-  "deepgramai",
-  "deepgramhq",
-  "deepinfra",
-  "deepjudge",
-  "deepmind",
-  "deepnote",
-  "deeporigin",
-  "deepsecurity",
-  "deepseek",
-  "deepset",
-  "deepstream",
-  "deepwatch",
-  "defectdojo",
-  "degreed",
-  "deliverect",
-  "deltaio",
-  "density",
-  "deputy",
-  "descope",
-  "descopeai",
-  "descopehq",
-  "descript",
-  "detectify",
-  "detectifyhq",
-  "devbox",
-  "devcycle",
-  "devpod",
-  "devrev",
-  "devtron",
-  "devzero",
-  "dfinity",
-  "dgmatrix",
-  "dialpad",
-  "digibee",
-  "digicert",
-  "digitalguardian",
-  "digitaloceanhq",
-  "digitalshadow",
-  "digsecurity",
-  "diligent",
-  "discord",
-  "dispel",
-  "distrokid",
-  "dnsfilter",
-  "docebo",
-  "docker",
-  "dockerdesktop",
-  "docling",
-  "docusign",
-  "doit",
-  "domino",
-  "dominohq",
-  "doppler",
-  "dotproduct",
-  "doubleverify",
-  "doubleverifyhq",
-  "dragonflydb",
-  "dragos",
-  "drata",
-  "dratahq",
-  "dream11",
-  "dreamdata",
-  "dreamfactory",
-  "dremio",
-  "drift",
-  "drivetrain",
-  "drivetrainai",
-  "dropbox",
-  "dryrun",
-  "dstack",
-  "duckdb",
-  "dune",
-  "duolingo",
-  "duplocloud",
-  "dust",
-  "dynaboard",
-  "dynatrace",
-  "e2b",
-  "earthly",
-  "eclypsium",
-  "ecosia",
-  "ecovadis",
-  "ecwid",
-  "edgeimpulse",
-  "edgeuno",
-  "edgio",
-  "egain",
-  "egnyte",
-  "eightfold",
-  "eikon",
-  "eikontech",
-  "elastic",
-  "elasticcloud",
-  "elasticpath",
-  "elasticrun",
-  "elementary",
-  "elementarydata",
-  "elementl",
-  "elementor",
-  "elevate",
-  "elevenlabs",
-  "embarktrucks",
-  "embed",
-  "embeddings",
-  "embedly",
-  "ember",
-  "embold",
-  "embrace",
-  "embroker",
-  "emburse",
-  "emergent",
-  "emitwise",
-  "enable",
-  "enablecomp",
-  "enablecompass",
-  "encore",
-  "encoredev",
-  "endgame",
-  "endorlabs",
-  "endorlabsai",
-  "endorlabsinc",
-  "endorlabsio",
-  "energyhub",
-  "energyvault",
-  "engflow",
-  "ensemble",
-  "entelo",
-  "enterprisedb",
-  "env0",
-  "envoy",
-  "envoyglobal",
-  "epicgames",
-  "epicgameshq",
-  "epicor",
-  "epirus",
-  "eppo",
-  "epsagon",
-  "epsilon",
-  "epsilon3",
-  "equalexperts",
-  "equalexpertsgroup",
-  "equalexpertsinc",
-  "equilibrium",
-  "equinix",
-  "esentire",
-  "esentireinc",
-  "espresa",
-  "espressif",
-  "esri",
-  "estuary",
-  "ethos",
-  "ethoslife",
-  "eucalyptus",
-  "everactive",
-  "everbridge",
-  "everlaw",
-  "everlawhq",
-  "everquote",
-  "evidation",
-  "evidentlyai",
-  "evisort",
-  "evisorthq",
-  "evolutioniq",
-  "exabeam",
-  "exafunction",
-  "exiger",
-  "exotrail",
-  "expelhq",
-  "expelinc",
-  "expelio",
-  "expensify",
-  "explo",
-  "exploai",
-  "explorium",
-  "extend",
-  "extrahop",
-  "ezcater",
-  "fabric",
-  "fabrichealth",
-  "fabricinc",
-  "fairwinds",
-  "fairwindsops",
-  "fal",
-  "falai",
-  "falconx",
-  "falconxhq",
-  "falcosecurity",
-  "faraday",
-  "farfetch",
-  "farmwise",
-  "farmwisehq",
-  "farohealth",
-  "farosai",
-  "fastembed",
-  "fastly",
-  "fathom",
-  "fauna",
-  "feathery",
-  "featheryhq",
-  "featurebase",
-  "fender",
-  "feroot",
-  "fiberplane",
-  "fiddler",
-  "fieldglass",
-  "fieldwire",
-  "figma",
-  "filestack",
-  "finbourne",
-  "finbournehq",
-  "finch",
-  "fingerprint",
-  "finix",
-  "fireblocks",
-  "firebolt",
-  "fireboltdata",
-  "firecrawl",
-  "fireflies",
-  "firefly",
-  "fireflyai",
-  "firehydrant",
-  "firezone",
-  "firstbase",
-  "firstup",
-  "fishtownanalytics",
-  "fivetran",
-  "flagger",
-  "flaggerapp",
-  "flagright",
-  "flagship",
-  "flashbots",
-  "flatfile",
-  "fleek",
-  "fleet",
-  "fleetdm",
-  "fleetio",
-  "flexe",
-  "flexport",
-  "flipdish",
-  "flipp",
-  "flock",
-  "floqast",
-  "flowai",
-  "flowdesk",
-  "flowhub",
-  "flowise",
-  "flowiseai",
-  "flowsecurity",
-  "fluidtruck",
-  "flyio",
-  "flyte",
-  "flywire",
-  "foliahealth",
-  "fonoster",
-  "fontawesome",
-  "fontawesomehq",
-  "forcepoint",
-  "forethought",
-  "forge",
-  "form3",
-  "formance",
-  "formancehq",
-  "formlabs",
-  "formstack",
-  "forwardhealth",
-  "forwardnetworks",
-  "fossa",
-  "found",
-  "foundry",
-  "foxit",
-  "freed",
-  "freenome",
-  "freenow",
-  "freestar",
-  "freightwaves",
-  "freshworks",
-  "front",
-  "frontapp",
-  "frontegg",
-  "frontendhealth",
-  "fullenrich",
-  "fullstory",
-  "fullstoryhq",
-  "fundguard",
-  "fusionauth",
-  "gainsight",
-  "galaxy",
-  "galileo",
-  "galileofinancial",
-  "gamechanger",
-  "gardenio",
-  "garrison",
-  "gather",
-  "geckoboard",
-  "gem",
-  "gemsecurity",
-  "genea",
-  "genesis",
-  "genies",
-  "getaround",
-  "getdbt",
-  "getyourguide",
-  "ghost",
-  "ghostery",
-  "giskard",
-  "gitguardian",
-  "gitlab",
-  "gitness",
-  "gladia",
-  "gladly",
-  "glassbox",
-  "glasswall",
-  "glean",
-  "gleanai",
-  "glia",
-  "gliaai",
-  "gliacloud",
-  "gliahealth",
-  "glific",
-  "glint",
-  "globe",
-  "glossier",
-  "glovo",
-  "go1",
-  "goatcounter",
-  "goauthentik",
-  "gobright",
-  "gocardless",
-  "gocomet",
-  "godaddy",
-  "goldbelly",
-  "gong",
-  "gongio",
-  "goodfire",
-  "goodleap",
-  "goodrx",
-  "goodtime",
-  "goose",
-  "gopuff",
-  "gorillas",
-  "gradient",
-  "grafana",
-  "grafbase",
-  "grammarly",
-  "graphapp",
-  "graphcdn",
-  "graphcore",
-  "graphite",
-  "graphitehq",
-  "graphql",
-  "graphsignal",
-  "gravity",
-  "greatexpectations",
-  "greenlight",
-  "greenlightfinancial",
-  "gremlin",
-  "greptile",
-  "greynoise",
-  "greynoisehq",
-  "gridgain",
-  "gridspace",
-  "griptape",
-  "grofers",
-  "grofershq",
-  "grofersindia",
-  "groq",
-  "groundcover",
-  "growthbook",
-  "growthloop",
-  "guac",
-  "guardianai",
-  "guardianlife",
-  "guardrailsai",
-  "guidewire",
-  "guildeducation",
-  "gusto",
-  "h2o",
-  "h2oai",
-  "hackerone",
-  "hackerrank",
-  "hackthebox",
-  "haiku",
-  "hakimo",
-  "halcyon",
-  "hallow",
-  "halo",
-  "hamilton",
-  "handshake",
-  "handshakehq",
-  "happiestminds",
-  "happyfox",
-  "happyrobot",
-  "harbor",
-  "hardfin",
-  "harness",
-  "harnessinc",
-  "harnessio",
-  "harvest",
-  "hashicorp",
-  "hashnode",
-  "hashnodehq",
-  "haystack",
-  "hazelcast",
-  "hazelhealth",
-  "hclsoftware",
-  "headlamp",
-  "headway",
-  "healthcatalyst",
-  "healthgorilla",
-  "healthie",
-  "heap",
-  "heartflow",
-  "hedra",
-  "hedvig",
-  "heimdal",
-  "helios",
-  "helium",
-  "helixml",
-  "helloalice",
-  "helloheart",
-  "hellosign",
-  "helm",
-  "helpjuice",
-  "hermeus",
-  "heroku",
-  "heron",
-  "hex",
-  "hexagon",
-  "hexops",
-  "hextech",
-  "hextechai",
-  "hiddenlayer",
-  "higharc",
-  "highbyte",
-  "highlevel",
-  "highradius",
-  "highspot",
-  "highspothq",
-  "hightouch",
-  "hightouchdata",
-  "hightouchhq",
-  "hirevue",
-  "hive",
-  "hiveai",
-  "hivebrite",
-  "hivebritehq",
-  "hiver",
-  "homebase",
-  "honeybook",
-  "honeycomb",
-  "honeycombio",
-  "honeyhive",
-  "hoodi",
-  "hopin",
-  "hopper",
-  "hopscotch",
-  "hopskipdrive",
-  "horizen",
-  "horizon3",
-  "hostaway",
-  "hostawayhq",
-  "hostinger",
-  "hotglue",
-  "hotjar",
-  "hotmart",
-  "housecallpro",
-  "housecanary",
-  "houseware",
-  "hover",
-  "hoverfly",
-  "hubilo",
-  "huggingface",
-  "humanfirst",
-  "humaninterest",
-  "humanitec",
-  "humanloop",
-  "humanloopai",
-  "humansecurity",
-  "humata",
-  "huntress",
-  "huntresslabs",
-  "hydrolix",
-  "hyland",
-  "hyper",
-  "hyperexponential",
-  "hypergiant",
-  "hypermode",
-  "hyperproof",
-  "hyperproofhq",
-  "hyperscience",
-  "hyperswitch",
-  "hypr",
-  "i3verticals",
-  "ibm",
-  "ibmcloud",
-  "iboss",
-  "ibotta",
-  "iceberg",
-  "iceye",
-  "icon",
-  "icons8",
-  "idio",
-  "ifood",
-  "ignite",
-  "illumio",
-  "illumiohq",
-  "imagekit",
-  "immersive",
-  "immuta",
-  "impact",
-  "impactanalytics",
-  "impactanalyticshq",
-  "impactdotcom",
-  "impartsecurity",
-  "imply",
-  "implydata",
-  "impossiblecloud",
-  "imprint",
-  "imprivata",
-  "improbable",
-  "incidentio",
-  "incidentiq",
-  "incode",
-  "incodehq",
-  "incorta",
-  "indee",
-  "indico",
-  "indigoag",
-  "inductiveautomation",
-  "inferless",
-  "infinera",
-  "infinitecampus",
-  "infinitus",
-  "infinyon",
-  "infinyonhq",
-  "infisical",
-  "influxdata",
-  "influxdatahq",
-  "infoblox",
-  "infogrid",
-  "inkeep",
-  "inkitt",
-  "inmobi",
-  "inngest",
-  "innovaccer",
-  "innovium",
-  "inrupt",
-  "inscribe",
-  "insightsoftware",
-  "insighttimer",
-  "insighttimerhq",
-  "insitro",
-  "inspectiv",
-  "inspektor",
-  "instabase",
-  "instabaseai",
-  "instabug",
-  "instacart",
-  "instana",
-  "instawork",
-  "instill",
-  "integralads",
-  "integrate",
-  "integratehq",
-  "integry",
-  "intellicheck",
-  "interactions",
-  "interactionsai",
-  "intercom",
-  "intercomhq",
-  "interfolio",
-  "interos",
-  "interplaylearning",
-  "intersystems",
-  "interwell",
-  "intuit",
-  "inventa",
-  "invoca",
-  "inworld",
-  "iofinet",
-  "iohk",
-  "ionic",
-  "ionq",
-  "ironclad",
-  "ironfish",
-  "ironnet",
-  "isara",
-  "isaralabs",
-  "isovalent",
-  "isovalenthq",
-  "iterable",
-  "iterative",
-  "iteris",
-  "ixlayer",
-  "jackhenry",
-  "jackpocket",
-  "jam",
-  "jamf",
-  "janai",
-  "jasper",
-  "jasperai",
-  "jellyfish",
-  "jetbrains",
-  "jetstack",
-  "jfrog",
-  "jfroghq",
-  "jinja",
-  "jobber",
-  "jobyaviation",
-  "join",
-  "joinarc",
-  "journeyapps",
-  "julep",
-  "jumio",
-  "jump",
-  "jumpcloud",
-  "juniper",
-  "jupiter",
-  "jupiterone",
-  "justeat",
-  "justpoint",
-  "justworks",
-  "k2view",
-  "kafkaesque",
-  "kaltura",
-  "kandji",
-  "kapa",
-  "kapwing",
-  "karat",
-  "karbon",
-  "karius",
-  "kasm",
-  "katonic",
-  "keep",
-  "keepersecurity",
-  "keepit",
-  "keeptruckin",
-  "kepler",
-  "keploy",
-  "kestra",
-  "kestrahq",
-  "ketch",
-  "kevel",
-  "kevelhq",
-  "keyfactor",
-  "keygen",
-  "keyme",
-  "khealth",
-  "kindred",
-  "klarna",
-  "klasha",
-  "klaviyo",
-  "klue",
-  "knapsack",
-  "knime",
-  "knock",
-  "koala",
-  "komodor",
-  "komodorhq",
-  "komodorinc",
-  "kong",
-  "konghq",
-  "konveyor",
-  "kraken",
-  "kubecost",
-  "kubegrade",
-  "kubiya",
-  "kumo",
-  "kustomer",
-  "labelbox",
-  "labelboxhq",
-  "lacework",
-  "lakefs",
-  "lakefsio",
-  "lamatic",
-  "laminar",
-  "lamini",
-  "landbot",
-  "landingai",
-  "langbase",
-  "langchain",
-  "langdock",
-  "langflow",
-  "langfuse",
-  "langgenius",
-  "langgraph",
-  "langroid",
-  "langsmith",
-  "langwatch",
-  "lantern",
-  "last9",
-  "latacora",
-  "lattice",
-  "launchable",
-  "launchdarkly",
-  "launchdarklyhq",
-  "launchflow",
-  "launchhouse",
-  "launchmetrics",
-  "launchpot",
-  "layer5",
-  "layerzero",
-  "lazygit",
-  "leaflink",
-  "leanix",
-  "leapsome",
-  "ledger",
-  "ledgerlive",
-  "leena",
-  "leenaai",
-  "legendary",
-  "lemon",
-  "lemonade",
-  "lemonedge",
-  "lemonio",
-  "lendbuzz",
-  "levity",
-  "lexcheck",
-  "lifebit",
-  "liftoff",
-  "liftoffmobile",
-  "lightbend",
-  "lightcast",
-  "lightdash",
-  "lightlytics",
-  "lightmatter",
-  "lightningai",
-  "lightspin",
-  "lightstep",
-  "lightup",
-  "linear",
-  "linearb",
-  "linkerd",
-  "linkurious",
-  "liongard",
-  "liquibase",
-  "litera",
-  "litify",
-  "litmus",
-  "litprotocol",
-  "liveblocks",
-  "livekit",
-  "livepeer",
-  "liveperson",
-  "llamaindex",
-  "loadsmart",
-  "localstack",
-  "logdna",
-  "logicgate",
-  "logicmonitor",
-  "logrocket",
-  "logzio",
-  "lokalise",
-  "looker",
-  "lookerdata",
-  "lookout",
-  "loom",
-  "loomhq",
-  "lottie",
-  "lottiefiles",
-  "lucid",
-  "lucidworks",
-  "luma",
-  "lunar",
-  "lunarcrush",
-  "lunarenergy",
-  "lunasec",
-  "lyft",
-  "lyrahealth",
-  "lyzr",
-  "m3ter",
-  "mabl",
-  "machinify",
-  "madkudu",
-  "madrona",
-  "magic",
-  "magicbell",
-  "magiceden",
-  "mailgun",
-  "mailmodo",
-  "maintainx",
-  "makerbot",
-  "mambu",
-  "mammoth",
-  "manifest",
-  "manifestai",
-  "mantl",
-  "mapbox",
-  "mapboxhq",
-  "mapboxinc",
-  "mark43",
-  "marqo",
-  "materialbank",
-  "materialize",
-  "matillion",
-  "matrixport",
-  "matterlabs",
-  "mattermost",
-  "mattermosthq",
-  "matterport",
-  "maven",
-  "mavenclinic",
-  "mavenoid",
-  "maverick",
-  "maymobility",
-  "meadow",
-  "medallia",
-  "medalliahq",
-  "medcrypt",
-  "medely",
-  "medplum",
-  "meero",
-  "meilisearch",
-  "meilisearchcloud",
-  "meilisearchhq",
-  "melio",
-  "meliohq",
-  "meltano",
-  "mem0",
-  "memgraph",
-  "memory",
-  "mend",
-  "mercoa",
-  "mercury",
-  "merge",
-  "mergeapi",
-  "mergify",
-  "meroxa",
-  "meshsecurity",
-  "metabase",
-  "metamap",
-  "metaplane",
-  "metaview",
-  "metoro",
-  "metricstream",
-  "metronome",
-  "mezmo",
-  "mezmohq",
-  "microsoft",
-  "milvus",
-  "mindbody",
-  "mindtickle",
-  "mintlify",
-  "mintlifyhq",
-  "minute",
-  "mirakl",
-  "mirantis",
-  "miro",
-  "mirohq",
-  "missioncloud",
-  "missioncloudservices",
-  "missionlane",
-  "mistplay",
-  "mistralai",
-  "mistsystems",
-  "mixpanel",
-  "mixpanelhq",
-  "ml6",
-  "mlflow",
-  "mobilecoin",
-  "mobius",
-  "modal",
-  "modalhq",
-  "modeanalytics",
-  "moderna",
-  "modernhealth",
-  "modernhealthhq",
-  "modernizingmedicine",
-  "modernloop",
-  "modernloophq",
-  "moduscreate",
-  "moengage",
-  "moesif",
-  "moloco",
-  "monad",
-  "monadlabs",
-  "monday",
-  "mongodb",
-  "monograph",
-  "monographhq",
-  "monoid",
-  "monta",
-  "monzo",
-  "moonpay",
-  "moonrepo",
-  "morph",
-  "morphic",
-  "morty",
-  "mosaic",
-  "motherduck",
-  "motif",
-  "motional",
-  "motive",
-  "mountainprotocol",
-  "movableink",
-  "moveworks",
-  "moveworksai",
-  "mozartdata",
-  "mparticle",
-  "mparticlehq",
-  "multion",
-  "multiverse",
-  "mural",
-  "muralpay",
-  "murf",
-  "mutable",
-  "mux",
-  "muxhq",
-  "myfitnesspal",
-  "mynd",
-  "myrror",
-  "mystenlabs",
-  "n8n",
-  "nacelle",
-  "nacellecommerce",
-  "nango",
-  "nangohq",
-  "nanohealth",
-  "nanonets",
-  "narmi",
-  "narrative",
-  "narrativebi",
-  "narrativeio",
-  "nationalgrid",
-  "navan",
-  "navattic",
-  "nearbay",
-  "nearform",
-  "nectar",
-  "neo4j",
-  "neon",
-  "neontech",
-  "neontechhq",
-  "netapp",
-  "netbird",
-  "netbirdio",
-  "netboxlabs",
-  "netdata",
-  "netfoundry",
-  "netlify",
-  "netlifyhq",
-  "netmaker",
-  "netomi",
-  "netomiai",
-  "netris",
-  "netskope",
-  "neuralmagic",
-  "newfront",
-  "newrelic",
-  "newrelichq",
-  "newsela",
-  "nexa",
-  "nexhealth",
-  "nexla",
-  "nextdoor",
-  "nexthink",
-  "nexthinkcloud",
-  "nexthinkhq",
-  "nextinsurance",
-  "nextmv",
-  "ngrok",
-  "nightfall",
-  "nightfallai",
-  "nimble",
-  "nimblestorage",
-  "ninjaone",
-  "nitric",
-  "nitro",
-  "nocobase",
-  "nocobasehq",
-  "nocodb",
-  "nomad",
-  "nomadhealth",
-  "nomadlist",
-  "nomic",
-  "nominal",
-  "nordsecurity",
-  "nordvpn",
-  "normalcomputing",
-  "normalyze",
-  "northflank",
-  "northflankhq",
-  "northone",
-  "nosto",
-  "notion",
-  "nova",
-  "novita",
-  "novu",
-  "ns1",
-  "nubank",
-  "nuclia",
-  "nuclio",
-  "numaflow",
-  "numeral",
-  "nuna",
-  "nuon",
-  "nuro",
-  "nutanix",
-  "nydig",
-  "nylas",
-  "nylashq",
-  "o11y",
-  "o9solutions",
-  "oak9",
-  "oasys",
-  "observe",
-  "observeinc",
-  "oceanbase",
-  "octane",
-  "octoai",
-  "octolane",
-  "octoml",
-  "octopusenergy",
-  "octorate",
-  "odaseva",
-  "odigos",
-  "odin",
-  "offchainlabs",
-  "okcoin",
-  "okta",
-  "okteto",
-  "ollama",
-  "omada",
-  "omnea",
-  "omni",
-  "omnicell",
-  "omnidian",
-  "omnipresent",
-  "omnirobotics",
-  "omnistrate",
-  "oncallai",
-  "oncallhealth",
-  "onebrief",
-  "onehouse",
-  "oneleet",
-  "oneschema",
-  "onesignal",
-  "onespan",
-  "onfido",
-  "onjuno",
-  "onyx",
-  "opal",
-  "opaldev",
-  "openai",
-  "openbb",
-  "openlayer",
-  "openobserve",
-  "openphone",
-  "openpipe",
-  "openrouter",
-  "opensauced",
-  "opensea",
-  "openx",
-  "openziti",
-  "opik",
-  "opsgenie",
-  "opslevel",
-  "opsmill",
-  "opswat",
-  "optimizely",
-  "optiver",
-  "optoro",
-  "orb",
-  "orbio",
-  "orbital",
-  "orbitalmaterials",
-  "orby",
-  "orca",
-  "orcasecurity",
-  "order",
-  "orderful",
-  "orkes",
-  "orkesio",
-  "orum",
-  "orumio",
-  "ory",
-  "osano",
-  "osmosis",
-  "otter",
-  "otterai",
-  "ottertune",
-  "ouro",
-  "outerbase",
-  "outerbounds",
-  "outreach",
-  "outset",
-  "outshift",
-  "outsystems",
-  "overjet",
-  "ovhcloud",
-  "ownbackup",
-  "owncompany",
-  "oxla",
-  "oxsecurity",
-  "p0security",
-  "pachama",
-  "pachyderm",
-  "packetai",
-  "packetfabric",
-  "paddle",
-  "pager",
-  "pagerduty",
-  "pagerhealth",
-  "pagoda",
-  "pairai",
-  "pairwise",
-  "paloalto",
-  "paloaltonetworks",
-  "pangea",
-  "panopto",
-  "pantheon",
-  "panther",
-  "papaya",
-  "paradigm",
-  "paradime",
-  "parafin",
-  "parallel",
-  "paralleldomain",
-  "parallelwireless",
-  "parity",
-  "paritytech",
-  "parloa",
-  "parloaai",
-  "parseable",
-  "parseableio",
-  "parsec",
-  "patch",
-  "patchstack",
-  "patreon",
-  "paycom",
-  "payfit",
-  "payfithq",
-  "payhawk",
-  "paylocity",
-  "payoneer",
-  "payrails",
-  "payrailsio",
-  "paystand",
-  "paytm",
-  "paytronix",
-  "peakon",
-  "pearai",
-  "pearlhealth",
-  "pearson",
-  "pebble",
-  "peerdb",
-  "peloton",
-  "peopleai",
-  "peoplelogic",
-  "pepperdata",
-  "perceptyx",
-  "percona",
-  "percy",
-  "perfectscale",
-  "perforce",
-  "perkbox",
-  "permit",
-  "permitio",
-  "permitiohq",
-  "persistiq",
-  "persona",
-  "phantom",
-  "phi",
-  "phoenixnap",
-  "photoroom",
-  "phreesia",
-  "phylum",
-  "picnic",
-  "pieces",
-  "pile",
-  "pilot",
-  "pindrop",
-  "pinecone",
-  "pineconeio",
-  "pingcap",
-  "pingidentity",
-  "pinnacle",
-  "pipedream",
-  "pipedrive",
-  "pixee",
-  "pixeltable",
-  "plaid",
-  "plaidapi",
-  "plaidhq",
-  "plandex",
-  "planet",
-  "planetlabs",
-  "planetscale",
-  "planetscalecloud",
-  "planetscalehq",
-  "planhat",
-  "plasmic",
-  "platform9",
-  "playco",
-  "playht",
-  "playhtai",
-  "playvox",
-  "playwright",
-  "plivo",
-  "ploomber",
-  "ploombercloud",
-  "plural",
-  "pluralith",
-  "pluralsight",
-  "pocketfm",
-  "podium",
-  "podman",
-  "polarsignals",
-  "polybase",
-  "polymer",
-  "pomerium",
-  "pond5",
-  "ponder",
-  "ponderai",
-  "popmenu",
-  "port",
-  "portainer",
-  "portainerio",
-  "portkey",
-  "portkeyai",
-  "portworx",
-  "posthog",
-  "posthogcloud",
-  "posthoghq",
-  "postman",
-  "powerfleet",
-  "powerml",
-  "precisionaq",
-  "prefect",
-  "prefecthq",
-  "prelude",
-  "prequel",
-  "preset",
-  "presetdata",
-  "presetio",
-  "presidio",
-  "preswald",
-  "primeintellect",
-  "primer",
-  "primerio",
-  "printful",
-  "printify",
-  "prisma",
-  "privacera",
-  "privacysandbox",
-  "privitar",
-  "privy",
-  "procore",
-  "procurify",
-  "productboard",
-  "productboardhq",
-  "profitwell",
-  "project44",
-  "projectdiscovery",
-  "projectdiscoveryio",
-  "prolific",
-  "propel",
-  "propelauth",
-  "propeldata",
-  "prophecy",
-  "prophero",
-  "prosimo",
-  "prosper",
-  "protecht",
-  "protectai",
-  "protectaihq",
-  "protobuf",
-  "proxyrack",
-  "public",
-  "pubnub",
-  "pulppo",
-  "pulselive",
-  "pulselivehq",
-  "pulumi",
-  "pulumiio",
-  "pulumiiohq",
-  "pureinsights",
-  "purestorage",
-  "purevpn",
-  "qatalog",
-  "qdrant",
-  "qdrantcloud",
-  "qdrantio",
-  "qodo",
-  "quadratic",
-  "qualio",
-  "qualiohq",
-  "qualiti",
-  "qualtrics",
-  "qualys",
-  "quantcast",
-  "quantexa",
-  "quantinuum",
-  "quantive",
-  "quantumblack",
-  "quantumcircuits",
-  "quantummetric",
-  "quarkus",
-  "quickbase",
-  "quicknode",
-  "quickwit",
-  "quickwitio",
-  "quietai",
-  "quizlet",
-  "qumulo",
-  "r3",
-  "rabbitmq",
-  "rackspace",
-  "radar",
-  "railwayapp",
-  "railz",
-  "ramp",
-  "ramphq",
-  "rancher",
-  "rapid7",
-  "rapidapi",
-  "rasa",
-  "raycast",
-  "raycastapp",
-  "raycasthq",
-  "raysearch",
-  "razorops",
-  "razorpay",
-  "reachy",
-  "reasoning",
-  "recharge",
-  "recogni",
-  "recordedfuture",
-  "redash",
-  "redcanary",
-  "redhat",
-  "redis",
-  "redisenterprise",
-  "redislabs",
-  "redislabsinc",
-  "redox",
-  "redoxengine",
-  "redpanda",
-  "redpandaio",
-  "redventures",
-  "refine",
-  "reflex",
-  "regal",
-  "regology",
-  "relay",
-  "relayapp",
-  "relayfinancial",
-  "reliabilityfirst",
-  "remote",
-  "remotecom",
-  "render",
-  "rendercloud",
-  "renderedai",
-  "renderhq",
-  "replicate",
-  "replicateai",
-  "replit",
-  "replo",
-  "rescale",
-  "resend",
-  "resendhq",
-  "resilience",
-  "retool",
-  "retoolhq",
-  "revenuecat",
-  "revenuecathq",
-  "revinate",
-  "revolut",
-  "rewind",
-  "rhinofi",
-  "ridecell",
-  "rilldata",
-  "ringcentral",
-  "rippling",
-  "riskified",
-  "river",
-  "rivet",
-  "roadie",
-  "roboflow",
-  "rocketchat",
-  "rocketlane",
-  "rocketpool",
-  "rocketsoftware",
-  "rockset",
-  "rokt",
-  "rollbar",
-  "rook",
-  "rookout",
-  "rootinsurance",
-  "rootly",
-  "rootlyhq",
-  "rootlyinc",
-  "rubicon",
-  "rubiconmd",
-  "rubrik",
-  "rudderstack",
-  "rudderstackhq",
-  "runpod",
-  "runway",
-  "runwayhq",
-  "runwayml",
-  "runwhen",
-  "safebase",
-  "safebasehq",
-  "safebaseinc",
-  "safebreach",
-  "safetyculture",
-  "safetywing",
-  "safetywinghq",
-  "saildrone",
-  "sailpoint",
-  "sailpointhq",
-  "saleshood",
-  "salesloft",
-  "samsara",
-  "samsarahq",
-  "sana",
-  "sanas",
-  "sandboxaq",
-  "sanity",
-  "sanityhq",
-  "sanityio",
-  "saviynt",
-  "scaleai",
-  "scalegrid",
-  "scaleway",
-  "scandit",
-  "scanditai",
-  "scarf",
-  "scarfio",
-  "scylla",
-  "scylladb",
-  "seam",
-  "seatgeek",
-  "secureauth",
-  "secureframe",
-  "secureworks",
-  "securitycompass",
-  "securityscorecard",
-  "seek",
-  "seekout",
-  "seekwell",
-  "seekwellhq",
-  "segment",
-  "segmentio",
-  "segmentstream",
-  "seismic",
-  "selfbook",
-  "semgrep",
-  "semgrepdev",
-  "semgrepinc",
-  "semperis",
-  "sendbird",
-  "sendgrid",
-  "sendoso",
-  "sense",
-  "sensehq",
-  "sentinelone",
-  "sentry",
-  "seon",
-  "sequel",
-  "sequence",
-  "serverless",
-  "serverpod",
-  "servicenow",
-  "servicetitan",
-  "shadow",
-  "shadowserver",
-  "shakudo",
-  "sharechat",
-  "sharegate",
-  "sharethrough",
-  "shipbob",
-  "shipengine",
-  "shippo",
-  "shipwell",
-  "shipyard",
-  "shipyardhq",
-  "shopify",
-  "shoreline",
-  "shortcut",
-  "shortwave",
-  "siglens",
-  "sigmacomputing",
-  "sigmacomputinghq",
-  "signadot",
-  "signalfx",
-  "signifyd",
-  "simplepractice",
-  "simspace",
-  "simstudio",
-  "singlebasecloud",
-  "singleops",
-  "singlestore",
-  "sitetracker",
-  "sketch",
-  "skiff",
-  "skilljar",
-  "skims",
-  "skydio",
-  "skyflow",
-  "skyhighsecurity",
-  "skyscanner",
-  "skyvern",
-  "skyvernai",
-  "slab",
-  "slalom",
-  "slingshot",
-  "sliplane",
-  "smallstep",
-  "smartasset",
-  "smartbear",
-  "smartcar",
-  "smartling",
-  "smartnews",
-  "smartsheet",
-  "snapdocs",
-  "snaplogic",
-  "snic",
-  "snorkel",
-  "snorkelai",
-  "snowflake",
-  "snowplow",
-  "socket",
-  "socketdev",
-  "socotra",
-  "socure",
-  "solace",
-  "solaredge",
-  "solarwinds",
-  "solarwindscloud",
-  "solidroad",
-  "solo",
-  "soloio",
-  "sonar",
-  "sonarqube",
-  "sonatype",
-  "sonder",
-  "sonrai",
-  "sourceclear",
-  "sourcegraph",
-  "sourcegraphhq",
-  "sourcehut",
-  "spacelift",
-  "spaceliftdev",
-  "spaceliftio",
-  "sparkbeyond",
-  "sparkpost",
-  "speakeasy",
-  "speedscale",
-  "spekit",
-  "splashtop",
-  "split",
-  "splitio",
-  "spotai",
-  "spotdraft",
-  "spoton",
-  "sprig",
-  "springhealth",
-  "springworks",
-  "sprinklr",
-  "spycloud",
-  "stackadapt",
-  "stackauth",
-  "stackblitz",
-  "stackblitzhq",
-  "stackgen",
-  "stackhawk",
-  "stacklok",
-  "stackone",
-  "stackrox",
-  "stackstate",
-  "starburst",
-  "starburstdata",
-  "starbursthq",
-  "starlingbank",
-  "starrocks",
-  "starrocksio",
-  "starry",
-  "steampipe",
-  "steamship",
-  "stellar",
-  "stellarcyber",
-  "stellarhealth",
-  "stitchfix",
-  "stormforge",
-  "stormforgehq",
-  "stormreply",
-  "stormreplyhq",
-  "strapi",
-  "stream",
-  "streamdal",
-  "streamlit",
-  "streamnative",
-  "stripe",
-  "stripeclimate",
-  "strongcompute",
-  "strongdm",
-  "strongdmhq",
-  "submittable",
-  "substrate",
-  "substrateai",
-  "sumo",
-  "sumoheavy",
-  "sumologic",
-  "supabase",
-  "superannotate",
-  "superblocks",
-  "superblocksai",
-  "superhuman",
-  "superlinked",
-  "supermemory",
-  "supertokens",
-  "supertokenshq",
-  "surrealdb",
-  "surrealdbcloud",
-  "surrealdbhq",
-  "surveymonkey",
-  "svix",
-  "swimlane",
-  "swimm",
-  "swimmio",
-  "symphonyai",
-  "synack",
-  "synthesia",
-  "sysdig",
-  "sysdighq",
-  "sysdigsecure",
-  "tabbyml",
-  "tabnine",
-  "tackle",
-  "tailcall",
-  "tailorbrands",
-  "tailscale",
-  "tailwarden",
-  "talkdesk",
-  "talon",
-  "talonsecurity",
-  "tanium",
-  "tanstack",
-  "taskingai",
-  "teamviewer",
-  "teamwork",
-  "techsee",
-  "tecton",
-  "teleport",
-  "teleporthq",
-  "tembo",
-  "temporal",
-  "temporalio",
-  "tensorwave",
-  "tensorzero",
-  "terra",
-  "terraformcloud",
-  "terraformlabs",
-  "terramate",
-  "terrateam",
-  "teslamotors",
-  "testcontainers",
-  "testifysec",
-  "testim",
-  "testlio",
-  "testrail",
-  "texada",
-  "textkernel",
-  "thegraph",
-  "thegraphprotocol",
-  "thena",
-  "thetradeDesk",
-  "thoropass",
-  "thoughtmachine",
-  "thoughtspot",
-  "thoughtspothq",
-  "thoughttrace",
-  "thousandeyes",
-  "thousandeyeshq",
-  "threatlocker",
-  "threeds",
-  "tidal",
-  "tigera",
-  "tigergraph",
-  "tigrisdata",
-  "timescale",
-  "timescalehq",
-  "tines",
-  "tinybird",
-  "tinybirdhq",
-  "tipalti",
-  "toast",
-  "together",
-  "togetherai",
-  "tokern",
-  "tomorrowio",
-  "tomtom",
-  "tonic",
-  "tooljet",
-  "topazlabs",
-  "torc",
-  "torq",
-  "torqhq",
-  "torqio",
-  "trace3",
-  "traceable",
-  "traceableai",
-  "traceablehq",
-  "tractian",
-  "transcarent",
-  "transcend",
-  "transformco",
-  "transposit",
-  "treasuredata",
-  "treasuredatahq",
-  "treeverse",
-  "trellis",
-  "trellix",
-  "trendmicro",
-  "trendmicrohq",
-  "trendminer",
-  "tribe",
-  "tribeai",
-  "trilogy",
-  "trinsic",
-  "tripactions",
-  "triplelift",
-  "triton",
-  "troj",
-  "trueaccord",
-  "truecaller",
-  "truefoundry",
-  "truefoundryhq",
-  "truenorth",
-  "truera",
-  "trueraai",
-  "trustcloud",
-  "trustero",
-  "trustifi",
-  "trustpilot",
-  "truveta",
-  "tuist",
-  "tunecore",
-  "turbonomic",
-  "turbopuffer",
-  "turborepo",
-  "turing",
-  "turso",
-  "tursohq",
-  "twelvelabs",
-  "twilio",
-  "twiliosegment",
-  "typedream",
-  "typeface",
-  "typst",
-  "ubicloud",
-  "udacity",
-  "udemy",
-  "udemybusiness",
-  "unbabel",
-  "unify",
-  "unifyapps",
-  "uniphore",
-  "uniphoreai",
-  "unit21",
-  "unlearn",
-  "unleash",
-  "unqork",
-  "unqorkhq",
-  "unstructured",
-  "upbound",
-  "upboundhq",
-  "uplight",
-  "upsolver",
-  "upstart",
-  "upstash",
-  "usebraintrust",
-  "useinsider",
-  "usergems",
-  "usertesting",
-  "v7labs",
-  "valimail",
-  "valkey",
-  "valon",
-  "vanta",
-  "vantage",
-  "vastdata",
-  "vaultspeed",
-  "vectara",
-  "vector",
-  "vectorized",
-  "vectorizedio",
-  "vectra",
-  "veeam",
-  "veeva",
-  "veho",
-  "vela",
-  "veladb",
-  "velero",
-  "vendia",
-  "vendr",
-  "vercel",
-  "vercelai",
-  "verdigris",
-  "veritone",
-  "verkada",
-  "verkadahq",
-  "verta",
-  "veson",
-  "vespa",
-  "vespaai",
-  "via",
-  "victoriametrics",
-  "victoriametricshq",
-  "viget",
-  "virta",
-  "virtahealth",
-  "virtana",
-  "virtru",
-  "virtuoso",
-  "visionaryai",
-  "vistar",
-  "visuallayer",
-  "vitess",
-  "vizai",
-  "vmray",
-  "vmware",
-  "voltrondata",
-  "voltus",
-  "vonage",
-  "vonageapi",
-  "vouch",
-  "vouched",
-  "voyageai",
-  "voyager",
-  "vulcan",
-  "vulcanforms",
-  "vulcanformsinc",
-  "vultr",
-  "vultrcloud",
-  "vultrcloudhq",
-  "wandb",
-  "wandbai",
-  "wandera",
-  "warp",
-  "weave",
-  "weaviate",
-  "weaviateio",
-  "webdataset",
-  "webflow",
-  "webiny",
-  "wefox",
-  "weightsandbiases",
-  "weightsbiases",
-  "wepay",
-  "werf",
-  "wework",
-  "whatnot",
-  "whimsical",
-  "windfall",
-  "windmill",
-  "windriver",
-  "winglang",
-  "wiremock",
-  "wise",
-  "wispr",
-  "wistia",
-  "wiz",
-  "workadventure",
-  "workato",
-  "workatohq",
-  "workboard",
-  "workhuman",
-  "workiva",
-  "workos",
-  "workoshq",
-  "workspaceone",
-  "writer",
-  "writerai",
-  "xage",
-  "xano",
-  "xata",
-  "xatahq",
-  "xelix",
-  "xendit",
-  "xepelin",
-  "xero",
-  "xnor",
-  "xnorai",
-  "xometry",
-  "yalo",
-  "yellowai",
-  "yext",
-  "yotpo",
-  "youcom",
-  "yougov",
-  "yscope",
-  "yugabyte",
-  "yugabytedb",
-  "yugabytedbhq",
-  "zapier",
-  "zendesk",
-  "zenefits",
-  "zenjob",
-  "zenledger",
-  "zenml",
-  "zenmlhq",
-  "zenoti",
-  "zeotap",
-  "zephr",
-  "zeplin",
-  "zerotier",
-  "zerotierhq",
-  "zeta",
-  "zettaset",
-  "zilliz",
-  "zillow",
-  "zimperium",
-  "zimperiumhq",
-  "zincsearch",
-  "zip",
-  "ziphq",
-  "ziphqinc",
-  "zipline",
-  "ziprecruiter",
-  "zluri",
-  "zlurihq",
-  "zocdoc",
-  "zoekt",
-  "zonos",
-  "zoominfo",
-  "zoovu",
-  "zoox",
-  "zopa",
-  "zora",
-  "zoraai",
-  "zotero",
-  "zscaler",
-  "zscalercloud",
-  "zuddl",
-  "zuora",
-  "zuplo",
-  "zwift",
-  "zyte",
+  "1password", // 0
+  "a10networks", // 0
+  "abacus", // 0
+  "abbvie", // 15
+  "abbyy", // 0
+  "ably", // 0
+  "ablycloud", // 0
+  "ablyio", // 0
+  "abnormal", // 0
+  "abnormalsecurity", // 0
+  "abramsonlaborgroup", // 58
+  "acceldata", // 0
+  "acceledata", // 0
+  "accelq", // 0
+  "accenture", // 0
+  "accenturefederalservices", // 20
+  "accolade", // 0
+  "accruent", // 0
+  "acornlabs", // 0
+  "acorns", // 0
+  "acoustic", // 0
+  "acquia", // 0
+  "acquiacloud", // 0
+  "actblue", // 0
+  "actian", // 0
+  "actiancloud", // 0
+  "actifio", // 0
+  "actimize", // 0
+  "actyx", // 0
+  "actzero", // 0
+  "acuant", // 0
+  "acuitymd", // 0
+  "acumatica", // 3
+  "ada", // 0
+  "adahealth", // 0
+  "adaptive", // 0
+  "adaptivecards", // 0
+  "addeco", // 0
+  "addepar", // 0
+  "addeparhq", // 0
+  "addevent", // 0
+  "adlumin", // 0
+  "adluminhq", // 0
+  "adlumininc", // 0
+  "adluminsecurity", // 0
+  "adyen", // 0
+  "aembit", // 0
+  "aembitsecurity", // 0
+  "aerospike", // 0
+  "aerospikehq", // 0
+  "aerovect", // 2
+  "affinipay", // 0
+  "affirm", // 0
+  "afresh", // 0
+  "aftership", // 0
+  "agenta", // 0
+  "agentops", // 0
+  "agileengine", // 1
+  "agileit", // 2
+  "agiloft", // 0
+  "agiloftinc", // 0
+  "agora", // 0
+  "airbridge", // 0
+  "airbyte", // 0
+  "aircall", // 0
+  "aircloak", // 0
+  "airfocus", // 0
+  "airkit", // 0
+  "airmeet", // 0
+  "airplane", // 0
+  "airship", // 0
+  "airtable", // 0
+  "airtablehq", // 0
+  "airtame", // 0
+  "airwallex", // 0
+  "aisera", // 0
+  "aiven", // 0
+  "akamai", // 0
+  "akana", // 0
+  "akasa", // 0
+  "akeneo", // 0
+  "akeneoio", // 0
+  "akiflow", // 0
+  "akka", // 0
+  "akkio", // 0
+  "akompli", // 0
+  "akool", // 0
+  "alation", // 0
+  "alertlogic", // 0
+  "alertmedia", // 0
+  "algolia", // 0
+  "algosec", // 0
+  "alkami", // 0
+  "alkira", // 0
+  "alloy", // 0
+  "alloyautomation", // 0
+  "allstacks", // 0
+  "alluxio", // 0
+  "alluxiocloud", // 0
+  "almanac", // 0
+  "alpaca", // 0
+  "alpacaai", // 0
+  "alpine", // 0
+  "altair", // 0
+  "altana", // 0
+  "alteryx", // 0
+  "altinity", // 0
+  "altinitycloud", // 0
+  "altostra", // 0
+  "altruist", // 0
+  "amarin", // 0
+  "amarintech", // 0
+  "amaris", // 0
+  "amarok", // 0
+  "amity", // 0
+  "amount", // 0
+  "amperity", // 0
+  "amplitude", // 0
+  "ampt", // 0
+  "amwell", // 0
+  "anaconda", // 0
+  "anaplan", // 0
+  "anchor", // 0
+  "anchorage", // 0
+  "anchore", // 0
+  "anduril", // 0
+  "anjuna", // 0
+  "anomali", // 0
+  "anomalo", // 0
+  "ansys", // 0
+  "anthropic", // 0
+  "anyrun", // 0
+  "anyscale", // 0
+  "anysphere", // 0
+  "apexai", // 0
+  "apica", // 0
+  "apollo", // 0
+  "apollograph", // 0
+  "apolloio", // 0
+  "appcircle", // 0
+  "appcues", // 0
+  "appdirect", // 0
+  "appdynamics", // 0
+  "appfire", // 0
+  "appflowy", // 0
+  "appian", // 0
+  "appiancloud", // 0
+  "appsmith", // 0
+  "appsmithhq", // 0
+  "apptio", // 0
+  "appwrite", // 0
+  "appwritecloud", // 0
+  "aptible", // 0
+  "aptoslabs", // 0
+  "aquant", // 0
+  "aquasec", // 0
+  "aquasecurity", // 0
+  "arangocloud", // 0
+  "arangodb", // 0
+  "arc", // 0
+  "arcadia", // 0
+  "arcjet", // 0
+  "arcticwolf", // 0
+  "ardent", // 0
+  "argoproj", // 0
+  "arista", // 0
+  "arize", // 0
+  "armis", // 0
+  "armissecurity", // 0
+  "armorblox", // 0
+  "armorcode", // 0
+  "armory", // 0
+  "armosec", // 0
+  "arrcus", // 0
+  "arrikto", // 0
+  "artechinformationsystemllc", // 62
+  "artechinfosystemsltd", // 5
+  "articulate", // 0
+  "artifact", // 0
+  "artifactai", // 0
+  "artifacthub", // 0
+  "asana", // 0
+  "asanahq", // 0
+  "ascend", // 0
+  "asciigroupllc", // 2
+  "ashburnconsulting", // 4
+  "astradb", // 0
+  "astranis", // 0
+  "astranis-space", // 0
+  "astrill", // 0
+  "astronomer", // 0
+  "astronomerhq", // 0
+  "astronomerio", // 0
+  "ataccama", // 0
+  "atera", // 0
+  "athenahealth", // 0
+  "atlan", // 0
+  "atlancloud", // 0
+  "atlanhq", // 0
+  "atomic", // 0
+  "atomist", // 0
+  "atomwise", // 0
+  "attackiq", // 0
+  "attentive", // 0
+  "aubergecollection", // 5
+  "auditboard", // 0
+  "augmedix", // 0
+  "augment", // 0
+  "augmentcode", // 0
+  "augury", // 0
+  "aurorainnovation", // 0
+  "auth0", // 0
+  "authentik", // 0
+  "authgear", // 0
+  "authzed", // 0
+  "authzedhq", // 0
+  "autify", // 0
+  "autoblocks", // 0
+  "autodesk", // 0
+  "autodeskforge", // 0
+  "autogen", // 0
+  "automox", // 0
+  "autonolas", // 0
+  "ava", // 0
+  "avaamo", // 0
+  "avalabs", // 0
+  "avalara", // 0
+  "avalon", // 0
+  "avanan", // 0
+  "avathon", // 0
+  "avetta", // 0
+  "aviatrix", // 0
+  "aviz", // 0
+  "avocadoml", // 0
+  "awslabs", // 0
+  "axelar", // 0
+  "axiom", // 0
+  "axiomhq", // 0
+  "axissecurity", // 0
+  "axleinformaticsllc", // 1
+  "axon", // 0
+  "axoniq", // 0
+  "axoniqhq", // 0
+  "axonius", // 0
+  "azion", // 0
+  "aziontech", // 0
+  "azul", // 0
+  "baanyansoftwareservicesinc", // 4
+  "backbase", // 0
+  "backblaze", // 0
+  "backstage", // 0
+  "baffle", // 0
+  "bairesdev", // 0
+  "balena", // 0
+  "ballerine", // 0
+  "bamboohr", // 0
+  "banked", // 0
+  "barracuda", // 0
+  "base10", // 0
+  "baselayer", // 0
+  "baserow", // 0
+  "basetenai", // 0
+  "basetencloud", // 0
+  "basetenhq", // 0
+  "bastionzero", // 0
+  "beacon", // 0
+  "beam", // 0
+  "beamery", // 0
+  "beehiiv", // 0
+  "beekeeper", // 0
+  "beeks", // 0
+  "beigene", // 2
+  "belvo", // 0
+  "benchling", // 0
+  "benchsci", // 0
+  "benepass", // 0
+  "bento", // 0
+  "berachain", // 0
+  "betterauth", // 0
+  "bettercloud", // 0
+  "betterment", // 0
+  "betterstack", // 0
+  "betterstackhq", // 0
+  "betterup", // 0
+  "beyondidentity", // 0
+  "bigcommerce", // 0
+  "bigcommercehq", // 0
+  "bigeye", // 0
+  "bigid", // 0
+  "bigidsecurity", // 0
+  "bigpanda", // 0
+  "bill", // 0
+  "bindplane", // 0
+  "bindplanehq", // 0
+  "bitgo", // 0
+  "bitmovin", // 0
+  "bitquery", // 0
+  "bitrise", // 0
+  "bitriseio", // 0
+  "bitsai", // 0
+  "bitwarden", // 0
+  "bitwardenhq", // 0
+  "bitwardeninc", // 0
+  "blackduck", // 0
+  "blackkite", // 0
+  "blackline", // 0
+  "blacksmith", // 0
+  "blameless", // 0
+  "blamelesshq", // 0
+  "blend", // 0
+  "blinkist", // 0
+  "blinkops", // 0
+  "blitzy", // 0
+  "blockdaemon", // 0
+  "bluecore", // 0
+  "blueground", // 0
+  "bluehexagon", // 0
+  "bluesky", // 0
+  "bluestone", // 77
+  "bluevoyant", // 0
+  "bluevoyantinc", // 0
+  "bolt", // 0
+  "boltnew", // 0
+  "boomi", // 0
+  "boostsecurity", // 0
+  "boundary", // 0
+  "boundaryml", // 0
+  "boxboat", // 0
+  "brainboard", // 0
+  "braintrust", // 0
+  "braintrustai", // 0
+  "braintrustdata", // 0
+  "braintrusthq", // 0
+  "branch", // 0
+  "branchio", // 0
+  "braze", // 0
+  "brex", // 0
+  "brexhq", // 0
+  "bridgecrew", // 0
+  "bridgecrewhq", // 0
+  "brightcove", // 0
+  "brightdata", // 0
+  "brightflag", // 0
+  "brightinsight", // 0
+  "brightwheel", // 0
+  "bringg", // 0
+  "broadcom", // 0
+  "broadlume", // 0
+  "browserstack", // 0
+  "browseruse", // 0
+  "bugcrowd", // 0
+  "buildkite", // 0
+  "buildops", // 0
+  "buildopsinc", // 0
+  "buildpulse", // 0
+  "buildship", // 0
+  "bun", // 0
+  "bunnyshell", // 0
+  "bunnyshellhq", // 0
+  "bunq", // 0
+  "bytebase", // 0
+  "bytebasehq", // 0
+  "bytewax", // 0
+  "c3ai", // 0
+  "caci", // 1
+  "cadence", // 0
+  "cairo", // 0
+  "calcom", // 0
+  "caldera", // 0
+  "calendly", // 0
+  "calix", // 0
+  "calixa", // 0
+  "callminer", // 1
+  "calm", // 0
+  "calypsoai", // 0
+  "cambridgemobiletelematics", // 0
+  "camunda", // 0
+  "camunda8", // 0
+  "camundaio", // 0
+  "canva", // 0
+  "canvendor", // 2
+  "captaindata", // 0
+  "captainstack", // 0
+  "captivateiq", // 0
+  "captivateiqhq", // 0
+  "carbonblack", // 0
+  "carbonhealth", // 0
+  "carbonrobotics", // 0
+  "carta", // 0
+  "cartesia", // 0
+  "cascade", // 0
+  "caspio", // 0
+  "castai", // 0
+  "castaihq", // 0
+  "castor", // 0
+  "castorhq", // 0
+  "catchpoint", // 0
+  "catchpointsystems", // 0
+  "celerdata", // 0
+  "celestia", // 0
+  "celonis", // 0
+  "censys", // 0
+  "centrifuge", // 0
+  "cerby", // 0
+  "cerebras", // 0
+  "cerebrium", // 0
+  "certik", // 0
+  "chainalysis", // 0
+  "chainbase", // 0
+  "chainguard", // 0
+  "chainguard-dev", // 0
+  "chainguarddev", // 0
+  "chainlinklabs", // 0
+  "chainlit", // 0
+  "chalk", // 0
+  "chaossearch", // 0
+  "chaossearchhq", // 0
+  "checkhq", // 0
+  "checkly", // 0
+  "checkmarx", // 0
+  "checkr", // 0
+  "chime", // 0
+  "choir", // 0
+  "chroma", // 0
+  "chromadb", // 0
+  "chronicle", // 0
+  "chroniclehq", // 0
+  "chroniclelabs", // 0
+  "chroniclesecurity", // 0
+  "chronosphere", // 0
+  "chronospherehq", // 0
+  "circle", // 0
+  "circleci", // 0
+  "circlecihq", // 0
+  "circleup", // 0
+  "cirruslogic", // 0
+  "cityofphiladelphia", // 32
+  "clari", // 0
+  "clarifai", // 0
+  "claroty", // 0
+  "clarotyhq", // 0
+  "clay", // 0
+  "clearbit", // 0
+  "clearco", // 0
+  "clearscore", // 0
+  "clearspeed", // 0
+  "clerk", // 0
+  "clerkdev", // 0
+  "clerkhq", // 0
+  "clever", // 0
+  "clickhouse", // 0
+  "clickup", // 0
+  "clio", // 0
+  "cloudbees", // 0
+  "cloudera", // 0
+  "cloudflare", // 0
+  "cloudinary", // 0
+  "cloudnativepg", // 0
+  "cloudquery", // 0
+  "cloudsmith", // 0
+  "cloudsploit", // 0
+  "cloudtruth", // 0
+  "cloudzero", // 0
+  "cloudzerohq", // 0
+  "clover", // 0
+  "clumio", // 0
+  "coast", // 0
+  "cockroachdb", // 0
+  "cockroachlabs", // 0
+  "coda", // 0
+  "code42", // 0
+  "codecov", // 0
+  "codefresh", // 0
+  "codeium", // 0
+  "coder", // 0
+  "codesee", // 0
+  "codiga", // 0
+  "codium", // 0
+  "cofactor", // 0
+  "cohere", // 0
+  "cohereai", // 0
+  "cohesity", // 0
+  "cohesityinc", // 0
+  "cohesive", // 0
+  "collibra", // 0
+  "comet", // 0
+  "cometml", // 0
+  "commaai", // 0
+  "commercetools", // 0
+  "commonapp", // 0
+  "commonroom", // 0
+  "commonroomhq", // 0
+  "compilerworks", // 0
+  "complyadvantage", // 0
+  "composio", // 0
+  "conductorhq", // 0
+  "conductorone", // 0
+  "conductoronehq", // 0
+  "configcat", // 0
+  "confluent", // 0
+  "connectly", // 0
+  "connectwise", // 0
+  "consensys", // 0
+  "contentful", // 0
+  "contentsquare", // 0
+  "contentstack", // 0
+  "continuedev", // 0
+  "contrastsecurity", // 0
+  "contrastsecurityinc", // 0
+  "controlup", // 0
+  "convex", // 0
+  "convexcloud", // 0
+  "convexdev", // 0
+  "conviva", // 0
+  "convoy", // 0
+  "copilotkit", // 0
+  "coralogix", // 0
+  "coralogixcloud", // 0
+  "coralogixhq", // 0
+  "corelight", // 0
+  "coro", // 0
+  "coroot", // 0
+  "cortex", // 0
+  "corvus", // 0
+  "cosmonic", // 0
+  "coursera", // 0
+  "craftdocs", // 0
+  "crewai", // 0
+  "cribl", // 0
+  "criblhq", // 0
+  "criblio", // 0
+  "crowdbotics", // 0
+  "crowdsec", // 0
+  "crowdstrike", // 0
+  "crowdstrikeinc", // 0
+  "crunchydata", // 0
+  "crusoe", // 0
+  "crusoeenergy", // 0
+  "cubist", // 0
+  "cubistpharma", // 0
+  "cyberark", // 0
+  "cybereason", // 0
+  "cyberhaven", // 0
+  "cyberreason", // 0
+  "cycloid", // 0
+  "cycode", // 0
+  "cycodehq", // 0
+  "cyera", // 0
+  "cyeraai", // 0
+  "cyeraio", // 0
+  "cymulate", // 0
+  "cymulatehq", // 0
+  "cyolo", // 0
+  "cyoloio", // 0
+  "dagger", // 0
+  "daggerio", // 0
+  "dagstercloud", // 0
+  "daily", // 0
+  "dailydev", // 0
+  "dailypay", // 0
+  "dandy", // 0
+  "dapr", // 0
+  "dashlane", // 0
+  "databend", // 0
+  "databento", // 0
+  "databricks", // 0
+  "databrickslabs", // 0
+  "datacamp", // 0
+  "datachain", // 0
+  "datadome", // 0
+  "datafold", // 0
+  "datagran", // 0
+  "dataiku", // 0
+  "datapeople", // 0
+  "datarails", // 0
+  "datarobot", // 0
+  "datastax", // 0
+  "datastrato", // 0
+  "datavant", // 0
+  "dbtlabs", // 0
+  "deel", // 0
+  "deepchecks", // 0
+  "deepgram", // 0
+  "deepgramai", // 0
+  "deepgramhq", // 0
+  "deepinfra", // 0
+  "deepjudge", // 0
+  "deepmind", // 0
+  "deepnote", // 0
+  "deeporigin", // 0
+  "deepsecurity", // 0
+  "deepseek", // 0
+  "deepset", // 0
+  "deepstream", // 0
+  "deepwatch", // 0
+  "defectdojo", // 0
+  "degreed", // 0
+  "deliverect", // 0
+  "deltaio", // 0
+  "density", // 0
+  "deputy", // 0
+  "descope", // 0
+  "descopeai", // 0
+  "descopehq", // 0
+  "descript", // 0
+  "detectify", // 0
+  "detectifyhq", // 0
+  "devbox", // 0
+  "devcycle", // 0
+  "devpod", // 0
+  "devrev", // 0
+  "devtron", // 0
+  "devzero", // 0
+  "dfinity", // 0
+  "dgmatrix", // 0
+  "dialpad", // 0
+  "digibee", // 0
+  "digicert", // 0
+  "digitalguardian", // 0
+  "digitaloceanhq", // 0
+  "digitalshadow", // 0
+  "digsecurity", // 0
+  "diligent", // 0
+  "discord", // 0
+  "dispel", // 0
+  "distrokid", // 0
+  "disysoakbrook", // 6
+  "diverselynx3", // 8
+  "dnsfilter", // 0
+  "docebo", // 0
+  "docker", // 0
+  "dockerdesktop", // 0
+  "docling", // 0
+  "docusign", // 0
+  "doit", // 0
+  "domino", // 0
+  "dominohq", // 0
+  "doppler", // 0
+  "dotproduct", // 0
+  "doubleverify", // 0
+  "doubleverifyhq", // 0
+  "dragonflydb", // 0
+  "dragos", // 0
+  "drata", // 0
+  "dratahq", // 0
+  "dream11", // 0
+  "dreamdata", // 0
+  "dreamfactory", // 0
+  "dremio", // 0
+  "drift", // 0
+  "drivetrain", // 0
+  "drivetrainai", // 0
+  "dropbox", // 0
+  "dryrun", // 0
+  "dstack", // 0
+  "duckdb", // 0
+  "dune", // 0
+  "duolingo", // 0
+  "duplocloud", // 0
+  "dust", // 0
+  "dynaboard", // 0
+  "dynatrace", // 0
+  "e2b", // 0
+  "earthly", // 0
+  "eclypsium", // 0
+  "ecosia", // 0
+  "ecovadis", // 0
+  "ecwid", // 0
+  "edgeimpulse", // 0
+  "edgeuno", // 0
+  "edgio", // 0
+  "egain", // 0
+  "egnyte", // 0
+  "eightfold", // 0
+  "eikon", // 0
+  "eikontech", // 0
+  "elastic", // 0
+  "elasticcloud", // 0
+  "elasticpath", // 0
+  "elasticrun", // 0
+  "elementary", // 0
+  "elementarydata", // 0
+  "elementl", // 0
+  "elementor", // 0
+  "elevate", // 0
+  "elevenlabs", // 0
+  "eliassengroup1", // 7
+  "ellianse", // 1
+  "embarktrucks", // 0
+  "embed", // 0
+  "embeddings", // 0
+  "embedly", // 0
+  "ember", // 0
+  "embold", // 0
+  "embrace", // 0
+  "embroker", // 0
+  "emburse", // 0
+  "emergent", // 0
+  "emitwise", // 0
+  "enable", // 0
+  "enablecomp", // 0
+  "enablecompass", // 0
+  "encore", // 0
+  "encoredev", // 0
+  "endava", // 3
+  "endgame", // 0
+  "endorlabs", // 0
+  "endorlabsai", // 0
+  "endorlabsinc", // 0
+  "endorlabsio", // 0
+  "energyhub", // 0
+  "energyvault", // 0
+  "engflow", // 0
+  "ensemble", // 0
+  "entelo", // 0
+  "enterprisedb", // 0
+  "env0", // 0
+  "envoy", // 0
+  "envoyglobal", // 0
+  "epicgames", // 0
+  "epicgameshq", // 0
+  "epicor", // 0
+  "epirus", // 0
+  "eppo", // 0
+  "epsagon", // 0
+  "epsilon", // 0
+  "epsilon3", // 0
+  "equalexperts", // 0
+  "equalexpertsgroup", // 0
+  "equalexpertsinc", // 0
+  "equilibrium", // 0
+  "equinix", // 0
+  "equus", // 5
+  "esentire", // 0
+  "esentireinc", // 0
+  "esolutionsinc", // 26
+  "espresa", // 0
+  "espressif", // 0
+  "esri", // 0
+  "estuary", // 0
+  "ethos", // 0
+  "ethoslife", // 0
+  "ettaingroup", // 23
+  "eucalyptus", // 0
+  "evb", // 1
+  "everactive", // 0
+  "everbridge", // 0
+  "everlaw", // 0
+  "everlawhq", // 0
+  "everquote", // 0
+  "evidation", // 8
+  "evidentlyai", // 0
+  "evisort", // 0
+  "evisorthq", // 0
+  "evolutioniq", // 3
+  "exabeam", // 0
+  "exafunction", // 0
+  "exiger", // 0
+  "exotrail", // 0
+  "expelhq", // 0
+  "expelinc", // 0
+  "expelio", // 0
+  "expensify", // 0
+  "experian", // 21
+  "experismanpowergroup1", // 1
+  "explo", // 0
+  "exploai", // 0
+  "explorium", // 0
+  "extend", // 0
+  "extrahop", // 0
+  "ezcater", // 0
+  "fabric", // 0
+  "fabrichealth", // 0
+  "fabricinc", // 0
+  "fairwinds", // 0
+  "fairwindsops", // 0
+  "fal", // 0
+  "falai", // 0
+  "falconx", // 0
+  "falconxhq", // 0
+  "falcosecurity", // 0
+  "faraday", // 0
+  "farfetch", // 0
+  "farmwise", // 0
+  "farmwisehq", // 0
+  "farohealth", // 0
+  "farosai", // 0
+  "fastembed", // 0
+  "fastly", // 0
+  "fathom", // 0
+  "fauna", // 0
+  "feathery", // 0
+  "featheryhq", // 0
+  "featurebase", // 0
+  "fender", // 0
+  "feroot", // 0
+  "fiberplane", // 0
+  "fiddler", // 0
+  "fieldglass", // 0
+  "fieldwire", // 0
+  "figma", // 0
+  "filestack", // 0
+  "finbourne", // 0
+  "finbournehq", // 0
+  "finch", // 0
+  "fingerprint", // 0
+  "finix", // 0
+  "fireblocks", // 0
+  "firebolt", // 0
+  "fireboltdata", // 0
+  "firecrawl", // 0
+  "fireflies", // 0
+  "firefly", // 0
+  "fireflyai", // 0
+  "firehydrant", // 0
+  "firezone", // 0
+  "firstbase", // 0
+  "firstup", // 0
+  "fishtownanalytics", // 0
+  "fivetran", // 0
+  "flagger", // 0
+  "flaggerapp", // 0
+  "flagright", // 0
+  "flagship", // 0
+  "flashbots", // 0
+  "flatfile", // 0
+  "fleek", // 0
+  "fleet", // 0
+  "fleetdm", // 0
+  "fleetio", // 0
+  "flexe", // 0
+  "flexport", // 0
+  "flipdish", // 0
+  "flipp", // 0
+  "flock", // 0
+  "floqast", // 0
+  "flowai", // 0
+  "flowdesk", // 0
+  "flowhub", // 0
+  "flowise", // 0
+  "flowiseai", // 0
+  "flowsecurity", // 0
+  "fluidtruck", // 0
+  "flyio", // 0
+  "flyte", // 0
+  "flywire", // 0
+  "foliahealth", // 0
+  "fonoster", // 0
+  "fontawesome", // 0
+  "fontawesomehq", // 0
+  "forcepoint", // 0
+  "forethought", // 0
+  "forge", // 0
+  "form3", // 0
+  "formance", // 0
+  "formancehq", // 0
+  "formlabs", // 0
+  "formstack", // 0
+  "forwardhealth", // 0
+  "forwardnetworks", // 0
+  "fossa", // 0
+  "found", // 0
+  "foundry", // 0
+  "foxit", // 0
+  "freed", // 0
+  "freenome", // 0
+  "freenow", // 0
+  "freestar", // 0
+  "freightwaves", // 0
+  "freshworks", // 17
+  "front", // 0
+  "frontapp", // 0
+  "frontegg", // 0
+  "frontendhealth", // 0
+  "fullenrich", // 0
+  "fullstory", // 0
+  "fullstoryhq", // 0
+  "fundguard", // 0
+  "fusionauth", // 0
+  "gainsight", // 0
+  "galaxy", // 0
+  "galileo", // 0
+  "galileofinancial", // 0
+  "gamechanger", // 0
+  "gardenio", // 0
+  "garrison", // 0
+  "gather", // 0
+  "geckoboard", // 0
+  "gem", // 0
+  "gemsecurity", // 0
+  "genea", // 0
+  "genesis", // 0
+  "genies", // 0
+  "getaround", // 0
+  "getdbt", // 0
+  "getyourguide", // 0
+  "ghost", // 0
+  "ghostery", // 0
+  "ginastechjobs", // 9
+  "giskard", // 0
+  "gitguardian", // 0
+  "gitlab", // 0
+  "gitness", // 0
+  "gladia", // 0
+  "gladly", // 0
+  "glassbox", // 0
+  "glasswall", // 0
+  "glean", // 1
+  "gleanai", // 0
+  "glia", // 0
+  "gliaai", // 0
+  "gliacloud", // 0
+  "gliahealth", // 0
+  "glific", // 0
+  "glint", // 0
+  "globe", // 0
+  "glossier", // 0
+  "glovo", // 0
+  "go1", // 0
+  "goatcounter", // 0
+  "goauthentik", // 0
+  "gobright", // 0
+  "gocardless", // 0
+  "gocomet", // 0
+  "godaddy", // 0
+  "goldbelly", // 0
+  "goldstonepartners", // 5
+  "gong", // 0
+  "gongio", // 0
+  "goodfire", // 0
+  "goodleap", // 0
+  "goodrx", // 0
+  "goodtime", // 0
+  "goose", // 0
+  "gopuff", // 0
+  "gorillas", // 0
+  "gradient", // 0
+  "grafana", // 0
+  "grafbase", // 0
+  "grammarly", // 0
+  "graphapp", // 0
+  "graphcdn", // 0
+  "graphcore", // 0
+  "graphite", // 0
+  "graphitehq", // 0
+  "graphql", // 0
+  "graphsignal", // 0
+  "gravity", // 0
+  "greatexpectations", // 0
+  "greenlight", // 0
+  "greenlightfinancial", // 0
+  "gremlin", // 0
+  "greptile", // 0
+  "greynoise", // 0
+  "greynoisehq", // 0
+  "gridgain", // 0
+  "gridspace", // 0
+  "griptape", // 0
+  "grofers", // 0
+  "grofershq", // 0
+  "grofersindia", // 0
+  "groq", // 0
+  "groundcover", // 0
+  "growthbook", // 0
+  "growthloop", // 0
+  "guac", // 0
+  "guardianai", // 0
+  "guardianlife", // 0
+  "guardrailsai", // 0
+  "guidewire", // 0
+  "guildeducation", // 0
+  "gusto", // 0
+  "h2o", // 0
+  "h2oai", // 0
+  "hackerone", // 0
+  "hackerrank", // 3
+  "hackthebox", // 0
+  "haiku", // 0
+  "hakimo", // 0
+  "halcyon", // 0
+  "hallow", // 0
+  "halo", // 0
+  "hamilton", // 0
+  "handshake", // 0
+  "handshakehq", // 0
+  "happiestminds", // 0
+  "happyfox", // 0
+  "happyrobot", // 0
+  "harbor", // 0
+  "hardfin", // 0
+  "harness", // 0
+  "harnessinc", // 0
+  "harnessio", // 0
+  "harvest", // 0
+  "hashicorp", // 0
+  "hashnode", // 0
+  "hashnodehq", // 0
+  "haystack", // 0
+  "hazelcast", // 0
+  "hazelhealth", // 0
+  "hclsoftware", // 0
+  "headlamp", // 0
+  "headway", // 0
+  "healthcatalyst", // 0
+  "healthgorilla", // 0
+  "healthie", // 0
+  "heap", // 0
+  "heartflow", // 0
+  "hedra", // 0
+  "hedvig", // 0
+  "heimdal", // 0
+  "helios", // 0
+  "helium", // 0
+  "helixml", // 0
+  "helloalice", // 0
+  "helloheart", // 0
+  "hellosign", // 0
+  "helm", // 0
+  "helpjuice", // 0
+  "hermeus", // 0
+  "heroku", // 0
+  "heron", // 0
+  "hex", // 0
+  "hexagon", // 0
+  "hexops", // 0
+  "hextech", // 0
+  "hextechai", // 0
+  "hiddenlayer", // 0
+  "hiflylabs", // 1
+  "higharc", // 0
+  "highbyte", // 0
+  "highlevel", // 0
+  "highradius", // 0
+  "highspot", // 0
+  "highspothq", // 0
+  "hightouch", // 0
+  "hightouchdata", // 0
+  "hightouchhq", // 0
+  "hirevue", // 0
+  "hive", // 0
+  "hiveai", // 0
+  "hivebrite", // 0
+  "hivebritehq", // 0
+  "hiver", // 0
+  "homebase", // 0
+  "honeybook", // 0
+  "honeycomb", // 0
+  "honeycombio", // 0
+  "honeyhive", // 0
+  "hoodi", // 0
+  "hopin", // 0
+  "hopper", // 0
+  "hopscotch", // 0
+  "hopskipdrive", // 0
+  "horizen", // 0
+  "horizon3", // 0
+  "horizontaltalent", // 4
+  "hostaway", // 0
+  "hostawayhq", // 0
+  "hostinger", // 0
+  "hotglue", // 0
+  "hotjar", // 0
+  "hotmart", // 0
+  "housecallpro", // 0
+  "housecanary", // 0
+  "houseware", // 0
+  "hover", // 0
+  "hoverfly", // 0
+  "hubilo", // 0
+  "huggingface", // 0
+  "humanfirst", // 0
+  "humaninterest", // 0
+  "humanitec", // 0
+  "humanloop", // 0
+  "humanloopai", // 0
+  "humansecurity", // 0
+  "humata", // 0
+  "huntress", // 0
+  "huntresslabs", // 0
+  "hydrolix", // 0
+  "hyland", // 0
+  "hyper", // 0
+  "hyperexponential", // 0
+  "hypergiant", // 0
+  "hypermode", // 0
+  "hyperproof", // 0
+  "hyperproofhq", // 0
+  "hyperscience", // 0
+  "hyperswitch", // 0
+  "hypr", // 0
+  "i3verticals", // 0
+  "ibm", // 0
+  "ibmcloud", // 0
+  "iboss", // 0
+  "ibotta", // 0
+  "iceberg", // 0
+  "iceye", // 0
+  "icon", // 0
+  "icons8", // 0
+  "idio", // 0
+  "ifood", // 0
+  "ignite", // 0
+  "illumio", // 0
+  "illumiohq", // 0
+  "imagekit", // 0
+  "immersive", // 0
+  "immuta", // 0
+  "impact", // 0
+  "impactanalytics", // 0
+  "impactanalyticshq", // 0
+  "impactdotcom", // 0
+  "impartsecurity", // 0
+  "imply", // 0
+  "implydata", // 0
+  "impossiblecloud", // 0
+  "imprint", // 0
+  "imprivata", // 0
+  "improbable", // 0
+  "incidentio", // 0
+  "incidentiq", // 0
+  "incode", // 0
+  "incodehq", // 0
+  "incorta", // 0
+  "indee", // 0
+  "indico", // 0
+  "indigoag", // 0
+  "inductiveautomation", // 0
+  "inferless", // 0
+  "infinera", // 0
+  "infinitecampus", // 0
+  "infinitus", // 0
+  "infinyon", // 0
+  "infinyonhq", // 0
+  "infisical", // 0
+  "influxdata", // 0
+  "influxdatahq", // 0
+  "infoblox", // 0
+  "infogrid", // 0
+  "inkeep", // 0
+  "inkitt", // 0
+  "inmobi", // 0
+  "inngest", // 0
+  "innovaccer", // 0
+  "innovium", // 0
+  "inrupt", // 0
+  "inscribe", // 0
+  "insightsoftware", // 0
+  "insighttimer", // 0
+  "insighttimerhq", // 0
+  "insitro", // 0
+  "inspectiv", // 0
+  "inspektor", // 0
+  "instabase", // 0
+  "instabaseai", // 0
+  "instabug", // 0
+  "instacart", // 0
+  "instana", // 0
+  "instawork", // 0
+  "instill", // 0
+  "instructure", // 1
+  "integralads", // 0
+  "integrate", // 0
+  "integratehq", // 0
+  "integry", // 0
+  "intellicheck", // 0
+  "interactions", // 0
+  "interactionsai", // 0
+  "intercom", // 0
+  "intercomhq", // 0
+  "interfolio", // 0
+  "interos", // 0
+  "interplaylearning", // 0
+  "intersystems", // 0
+  "interwell", // 0
+  "intuit", // 0
+  "inventa", // 0
+  "invoca", // 0
+  "inworld", // 0
+  "iofinet", // 0
+  "iohk", // 0
+  "ionic", // 0
+  "ionq", // 0
+  "ironclad", // 0
+  "ironfish", // 0
+  "ironnet", // 0
+  "isara", // 0
+  "isaralabs", // 0
+  "isovalent", // 0
+  "isovalenthq", // 0
+  "iterable", // 0
+  "iterative", // 0
+  "iteris", // 0
+  "ixlayer", // 0
+  "jackhenry", // 0
+  "jackpocket", // 0
+  "jam", // 0
+  "jamf", // 0
+  "janai", // 0
+  "jasper", // 0
+  "jasperai", // 0
+  "jeanmartininc", // 3
+  "jellyfish", // 0
+  "jetbrains", // 0
+  "jetstack", // 0
+  "jfrog", // 0
+  "jfroghq", // 0
+  "jinja", // 0
+  "jitterbit", // 5
+  "jobber", // 0
+  "jobyaviation", // 0
+  "join", // 0
+  "joinarc", // 0
+  "journeyapps", // 0
+  "jsheldllc", // 13
+  "julep", // 0
+  "jumio", // 0
+  "jump", // 0
+  "jumpcloud", // 0
+  "juniper", // 0
+  "jupiter", // 0
+  "jupiterone", // 0
+  "justeat", // 0
+  "justpoint", // 0
+  "justworks", // 4
+  "k2view", // 0
+  "kafkaesque", // 0
+  "kaltura", // 0
+  "kandji", // 0
+  "kapa", // 0
+  "kapwing", // 0
+  "karat", // 0
+  "karbon", // 0
+  "karius", // 0
+  "karsunsolutionsllc", // 2
+  "kasm", // 0
+  "katonic", // 0
+  "keep", // 0
+  "keepersecurity", // 0
+  "keepit", // 0
+  "keeptruckin", // 0
+  "kepler", // 0
+  "keploy", // 0
+  "kestra", // 0
+  "kestrahq", // 0
+  "ketch", // 0
+  "kevel", // 0
+  "kevelhq", // 0
+  "keyfactor", // 0
+  "keygen", // 0
+  "keylentinc", // 3
+  "keyme", // 0
+  "khealth", // 0
+  "kindred", // 0
+  "klarna", // 0
+  "klasha", // 0
+  "klaviyo", // 0
+  "klue", // 0
+  "knapsack", // 0
+  "knime", // 0
+  "knock", // 0
+  "koala", // 0
+  "komodor", // 0
+  "komodorhq", // 0
+  "komodorinc", // 0
+  "konecranes", // 8
+  "kong", // 0
+  "konghq", // 0
+  "konveyor", // 0
+  "kraken", // 0
+  "kubecost", // 0
+  "kubegrade", // 0
+  "kubiya", // 0
+  "kumo", // 0
+  "kustomer", // 0
+  "labelbox", // 0
+  "labelboxhq", // 0
+  "lacework", // 0
+  "lakefs", // 0
+  "lakefsio", // 0
+  "lamatic", // 0
+  "laminar", // 0
+  "lamini", // 0
+  "landbot", // 0
+  "landingai", // 0
+  "langbase", // 0
+  "langchain", // 0
+  "langdock", // 0
+  "langflow", // 0
+  "langfuse", // 0
+  "langgenius", // 0
+  "langgraph", // 0
+  "langroid", // 0
+  "langsmith", // 0
+  "langwatch", // 0
+  "lantern", // 0
+  "larabidachildrenshospital", // 3
+  "last9", // 0
+  "latacora", // 0
+  "lattice", // 0
+  "launchable", // 0
+  "launchdarkly", // 0
+  "launchdarklyhq", // 0
+  "launchflow", // 0
+  "launchhouse", // 0
+  "launchmetrics", // 0
+  "launchpot", // 0
+  "layer5", // 0
+  "layerzero", // 0
+  "lazygit", // 0
+  "leaflink", // 0
+  "leanix", // 0
+  "leapsome", // 0
+  "ledger", // 0
+  "ledgerlive", // 0
+  "leena", // 0
+  "leenaai", // 0
+  "legendary", // 0
+  "lemon", // 0
+  "lemonade", // 0
+  "lemonedge", // 0
+  "lemonio", // 0
+  "lendbuzz", // 0
+  "lendingtree", // 4
+  "levity", // 0
+  "lexcheck", // 0
+  "lifebit", // 0
+  "liftoff", // 0
+  "liftoffmobile", // 0
+  "lightbend", // 0
+  "lightcast", // 0
+  "lightdash", // 0
+  "lightlytics", // 0
+  "lightmatter", // 0
+  "lightningai", // 0
+  "lightspin", // 0
+  "lightstep", // 0
+  "lightup", // 0
+  "linear", // 0
+  "linearb", // 0
+  "linkerd", // 0
+  "linkurious", // 0
+  "liongard", // 0
+  "liquibase", // 0
+  "litera", // 0
+  "litify", // 0
+  "litmus", // 0
+  "litprotocol", // 0
+  "liveblocks", // 0
+  "livekit", // 0
+  "livepeer", // 0
+  "liveperson", // 0
+  "llamaindex", // 0
+  "loadsmart", // 0
+  "localstack", // 0
+  "logdna", // 0
+  "logicgate", // 0
+  "logicmonitor", // 0
+  "logrocket", // 0
+  "logzio", // 0
+  "lokalise", // 0
+  "looker", // 0
+  "lookerdata", // 0
+  "lookout", // 0
+  "loom", // 0
+  "loomhq", // 0
+  "lottie", // 0
+  "lottiefiles", // 1
+  "lucid", // 0
+  "lucidworks", // 0
+  "luma", // 0
+  "lunar", // 0
+  "lunarcrush", // 0
+  "lunarenergy", // 0
+  "lunasec", // 0
+  "lyft", // 0
+  "lyrahealth", // 0
+  "lyzr", // 0
+  "m1finance", // 1
+  "m3ter", // 0
+  "mabl", // 0
+  "machinify", // 0
+  "madkudu", // 0
+  "madrona", // 0
+  "magantiitresourcesllc", // 68
+  "magic", // 0
+  "magicbell", // 0
+  "magiceden", // 0
+  "mailgun", // 0
+  "mailmodo", // 0
+  "maintainx", // 0
+  "makerbot", // 0
+  "mambu", // 0
+  "mammoth", // 0
+  "manifest", // 0
+  "manifestai", // 0
+  "mantl", // 0
+  "mapbox", // 0
+  "mapboxhq", // 0
+  "mapboxinc", // 0
+  "mark43", // 0
+  "marqo", // 0
+  "materialbank", // 1
+  "materialize", // 0
+  "matillion", // 0
+  "matrixport", // 0
+  "matterlabs", // 0
+  "mattermost", // 0
+  "mattermosthq", // 0
+  "matterport", // 0
+  "maven", // 0
+  "mavenclinic", // 0
+  "mavenoid", // 0
+  "maverick", // 0
+  "maymobility", // 0
+  "meadow", // 0
+  "medallia", // 0
+  "medalliahq", // 0
+  "medcrypt", // 0
+  "medely", // 0
+  "medplum", // 0
+  "meero", // 0
+  "meilisearch", // 0
+  "meilisearchcloud", // 0
+  "meilisearchhq", // 0
+  "melio", // 0
+  "meliohq", // 0
+  "meltano", // 0
+  "mem0", // 0
+  "memgraph", // 0
+  "memory", // 0
+  "mend", // 0
+  "mercoa", // 0
+  "mercury", // 0
+  "merge", // 0
+  "mergeapi", // 0
+  "mergify", // 0
+  "meroxa", // 0
+  "meshsecurity", // 0
+  "metabase", // 0
+  "metamap", // 0
+  "metaplane", // 0
+  "metasys", // 23
+  "metaview", // 0
+  "metoro", // 0
+  "metricstream", // 0
+  "metronome", // 0
+  "mezmo", // 0
+  "mezmohq", // 0
+  "mgmresortsinternational", // 2
+  "microsoft", // 0
+  "milvus", // 0
+  "mindbody", // 0
+  "mindtickle", // 0
+  "mintlify", // 0
+  "mintlifyhq", // 0
+  "minute", // 0
+  "mirakl", // 0
+  "mirantis", // 30
+  "miro", // 0
+  "mirohq", // 0
+  "missioncloud", // 0
+  "missioncloudservices", // 0
+  "missionlane", // 0
+  "mistplay", // 0
+  "mistralai", // 0
+  "mistsystems", // 0
+  "mixpanel", // 0
+  "mixpanelhq", // 0
+  "ml6", // 0
+  "mlflow", // 0
+  "mobilecoin", // 0
+  "mobius", // 0
+  "modal", // 0
+  "modalhq", // 0
+  "modeanalytics", // 0
+  "moderna", // 0
+  "modernhealth", // 0
+  "modernhealthhq", // 0
+  "modernizingmedicine", // 0
+  "modernloop", // 2
+  "modernloophq", // 0
+  "modis3", // 5
+  "moduscreate", // 0
+  "moengage", // 0
+  "moesif", // 0
+  "moloco", // 0
+  "monad", // 0
+  "monadlabs", // 0
+  "monday", // 0
+  "mongodb", // 0
+  "monograph", // 0
+  "monographhq", // 0
+  "monoid", // 0
+  "monta", // 0
+  "monzo", // 0
+  "moonpay", // 0
+  "moonrepo", // 0
+  "morph", // 0
+  "morphic", // 0
+  "morty", // 0
+  "mosaic", // 0
+  "motherduck", // 0
+  "motif", // 0
+  "motional", // 0
+  "motive", // 0
+  "mountainprotocol", // 0
+  "movableink", // 0
+  "moveworks", // 0
+  "moveworksai", // 0
+  "mozartdata", // 0
+  "mparticle", // 0
+  "mparticlehq", // 0
+  "msysinc", // 5
+  "multion", // 0
+  "multiverse", // 0
+  "mural", // 0
+  "muralpay", // 0
+  "murf", // 0
+  "mutable", // 0
+  "mux", // 0
+  "muxhq", // 0
+  "myfitnesspal", // 0
+  "mynd", // 0
+  "myrror", // 0
+  "mystenlabs", // 0
+  "n8n", // 0
+  "nacelle", // 0
+  "nacellecommerce", // 0
+  "nango", // 0
+  "nangohq", // 0
+  "nanohealth", // 0
+  "nanonets", // 0
+  "narmi", // 0
+  "narrative", // 0
+  "narrativebi", // 0
+  "narrativeio", // 0
+  "nationalgrid", // 0
+  "navan", // 0
+  "navattic", // 0
+  "nearbay", // 0
+  "nearform", // 1
+  "nectar", // 0
+  "neo4j", // 0
+  "neon", // 0
+  "neontech", // 0
+  "neontechhq", // 0
+  "netapp", // 0
+  "netbird", // 0
+  "netbirdio", // 0
+  "netboxlabs", // 0
+  "netdata", // 0
+  "netfoundry", // 0
+  "netlify", // 0
+  "netlifyhq", // 0
+  "netmaker", // 0
+  "netomi", // 0
+  "netomiai", // 0
+  "netris", // 0
+  "netskope", // 3
+  "neuralmagic", // 0
+  "newfront", // 0
+  "newrelic", // 0
+  "newrelichq", // 0
+  "newsela", // 0
+  "nexa", // 0
+  "nexhealth", // 0
+  "nexla", // 0
+  "nextdoor", // 0
+  "nexthink", // 2
+  "nexthinkcloud", // 0
+  "nexthinkhq", // 0
+  "nextinsurance", // 0
+  "nextmv", // 0
+  "ngrok", // 0
+  "nielseniq", // 4
+  "nightfall", // 0
+  "nightfallai", // 0
+  "nimble", // 0
+  "nimblestorage", // 0
+  "ninjaone", // 0
+  "nitric", // 0
+  "nitro", // 0
+  "nocobase", // 0
+  "nocobasehq", // 0
+  "nocodb", // 0
+  "nodedigital", // 3
+  "nomad", // 0
+  "nomadhealth", // 0
+  "nomadlist", // 0
+  "nomic", // 0
+  "nominal", // 0
+  "nordsecurity", // 0
+  "nordvpn", // 0
+  "normalcomputing", // 0
+  "normalyze", // 0
+  "northflank", // 0
+  "northflankhq", // 0
+  "northone", // 0
+  "northwesternmutual", // 35
+  "nosto", // 0
+  "notion", // 0
+  "nova", // 0
+  "novita", // 0
+  "novu", // 0
+  "ns1", // 0
+  "nubank", // 0
+  "nuclia", // 0
+  "nuclio", // 0
+  "numaflow", // 0
+  "numeral", // 0
+  "nuna", // 0
+  "nuon", // 0
+  "nuro", // 0
+  "nutanix", // 0
+  "nydig", // 0
+  "nylas", // 0
+  "nylashq", // 0
+  "o11y", // 0
+  "o9solutions", // 0
+  "oak9", // 0
+  "oasys", // 0
+  "observe", // 0
+  "observeinc", // 0
+  "oceanbase", // 0
+  "octane", // 0
+  "octoai", // 0
+  "octolane", // 0
+  "octoml", // 0
+  "octopusenergy", // 0
+  "octorate", // 0
+  "odaseva", // 0
+  "odigos", // 0
+  "odin", // 0
+  "offchainlabs", // 0
+  "okcoin", // 0
+  "okta", // 0
+  "okteto", // 0
+  "ollama", // 0
+  "omada", // 0
+  "omnea", // 0
+  "omni", // 0
+  "omnicell", // 0
+  "omnidian", // 0
+  "omnipresent", // 0
+  "omnirobotics", // 0
+  "omnistrate", // 0
+  "oncallai", // 0
+  "oncallhealth", // 0
+  "onebrief", // 0
+  "onehouse", // 0
+  "oneleet", // 0
+  "oneschema", // 0
+  "onesignal", // 0
+  "onespan", // 0
+  "onfido", // 0
+  "onjuno", // 0
+  "onyx", // 0
+  "opal", // 0
+  "opaldev", // 0
+  "openai", // 0
+  "openbb", // 0
+  "openlayer", // 0
+  "openobserve", // 0
+  "openphone", // 0
+  "openpipe", // 0
+  "openrouter", // 0
+  "opensauced", // 0
+  "opensea", // 0
+  "openx", // 0
+  "openziti", // 0
+  "opik", // 0
+  "opsgenie", // 0
+  "opslevel", // 0
+  "opsmill", // 0
+  "opswat", // 0
+  "optimizely", // 6
+  "optiver", // 0
+  "optoro", // 0
+  "orb", // 0
+  "orbio", // 0
+  "orbital", // 0
+  "orbitalmaterials", // 0
+  "orby", // 0
+  "orca", // 0
+  "orcasecurity", // 0
+  "order", // 0
+  "orderful", // 0
+  "orkes", // 0
+  "orkesio", // 0
+  "orum", // 0
+  "orumio", // 0
+  "ory", // 0
+  "osano", // 0
+  "osmosis", // 0
+  "otter", // 0
+  "otterai", // 0
+  "ottertune", // 0
+  "ouro", // 0
+  "outerbase", // 0
+  "outerbounds", // 0
+  "outreach", // 0
+  "outset", // 0
+  "outshift", // 0
+  "outsystems", // 0
+  "overjet", // 0
+  "ovhcloud", // 0
+  "ownbackup", // 0
+  "owncompany", // 0
+  "oxla", // 0
+  "oxsecurity", // 0
+  "p0security", // 0
+  "pachama", // 0
+  "pachyderm", // 0
+  "packetai", // 0
+  "packetfabric", // 0
+  "paddle", // 0
+  "pager", // 0
+  "pagerduty", // 0
+  "pagerhealth", // 0
+  "pagoda", // 0
+  "pairai", // 0
+  "pairwise", // 0
+  "paloalto", // 0
+  "paloaltonetworks", // 0
+  "pangea", // 0
+  "panopto", // 0
+  "pantheon", // 0
+  "panther", // 0
+  "papaya", // 0
+  "paradigm", // 0
+  "paradime", // 0
+  "paradox", // 2
+  "parafin", // 0
+  "parallel", // 0
+  "paralleldomain", // 0
+  "parallelwireless", // 0
+  "parity", // 0
+  "paritytech", // 0
+  "parloa", // 0
+  "parloaai", // 0
+  "parseable", // 0
+  "parseableio", // 0
+  "parsec", // 0
+  "patch", // 0
+  "patchstack", // 0
+  "patreon", // 0
+  "paycom", // 0
+  "payfit", // 0
+  "payfithq", // 0
+  "payhawk", // 0
+  "paylocity", // 0
+  "payoneer", // 0
+  "payrails", // 0
+  "payrailsio", // 0
+  "paystand", // 0
+  "paytm", // 0
+  "paytronix", // 0
+  "peakon", // 0
+  "pearai", // 0
+  "pearlhealth", // 0
+  "pearson", // 0
+  "pebble", // 0
+  "peerdb", // 0
+  "peloton", // 0
+  "peopleai", // 0
+  "peoplelogic", // 0
+  "pepperdata", // 0
+  "perceptyx", // 0
+  "percona", // 0
+  "percy", // 0
+  "perfectscale", // 0
+  "perforce", // 0
+  "perkbox", // 0
+  "permit", // 0
+  "permitio", // 0
+  "permitiohq", // 0
+  "persistiq", // 0
+  "persona", // 0
+  "phantom", // 0
+  "phi", // 0
+  "phoenixnap", // 0
+  "photoroom", // 0
+  "phreesia", // 0
+  "phylum", // 0
+  "picnic", // 0
+  "pieces", // 0
+  "pile", // 0
+  "pilot", // 0
+  "pindrop", // 0
+  "pinecone", // 0
+  "pineconeio", // 0
+  "pingcap", // 0
+  "pingidentity", // 0
+  "pinnacle", // 0
+  "pipedream", // 0
+  "pipedrive", // 0
+  "pixee", // 0
+  "pixeltable", // 0
+  "plaid", // 0
+  "plaidapi", // 0
+  "plaidhq", // 0
+  "plandex", // 0
+  "planet", // 0
+  "planetlabs", // 0
+  "planetscale", // 0
+  "planetscalecloud", // 0
+  "planetscalehq", // 0
+  "planhat", // 0
+  "plasmic", // 0
+  "platform9", // 0
+  "playco", // 0
+  "playht", // 0
+  "playhtai", // 0
+  "playvox", // 0
+  "playwright", // 0
+  "plivo", // 0
+  "ploomber", // 0
+  "ploombercloud", // 0
+  "plural", // 0
+  "pluralith", // 0
+  "pluralsight", // 0
+  "pocketfm", // 0
+  "podium", // 0
+  "podman", // 0
+  "polarsignals", // 0
+  "polybase", // 0
+  "polymer", // 0
+  "pomerium", // 0
+  "pond5", // 0
+  "ponder", // 0
+  "ponderai", // 0
+  "popmenu", // 0
+  "port", // 0
+  "portainer", // 0
+  "portainerio", // 0
+  "portkey", // 0
+  "portkeyai", // 0
+  "portworx", // 0
+  "posthog", // 0
+  "posthogcloud", // 0
+  "posthoghq", // 0
+  "postman", // 0
+  "powerfleet", // 0
+  "powerml", // 0
+  "precisionaq", // 0
+  "prefect", // 0
+  "prefecthq", // 0
+  "prelude", // 0
+  "prequel", // 0
+  "preset", // 0
+  "presetdata", // 0
+  "presetio", // 0
+  "presidio", // 0
+  "preswald", // 0
+  "primark", // 1
+  "primeintellect", // 0
+  "primer", // 0
+  "primerio", // 0
+  "printful", // 0
+  "printify", // 0
+  "prisma", // 0
+  "privacera", // 0
+  "privacysandbox", // 0
+  "privitar", // 0
+  "privy", // 0
+  "procon", // 3
+  "procore", // 0
+  "procurify", // 0
+  "productboard", // 0
+  "productboardhq", // 0
+  "profitwell", // 0
+  "project44", // 0
+  "projectdiscovery", // 0
+  "projectdiscoveryio", // 0
+  "prolific", // 0
+  "propel", // 0
+  "propelauth", // 0
+  "propeldata", // 0
+  "prophecy", // 0
+  "prophero", // 0
+  "prosimo", // 0
+  "prosper", // 0
+  "protecht", // 0
+  "protectai", // 0
+  "protectaihq", // 0
+  "protobuf", // 0
+  "proxyrack", // 0
+  "public", // 0
+  "pubnub", // 1
+  "pulppo", // 0
+  "pulselive", // 0
+  "pulselivehq", // 0
+  "pulumi", // 0
+  "pulumiio", // 0
+  "pulumiiohq", // 0
+  "pureinsights", // 0
+  "purestorage", // 0
+  "purevpn", // 0
+  "pyramidconsulting1", // 80
+  "qatalog", // 0
+  "qdrant", // 0
+  "qdrantcloud", // 0
+  "qdrantio", // 0
+  "qodo", // 0
+  "quadratic", // 0
+  "qualio", // 0
+  "qualiohq", // 0
+  "qualiti", // 0
+  "qualtrics", // 0
+  "qualys", // 0
+  "quantcast", // 0
+  "quantexa", // 0
+  "quantinuum", // 0
+  "quantive", // 0
+  "quantumblack", // 0
+  "quantumcircuits", // 0
+  "quantummetric", // 0
+  "quarkus", // 0
+  "quickbase", // 0
+  "quicknode", // 0
+  "quickwit", // 0
+  "quickwitio", // 0
+  "quietai", // 0
+  "quizlet", // 0
+  "qumulo", // 0
+  "r3", // 0
+  "raasinfotek", // 7
+  "rabbitmq", // 0
+  "rackspace", // 0
+  "radar", // 0
+  "railwayapp", // 0
+  "railz", // 0
+  "ramp", // 0
+  "ramphq", // 0
+  "rancher", // 0
+  "rapid7", // 0
+  "rapidapi", // 0
+  "rasa", // 0
+  "raycast", // 0
+  "raycastapp", // 0
+  "raycasthq", // 0
+  "raysearch", // 0
+  "razorops", // 0
+  "razorpay", // 0
+  "reachy", // 0
+  "reasoning", // 0
+  "recharge", // 0
+  "recogni", // 0
+  "recordedfuture", // 0
+  "redash", // 0
+  "redcanary", // 0
+  "redhat", // 0
+  "redis", // 0
+  "redisenterprise", // 0
+  "redislabs", // 0
+  "redislabsinc", // 0
+  "redox", // 0
+  "redoxengine", // 0
+  "redpanda", // 0
+  "redpandaio", // 0
+  "redventures", // 0
+  "refine", // 0
+  "reflex", // 0
+  "regal", // 0
+  "regology", // 0
+  "relay", // 0
+  "relayapp", // 0
+  "relayfinancial", // 0
+  "reliabilityfirst", // 0
+  "remote", // 0
+  "remotecom", // 0
+  "render", // 0
+  "rendercloud", // 0
+  "renderedai", // 0
+  "renderhq", // 0
+  "replicate", // 0
+  "replicateai", // 0
+  "replit", // 0
+  "replo", // 0
+  "rescale", // 0
+  "resend", // 0
+  "resendhq", // 0
+  "resilience", // 0
+  "retool", // 0
+  "retoolhq", // 0
+  "revenuecat", // 0
+  "revenuecathq", // 0
+  "revinate", // 0
+  "revolut", // 0
+  "rewind", // 0
+  "rhinofi", // 0
+  "ridecell", // 0
+  "rilldata", // 0
+  "ringcentral", // 0
+  "rippling", // 0
+  "riskified", // 0
+  "river", // 0
+  "rivet", // 0
+  "roadie", // 0
+  "roboflow", // 0
+  "rocketchat", // 0
+  "rocketlane", // 0
+  "rocketpool", // 0
+  "rocketsoftware", // 0
+  "rockset", // 0
+  "rokt", // 0
+  "rollbar", // 0
+  "rook", // 0
+  "rookout", // 0
+  "rootinsurance", // 0
+  "rootly", // 0
+  "rootlyhq", // 0
+  "rootlyinc", // 0
+  "rrdonnelley", // 5
+  "rubicon", // 0
+  "rubiconmd", // 0
+  "rubrik", // 0
+  "rudderstack", // 0
+  "rudderstackhq", // 0
+  "runpod", // 0
+  "runway", // 0
+  "runwayhq", // 0
+  "runwayml", // 0
+  "runwhen", // 0
+  "safebase", // 0
+  "safebasehq", // 0
+  "safebaseinc", // 0
+  "safebreach", // 0
+  "safetyculture", // 0
+  "safetywing", // 0
+  "safetywinghq", // 0
+  "saildrone", // 0
+  "sailpoint", // 0
+  "sailpointhq", // 0
+  "saleshood", // 0
+  "salesloft", // 0
+  "samsara", // 0
+  "samsarahq", // 0
+  "sana", // 0
+  "sanas", // 0
+  "sandboxaq", // 0
+  "sanity", // 0
+  "sanityhq", // 0
+  "sanityio", // 0
+  "saviynt", // 0
+  "saxonglobal", // 50
+  "scadeasolutionsinc", // 14
+  "scaleai", // 0
+  "scalegrid", // 0
+  "scaleway", // 0
+  "scandit", // 0
+  "scanditai", // 0
+  "scarf", // 0
+  "scarfio", // 0
+  "scylla", // 0
+  "scylladb", // 0
+  "seam", // 0
+  "seatgeek", // 0
+  "secureauth", // 0
+  "secureframe", // 0
+  "secureworks", // 0
+  "securitycompass", // 0
+  "securityscorecard", // 0
+  "seek", // 0
+  "seekout", // 2
+  "seekwell", // 0
+  "seekwellhq", // 0
+  "segment", // 0
+  "segmentio", // 0
+  "segmentstream", // 0
+  "seismic", // 0
+  "selfbook", // 0
+  "semgrep", // 0
+  "semgrepdev", // 0
+  "semgrepinc", // 0
+  "semperis", // 0
+  "sendbird", // 0
+  "sendgrid", // 0
+  "sendoso", // 0
+  "sense", // 0
+  "sensehq", // 0
+  "sentinelone", // 0
+  "sentry", // 0
+  "seon", // 0
+  "sequel", // 0
+  "sequence", // 0
+  "serverless", // 0
+  "serverpod", // 0
+  "servicenow", // 28
+  "servicetitan", // 4
+  "sezzle", // 1
+  "sgs", // 7
+  "shadow", // 0
+  "shadowserver", // 0
+  "shakudo", // 0
+  "sharechat", // 0
+  "sharegate", // 0
+  "sharethrough", // 0
+  "shipbob", // 0
+  "shipengine", // 0
+  "shippo", // 0
+  "shipwell", // 0
+  "shipyard", // 0
+  "shipyardhq", // 0
+  "shopify", // 0
+  "shoreline", // 0
+  "shortcut", // 0
+  "shortwave", // 0
+  "siglens", // 0
+  "sigmacomputing", // 0
+  "sigmacomputinghq", // 0
+  "signadot", // 0
+  "signalfx", // 0
+  "signifyd", // 0
+  "simplepractice", // 0
+  "simspace", // 0
+  "simstudio", // 0
+  "singlebasecloud", // 0
+  "singleops", // 0
+  "singlestore", // 0
+  "sitetracker", // 0
+  "sketch", // 0
+  "skiff", // 0
+  "skilljar", // 0
+  "skims", // 0
+  "skydio", // 0
+  "skyflow", // 0
+  "skyhighsecurity", // 0
+  "skyscanner", // 0
+  "skyvern", // 0
+  "skyvernai", // 0
+  "slab", // 0
+  "slalom", // 0
+  "slingshot", // 0
+  "sliplane", // 0
+  "smallstep", // 0
+  "smartasset", // 0
+  "smartbear", // 0
+  "smartcar", // 0
+  "smartling", // 0
+  "smartnews", // 0
+  "smartsheet", // 0
+  "snapdocs", // 0
+  "snaplogic", // 0
+  "snic", // 0
+  "snorkel", // 0
+  "snorkelai", // 0
+  "snowflake", // 0
+  "snowplow", // 0
+  "socket", // 0
+  "socketdev", // 0
+  "socotra", // 0
+  "socure", // 0
+  "solace", // 0
+  "solaredge", // 0
+  "solarwinds", // 1
+  "solarwindscloud", // 0
+  "solidigm", // 13
+  "solidroad", // 0
+  "solo", // 0
+  "soloio", // 0
+  "sonar", // 0
+  "sonarqube", // 0
+  "sonatype", // 0
+  "sonder", // 0
+  "sonrai", // 0
+  "sourceclear", // 0
+  "sourcegraph", // 0
+  "sourcegraphhq", // 0
+  "sourcehut", // 0
+  "spacelift", // 0
+  "spaceliftdev", // 0
+  "spaceliftio", // 0
+  "sparinformationsystems", // 9
+  "sparkbeyond", // 0
+  "sparkpost", // 0
+  "speakeasy", // 0
+  "speedscale", // 0
+  "spekit", // 0
+  "splashtop", // 0
+  "split", // 0
+  "splitio", // 0
+  "sportradar", // 5
+  "spotai", // 0
+  "spotdraft", // 0
+  "spoton", // 0
+  "sprig", // 0
+  "springhealth", // 0
+  "springworks", // 0
+  "sprinklr", // 0
+  "spycloud", // 0
+  "stackadapt", // 0
+  "stackauth", // 0
+  "stackblitz", // 0
+  "stackblitzhq", // 0
+  "stackgen", // 0
+  "stackhawk", // 0
+  "stacklok", // 0
+  "stackone", // 3
+  "stackrox", // 0
+  "stackstate", // 0
+  "starburst", // 0
+  "starburstdata", // 0
+  "starbursthq", // 0
+  "starlingbank", // 0
+  "starrocks", // 0
+  "starrocksio", // 0
+  "starry", // 0
+  "steampipe", // 0
+  "steamship", // 0
+  "stellar", // 0
+  "stellarcyber", // 0
+  "stellarhealth", // 0
+  "stellentit", // 1
+  "stitchfix", // 0
+  "stormforge", // 0
+  "stormforgehq", // 0
+  "stormreply", // 0
+  "stormreplyhq", // 0
+  "strapi", // 0
+  "strategicstaffingsolutionss3", // 3
+  "stream", // 0
+  "streamdal", // 0
+  "streamlit", // 0
+  "streamnative", // 0
+  "stripe", // 0
+  "stripeclimate", // 0
+  "strongcompute", // 0
+  "strongdm", // 0
+  "strongdmhq", // 0
+  "submittable", // 0
+  "substrate", // 0
+  "substrateai", // 0
+  "sumo", // 0
+  "sumoheavy", // 0
+  "sumologic", // 0
+  "supabase", // 0
+  "superannotate", // 0
+  "superblocks", // 0
+  "superblocksai", // 0
+  "superhuman", // 0
+  "superlinked", // 0
+  "supermemory", // 0
+  "supertokens", // 0
+  "supertokenshq", // 0
+  "surrealdb", // 0
+  "surrealdbcloud", // 0
+  "surrealdbhq", // 0
+  "surveymonkey", // 0
+  "svix", // 0
+  "swanktekinc", // 2
+  "swimlane", // 0
+  "swimm", // 0
+  "swimmio", // 0
+  "symphonyai", // 0
+  "synack", // 0
+  "synthesia", // 0
+  "sysdig", // 0
+  "sysdighq", // 0
+  "sysdigsecure", // 0
+  "tabbyml", // 0
+  "tabnine", // 0
+  "tackle", // 0
+  "tailcall", // 0
+  "tailorbrands", // 0
+  "tailscale", // 0
+  "tailwarden", // 0
+  "talkdesk", // 0
+  "talon", // 0
+  "talonsecurity", // 0
+  "tanium", // 0
+  "tanstack", // 0
+  "taskingai", // 0
+  "teamviewer", // 0
+  "teamwork", // 0
+  "techsee", // 0
+  "techsursolutions", // 25
+  "tecton", // 0
+  "teleport", // 0
+  "teleporthq", // 0
+  "tembo", // 0
+  "temporal", // 0
+  "temporalio", // 0
+  "tenmilesquaretechnologies", // 2
+  "tensorwave", // 0
+  "tensorzero", // 0
+  "terra", // 0
+  "terraformcloud", // 0
+  "terraformlabs", // 0
+  "terramate", // 0
+  "terrateam", // 0
+  "teslamotors", // 0
+  "testcontainers", // 0
+  "testifysec", // 0
+  "testim", // 0
+  "testlio", // 0
+  "testrail", // 0
+  "texada", // 0
+  "textkernel", // 0
+  "thegraph", // 0
+  "thegraphprotocol", // 0
+  "thejudgegroup1", // 1
+  "thena", // 0
+  "thenielsencompany", // 3
+  "thetradeDesk", // 0
+  "thoropass", // 0
+  "thoughtmachine", // 0
+  "thoughtspot", // 0
+  "thoughtspothq", // 0
+  "thoughttrace", // 0
+  "thousandeyes", // 0
+  "thousandeyeshq", // 0
+  "threatlocker", // 0
+  "threeds", // 0
+  "tidal", // 0
+  "tigera", // 0
+  "tigergraph", // 0
+  "tigrisdata", // 0
+  "timescale", // 0
+  "timescalehq", // 0
+  "tines", // 0
+  "tinybird", // 0
+  "tinybirdhq", // 0
+  "tipalti", // 0
+  "toast", // 0
+  "together", // 0
+  "togetherai", // 0
+  "tokern", // 0
+  "tomorrowio", // 0
+  "tomtom", // 0
+  "tonic", // 0
+  "tooljet", // 0
+  "topazlabs", // 0
+  "torc", // 0
+  "torq", // 0
+  "torqhq", // 0
+  "torqio", // 0
+  "trace3", // 0
+  "traceable", // 0
+  "traceableai", // 0
+  "traceablehq", // 0
+  "tractian", // 0
+  "transcarent", // 0
+  "transcend", // 0
+  "transformco", // 0
+  "transposit", // 0
+  "travoom", // 6
+  "treasuredata", // 0
+  "treasuredatahq", // 0
+  "treeverse", // 0
+  "trellis", // 0
+  "trellix", // 0
+  "trendmicro", // 0
+  "trendmicrohq", // 0
+  "trendminer", // 0
+  "tribe", // 0
+  "tribeai", // 0
+  "trigyntechnologies", // 2
+  "trigyntechnologiesinc", // 4
+  "trilogy", // 0
+  "trinsic", // 0
+  "tripactions", // 0
+  "triplelift", // 0
+  "triton", // 0
+  "troj", // 0
+  "trueaccord", // 0
+  "truecaller", // 0
+  "truefoundry", // 0
+  "truefoundryhq", // 0
+  "truenorth", // 0
+  "truera", // 0
+  "trueraai", // 0
+  "trustcloud", // 0
+  "trustero", // 0
+  "trustifi", // 0
+  "trustpilot", // 0
+  "trustradius", // 1
+  "truveta", // 0
+  "tuist", // 0
+  "tunecore", // 0
+  "turbonomic", // 0
+  "turbopuffer", // 0
+  "turborepo", // 0
+  "turing", // 0
+  "turnertownsend", // 63
+  "turso", // 0
+  "tursohq", // 0
+  "twelvelabs", // 0
+  "twilio", // 0
+  "twiliosegment", // 0
+  "typedream", // 0
+  "typeface", // 0
+  "typst", // 0
+  "ubicloud", // 0
+  "udacity", // 0
+  "udemy", // 0
+  "udemybusiness", // 0
+  "unbabel", // 0
+  "unify", // 0
+  "unifyapps", // 0
+  "uniphore", // 0
+  "uniphoreai", // 0
+  "unit21", // 0
+  "universityofnotredame", // 6
+  "unlearn", // 0
+  "unleash", // 0
+  "unqork", // 0
+  "unqorkhq", // 0
+  "unstructured", // 0
+  "upbound", // 0
+  "upboundhq", // 0
+  "uplight", // 0
+  "upsolver", // 0
+  "upstart", // 0
+  "upstash", // 0
+  "ursusinc", // 1
+  "usebraintrust", // 0
+  "useinsider", // 0
+  "usergems", // 0
+  "usertesting", // 0
+  "v7labs", // 0
+  "valimail", // 0
+  "valkey", // 0
+  "valon", // 0
+  "vanta", // 0
+  "vantage", // 0
+  "vastdata", // 0
+  "vaultspeed", // 0
+  "vectara", // 0
+  "vector", // 0
+  "vectorized", // 0
+  "vectorizedio", // 0
+  "vectra", // 0
+  "veeam", // 0
+  "veeva", // 0
+  "veho", // 0
+  "vela", // 0
+  "veladb", // 0
+  "velero", // 0
+  "vendia", // 0
+  "vendr", // 0
+  "vercel", // 0
+  "vercelai", // 0
+  "verdigris", // 0
+  "vericast", // 6
+  "veritone", // 0
+  "verkada", // 0
+  "verkadahq", // 0
+  "verta", // 0
+  "vervoe", // 1
+  "veson", // 0
+  "vespa", // 0
+  "vespaai", // 0
+  "via", // 0
+  "victoriametrics", // 0
+  "victoriametricshq", // 0
+  "viget", // 0
+  "virta", // 0
+  "virtahealth", // 0
+  "virtana", // 0
+  "virtru", // 0
+  "virtuoso", // 0
+  "visionaryai", // 0
+  "vistar", // 0
+  "visuallayer", // 0
+  "vitess", // 0
+  "vizai", // 0
+  "vmray", // 0
+  "vmware", // 0
+  "voltrondata", // 0
+  "voltus", // 0
+  "vonage", // 0
+  "vonageapi", // 0
+  "vouch", // 0
+  "vouched", // 0
+  "voyageai", // 0
+  "voyager", // 0
+  "vulcan", // 0
+  "vulcanforms", // 0
+  "vulcanformsinc", // 1
+  "vultr", // 0
+  "vultrcloud", // 0
+  "vultrcloudhq", // 0
+  "vuoriinc", // 22
+  "wandb", // 0
+  "wandbai", // 0
+  "wandera", // 0
+  "warp", // 0
+  "wearerosie", // 7
+  "weave", // 0
+  "weaviate", // 0
+  "weaviateio", // 0
+  "webdataset", // 0
+  "webflow", // 0
+  "webiny", // 0
+  "wefox", // 0
+  "weightsandbiases", // 0
+  "weightsbiases", // 0
+  "wepay", // 0
+  "werf", // 0
+  "wework", // 0
+  "whatnot", // 0
+  "whimsical", // 0
+  "windfall", // 0
+  "windmill", // 0
+  "windriver", // 0
+  "winglang", // 0
+  "wingscreditunion", // 4
+  "wiremock", // 0
+  "wise", // 5
+  "wispr", // 0
+  "wistia", // 0
+  "wiz", // 0
+  "workadventure", // 0
+  "workato", // 0
+  "workatohq", // 0
+  "workboard", // 0
+  "workhuman", // 0
+  "workiva", // 0
+  "workos", // 0
+  "workoshq", // 0
+  "workspaceone", // 0
+  "writer", // 0
+  "writerai", // 0
+  "xage", // 0
+  "xano", // 0
+  "xata", // 0
+  "xatahq", // 0
+  "xelix", // 0
+  "xendit", // 0
+  "xepelin", // 0
+  "xero", // 0
+  "xnor", // 0
+  "xnorai", // 0
+  "xometry", // 0
+  "xplor", // 4
+  "yalo", // 0
+  "yellowai", // 0
+  "yext", // 0
+  "yotpo", // 0
+  "youcom", // 0
+  "yougov", // 0
+  "yscope", // 0
+  "yugabyte", // 0
+  "yugabytedb", // 0
+  "yugabytedbhq", // 0
+  "zapier", // 0
+  "zendesk", // 0
+  "zenefits", // 0
+  "zenjob", // 0
+  "zenledger", // 0
+  "zenml", // 0
+  "zenmlhq", // 0
+  "zenoti", // 0
+  "zeotap", // 0
+  "zephr", // 0
+  "zeplin", // 0
+  "zerotier", // 2
+  "zerotierhq", // 0
+  "zeta", // 0
+  "zettaset", // 0
+  "zilliz", // 0
+  "zillow", // 0
+  "zimperium", // 0
+  "zimperiumhq", // 0
+  "zincsearch", // 0
+  "zip", // 0
+  "ziphq", // 0
+  "ziphqinc", // 0
+  "zipline", // 0
+  "ziprecruiter", // 0
+  "zluri", // 0
+  "zlurihq", // 0
+  "zocdoc", // 0
+  "zoekt", // 0
+  "zonos", // 0
+  "zoominfo", // 0
+  "zoovu", // 0
+  "zoox", // 0
+  "zopa", // 0
+  "zora", // 0
+  "zoraai", // 0
+  "zotero", // 0
+  "zscaler", // 0
+  "zscalercloud", // 0
+  "zuddl", // 0
+  "zuora", // 0
+  "zuplo", // 0
+  "zwift", // 0
+  "zyte", // 0
 ];
 
 export default companies;

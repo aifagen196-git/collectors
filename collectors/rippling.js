@@ -60,6 +60,9 @@ export default async function collectRipplingJobs() {
   console.log("🚀 Rippling Collector Started");
   console.log("==========================================\n");
 
+  // Every posting listed, and the ones kept (IT, US): listed jobs that are
+  // filtered out are hidden too.
+  const listed = new Set();
   const listedIds = new Set();
   const failedCompanies = new Set();
 
@@ -76,7 +79,7 @@ export default async function collectRipplingJobs() {
     }
     if (!Array.isArray(jobs)) continue;
     stats.listed += jobs.length;
-    for (const job of jobs) listedIds.add(job.uuid);
+    for (const job of jobs) listed.add(job.uuid);
 
     // Cheap checks on the list entry first, so details are fetched only for
     // IT jobs that could be in the US.
@@ -95,7 +98,9 @@ export default async function collectRipplingJobs() {
         try {
           detail = await getJson(`${API}/${slug}/jobs/${job.uuid}`);
         } catch {
+          // Still listed: leave whatever is stored for it as it is.
           stats.detailFailed++;
+          listedIds.add(job.uuid);
           return null;
         }
         const row = await normalizeBasic({
@@ -116,6 +121,7 @@ export default async function collectRipplingJobs() {
           return null;
         }
         stats.processed++;
+        listedIds.add(job.uuid);
         return row;
       },
       DETAIL_CONCURRENCY,
@@ -132,7 +138,7 @@ export default async function collectRipplingJobs() {
   if (failedCompanies.size) {
     console.log(`⏭ Skipping deactivation: ${failedCompanies.size} board(s) failed to load`);
   } else {
-    await deactivateMissing("rippling", listedIds);
+    await deactivateMissing("rippling", listedIds, new Set(), { listed });
   }
 
   console.log("\n==========================================");

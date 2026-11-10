@@ -7,6 +7,8 @@ import { createClient } from "@supabase/supabase-js";
 import { normalizeRecruiteeJob } from "./normalize/normalizeRecruitee.js";
 import companies from "./config/recruiteeCompanies.js";
 import { isUsJob } from "./lib/isUsJob.js";
+import { isDomainJob } from "./lib/isDomainJob.js";
+import { deactivateWhere } from "../processors/saveJobs.js";
 
 dotenv.config({ path: ".env" });
 
@@ -125,6 +127,10 @@ async function run() {
         console.log(`➡ ${job.title}`);
 
         const normalizedJob = await normalizeRecruiteeJob(job, company);
+        if (!isDomainJob(normalizedJob.title)) {
+          stats.offDomain = (stats.offDomain || 0) + 1;
+          continue;
+        }
         if (!isUsJob(normalizedJob)) {
           stats.nonUs = (stats.nonUs || 0) + 1;
           continue;
@@ -150,23 +156,15 @@ async function run() {
     Date.now() - SCRAPE_LAST_HOURS * 60 * 60 * 1000,
   ).toISOString();
 
-  const { error: deErr, count } = await supabase
-    .from("jobs")
-    .update({
-      is_active: false,
-    })
-    .lt("last_seen", staleCutoff)
-    .eq("source", "recruitee")
-    .eq("is_active", true)
-    .select("id", {
-      count: "exact",
-      head: true,
-    });
-
+  // Batched (shared helper): one UPDATE over thousands of rows trips the
+  // statement timeout.
+  const { done: count, error: deErr } = await deactivateWhere((q) =>
+    q.lt("last_seen", staleCutoff).eq("source", "recruitee"),
+  );
   if (deErr) {
-    console.error(`⚠ Deactivation failed: ${deErr.message}`);
+    console.error(`⚠ Deactivation failed after ${count} rows: ${deErr}`);
   } else {
-    console.log(`🗑 Deactivated ${count ?? 0} stale jobs`);
+    console.log(`🗑 Deactivated ${count} stale jobs`);
   }
 
   console.log("\n==========================================");

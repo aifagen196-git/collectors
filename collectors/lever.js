@@ -61,6 +61,9 @@ export default async function collectLeverJobs() {
   console.log("🚀 Lever Collector Started");
   console.log("==========================================\n");
 
+  // Every posting listed, and the ones that pass the filters (IT, US): jobs
+  // still listed but filtered out are hidden too.
+  const listed = new Set();
   const listedIds = new Set();
   const failedCompanies = new Set();
 
@@ -73,7 +76,7 @@ export default async function collectLeverJobs() {
         failedCompanies.add(normalizeCompany(company) || company);
         continue;
       }
-      for (const job of jobs) listedIds.add(String(job.id));
+      for (const job of jobs) listed.add(String(job.id));
 
       stats.fetched += jobs.length;
 
@@ -94,6 +97,7 @@ export default async function collectLeverJobs() {
           continue;
         }
 
+        listedIds.add(String(job.id));
         normalized.push(row);
         stats.processed++;
       }
@@ -113,7 +117,7 @@ export default async function collectLeverJobs() {
   // DEACTIVATE JOBS NO LONGER LISTED
   // =============================================
 
-  await deactivateMissing("lever", listedIds, failedCompanies);
+  await deactivateMissing("lever", listedIds, failedCompanies, { listed });
 
   console.log("\n==========================================");
   console.log("✅ Lever Collector Finished");
