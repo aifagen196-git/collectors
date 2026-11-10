@@ -22,6 +22,11 @@ const SCRAPE_LAST_HOURS = Number(process.env.SCRAPE_LAST_HOURS || 24);
 // Parallel detail-page fetches per company. Greenhouse tolerates this well and
 // it is the difference between a ~7-hour run and a ~20-minute one.
 const DETAIL_CONCURRENCY = Number(process.env.DETAIL_CONCURRENCY || 8);
+// Jobs not stored yet that one run fetches at most. When many boards are added
+// at once (2026-11-10: ~10,000 new jobs), the backlog loads over several runs
+// instead of one: shorter runs, and the database (500 MB free plan) gets time
+// to clear hidden jobs before it takes the new ones.
+const MAX_NEW_PER_RUN = Number(process.env.GREENHOUSE_MAX_NEW_PER_RUN || 2500);
 
 // =============================================
 // STATS
@@ -34,6 +39,7 @@ const stats = {
   offDomain: 0,
   nonUs: 0,
   unchanged: 0,
+  deferred: 0,
   processed: 0,
   saved: 0,
   deduped: 0,
@@ -121,6 +127,7 @@ export default async function collectGreenhouseJobs() {
   const listed = new Set();
   const keptIds = new Set();
   const failedCompanies = new Set();
+  let newBudget = MAX_NEW_PER_RUN;
 
   for (const company of companies) {
     try {
@@ -158,6 +165,11 @@ export default async function collectGreenhouseJobs() {
           stats.unchanged++;
           continue;
         }
+        if (!prev && newBudget <= 0) {
+          stats.deferred++; // a later run fetches it
+          continue;
+        }
+        if (!prev) newBudget--;
         toFetch.push({ job, us, prev });
       }
 
