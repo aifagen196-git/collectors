@@ -115,10 +115,11 @@ const AI_ROLE_RE = /\b(?:AI|ML|LLM|GenAI)\b.*\b(?:engineer|scientist|researcher|
 // software engineer.
 const SENIOR_ENGINEER_RE = /^\s*(?:(?:senior|sr\.?|lead|staff|principal|distinguished)\s+)+engineer\b/i;
 
-// The matcher has these families only so that "Recruiter, AI/ML" or "Legal
-// Counsel, Supply Chain" isn't read as an AI or supply-chain job; no area on
-// the site is legal or recruiting work.
-const NOT_IT_FAMILIES = new Set(["legal", "talent-hr"]);
+// The matcher has these families only so that "Recruiter, AI/ML", "Legal
+// Counsel, Supply Chain" or "NetSuite - Regional Sales Director" isn't read
+// as an AI, supply-chain or ERP job; no area on the site is legal,
+// recruiting or sales work.
+const NOT_IT_FAMILIES = new Set(["legal", "talent-hr", "sales"]);
 
 export function isDomainJob(title = "") {
   const family = inferRoleFamily(title);

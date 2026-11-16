@@ -132,6 +132,18 @@ const RELATED = {
   "software-engineering": { "backend-engineering": 0.7, "frontend-engineering": 0.7, devops: 0.5 },
   "backend-engineering": { "software-engineering": 0.7, devops: 0.5 },
   "frontend-engineering": { "software-engineering": 0.7, design: 0.4 },
+  "it-support": { "data-center": 0.6, "systems-administration": 0.6, "network-engineering": 0.4 },
+  "data-center": { "it-support": 0.6, "systems-administration": 0.5, "network-engineering": 0.5 },
+  "systems-administration": { "it-support": 0.5, devops: 0.5, "cloud-engineering": 0.5, "network-engineering": 0.5, "database-administration": 0.4 },
+  "database-administration": { "data-engineering": 0.5, "systems-administration": 0.4 },
+  "embedded-engineering": { "software-engineering": 0.6 },
+  "project-management": { "product-management": 0.5, "business-analysis": 0.4 },
+  "product-management": { "project-management": 0.5, "business-analysis": 0.5 },
+  sap: { erp: 0.5, "business-analysis": 0.4 },
+  erp: { sap: 0.5, "business-analysis": 0.4 },
+  salesforce: { "business-analysis": 0.4 },
+  servicenow: { "it-support": 0.4 },
+  workday: { erp: 0.4, "business-analysis": 0.4 },
 };
 
 // Location text that clearly indicates a non-US role. Needed because a batch
@@ -148,7 +160,7 @@ const NON_US_LOCATION =
 // United States". Without this, ~9% of the pool (real US jobs) was silently
 // gated out, starving the feeds.
 const US_LOCATION =
-  /\b(usa|u\.s\.a?\.?|united states|remote[, ]*\(?u\.?s\.?a?\)?|alabama|alaska|arizona|arkansas|california|colorado|connecticut|delaware|florida|georgia|hawaii|idaho|illinois|indiana|iowa|kansas|kentucky|louisiana|maine|maryland|massachusetts|michigan|minnesota|mississippi|missouri|montana|nebraska|nevada|new hampshire|new jersey|new mexico|new york|north carolina|north dakota|ohio|oklahoma|oregon|pennsylvania|rhode island|south carolina|south dakota|tennessee|texas|utah|vermont|virginia|washington|west virginia|wisconsin|wyoming|san francisco|new york city|nyc|los angeles|seattle|austin|boston|chicago|denver|atlanta|dallas|houston|miami|san diego|san jose|palo alto|mountain view|sunnyvale|bellevue|washington,? d\.?c\.?|bay area)\b/i;
+  /\b(usa|u\.s\.a?\.?|united states|remote[, ]*\(?u\.?s\.?a?\)?|alabama|alaska|arizona|arkansas|california|colorado|connecticut|delaware|florida|georgia|hawaii|idaho|illinois|indiana|iowa|kansas|kentucky|louisiana|maine|maryland|massachusetts|michigan|minnesota|mississippi|missouri|montana|nebraska|nevada|new hampshire|new jersey|new mexico|new york|north carolina|north dakota|ohio|oklahoma|oregon|pennsylvania|rhode island|south carolina|south dakota|tennessee|texas|utah|vermont|virginia|washington|west virginia|wisconsin|wyoming|san francisco|new york city|nyc|los angeles|seattle|austin|boston|chicago|denver|atlanta|dallas|houston|miami|san diego|san jose|palo alto|mountain view|sunnyvale|bellevue|washington,? d\.?c\.?|bay area|salt lake city|salt lake|provo|boise|phoenix|scottsdale|tempe|charlotte|raleigh|durham|nashville|philadelphia|pittsburgh|columbus|cleveland|cincinnati|detroit|ann arbor|minneapolis|st\.? paul|kansas city|st\.? louis|indianapolis|milwaukee|madison|tampa|orlando|jacksonville|fort lauderdale|sacramento|fresno|las vegas|reno|portland|salem|richmond|baltimore|arlington|alexandria|charleston|savannah|albuquerque|tucson|omaha|des moines|oklahoma city|tulsa|louisville|memphis|birmingham|new orleans|baton rouge|hartford|providence|buffalo|rochester|albany|syracuse|colorado springs|boulder|fort collins|spokane|tacoma|san antonio|fort worth|el paso|plano|irvine|san bernardino|riverside|oakland|berkeley|santa clara|santa monica|pasadena|redmond|kirkland)\b/i;
 
 // 2-letter US state abbreviations, matched only when clearly a location token
 // (preceded by a comma/space, e.g. "Austin, TX"). Kept separate to avoid the
@@ -351,9 +363,30 @@ const TITLE_FAMILIES = [
   // A candidate in the named domain is not qualified for these roles.
   ["legal", /\b(counsel|attorney|paralegal|legal|litigation)\b/i],
   ["talent-hr", /\b(recruiter|recruiting|talent acquisition|sourcer|people ops|people operations|hr business partner|human resources)\b/i],
+  // Selling roles name the product they sell ("NetSuite - Regional Sales
+  // Director", "Salesforce Account Executive"); they are not that platform's
+  // technical jobs. No candidate family maps here, so they never enter a feed.
+  // Technical account managers are left out on purpose: they are IT roles.
+  ["sales", /\b(sales (director|executive|manager|representative|rep|development)|(?<!technical\s)account (executive|manager|director)|business development|regional sales|inside sales|territory (manager|sales))\b/i],
   ["supply-chain", /\b(supply chain|logistics|procurement|sourcing|demand plan(ner|ning)?|inventory|fulfillment|warehouse|s&op|supply planning|materials manage)\b/i],
+  // Enterprise platforms. Checked before the generic developer/architect/
+  // analyst families: a "Salesforce Developer" or "SAP ABAP Developer" is a
+  // specialist the platform's own candidates want, not a general software job.
+  ["sap", /\b(sap|s\/4\s?hana|abap|hana)\b/i],
+  ["salesforce", /\b(salesforce|sfdc)\b/i],
+  ["servicenow", /\bservice\s?now\b/i],
+  ["workday", /\bworkday\b/i],
+  ["erp", /\b(netsuite|peoplesoft|jd edwards|jde|dynamics 365|d365|dynamics crm|oracle (ebs|e-business|fusion|cloud erp|erp|financials|hcm|scm|apex)|erp)\b/i],
+  // Managing a project or a product is its own job whatever it is about:
+  // "Software Product Manager", "Technical Program Manager, Data Center" and
+  // "Product Manager - Developer Tooling" are PM roles, so these come before
+  // the technical families. Construction project managers are not IT.
+  ["project-management", /\b(project manager|project management|program manager|programme manager|project coordinator|project lead|scrum master|agile coach|delivery manager|pmo|release manager)\b/i,
+    { exclude: /\b(construction|electrical|mechanical|civil)\b/i }],
+  ["product-management", /\b(product manager|product owner|chief of staff)\b/i],
   ["ai-ml", /\b(machine learning|ml engineer|ai engineer|deep learning|data scientist|nlp|computer vision|llm|genai|generative ai|ai\/ml|mlops|applied scientist)\b/i],
-  ["data-engineering", /\b(data engineer|etl|data platform|analytics engineer)\b/i],
+  ["data-engineering", /\b(data engineer|etl|data platform|analytics engineer|data architect|data warehouse|data modeler|big data|data integration|informatica|databricks|snowflake developer|mdm)\b/i],
+  ["database-administration", /\b(dba|database administrator|database admin|database engineer|database developer|database development|database architect|(sql server|oracle|postgres(ql)?|mysql|mongodb) (dba|administrator|admin|developer|engineer))\b/i],
   // Covers the analyst-titled DATA roles too (product/intelligence/FinOps/
   // risk/insights analyst) — these are data-analysis jobs, but with the narrow
   // pattern they resolved to "unknown" and the strict role gate hid them from
@@ -365,27 +398,81 @@ const TITLE_FAMILIES = [
   // Risks Analyst (security/risk roles) into a Data Analyst's feed. Only true
   // data-analysis titles belong. Data Scientist / Data Engineer are their OWN
   // families and must NOT be folded in just because they contain "data".
-  ["data-analytics", /\b(data analyst|business intelligence|bi analyst|analytics analyst|reporting analyst|insights analyst)\b/i],
-  ["offensive-security", /\b(penetration tester|red team|offensive security)\b/i],
-  ["security-engineering", /\b(security engineer|application security|infosec|cyber ?security|security analyst|detection|soc analyst|csoc|security operations|security automation)\b/i],
-  ["network-engineering", /\b(network engineer|network administrator)\b/i],
-  ["devops", /\b(devops|site reliability|sre\b|platform engineer|infrastructure engineer|build engineer|release engineer)\b/i],
-  ["cloud-engineering", /\b(cloud engineer|cloud architect|aws engineer|azure engineer)\b/i],
-  ["frontend-engineering", /\b(front.?end|react developer|ui engineer|web developer)\b/i],
-  ["backend-engineering", /\b(back.?end|api engineer)\b/i],
-  ["qa-testing", /\b(qa engineer|quality assurance|test engineer|sdet)\b/i],
-  ["software-engineering", /\b(software engineer|software developer|full.?stack|swe\b|sde\b|solutions? engineer|solutions architect|forward deployed|android engineer|ios engineer|mobile engineer|mobile developer|developer experience|developer relations|devrel)\b/i],
-  ["product-management", /\b(product manager|product owner|program manager|project manager|chief of staff)\b/i],
+  ["data-analytics", /\b(data analyst|business intelligence|bi analyst|bi developer|bi engineer|analytics analyst|reporting analyst|insights analyst|power bi|tableau developer|ssas|ssrs|reporting developer|data visualization)\b/i],
+  ["offensive-security", /\b(penetration tester|pen tester|pentester|red team|offensive security)\b/i],
+  ["security-engineering", /\b(security engineer|security architect|security specialist|security consultant|security administrator|information security|application security|infosec|cyber ?security|security analyst|detection|soc analyst|csoc|security operations|security automation)\b/i],
+  ["network-engineering", /\b(network engineer|network administrator|network architect|network developer|network technician|network analyst|network operations|noc (engineer|technician|analyst)|voip|telecom(munications)? engineer|wireless engineer)\b/i],
+  // "Support engineer" is also a job on flight lines and factory floors
+  // ("Ground Support Engineer", "Process Support Engineer"); those stay out.
+  ["it-support", /\b(help\s?desk|service desk|desktop support|deskside|it support|technical support|tech support|support (engineer|technician|specialist|analyst)|it technician|field technician|computer technician|end.?user support|it specialist|application support|production support)\b/i,
+    { exclude: /\b(ground|mission|process|tooling|chillers?|commissioning|cad|consumer|manufacturing|maintenance|clinical|medical)\b/i }],
+  ["systems-administration", /\b(systems? administrator|sysadmin|systems? admin|(linux|unix|windows|vmware|citrix|exchange|sharepoint|m365|office 365|active directory|wintel) (administrator|admin|engineer)|(it|windows|linux|server|enterprise|infrastructure) systems? engineer|systems? engineer\b.*\b(windows|linux|vmware|microsoft|citrix|commvault|sharepoint|m365|active directory)|mainframe systems programmer|vmware|commvault)\b/i],
+  ["devops", /\b(devops|dev\s?sec\s?ops|site reliability|sre\b|platform engineer|infrastructure engineer|build engineer|release engineer)\b/i],
+  ["cloud-engineering", /\b(cloud engineer|cloud architect|cloud solutions? (engineer|architect)|(aws|azure|gcp) (engineer|architect|administrator|developer))\b/i],
+  ["embedded-engineering", /\b(firmware|embedded)\b/i],
   ["design", /\b(designer|ux\b|ui designer|product design)\b/i],
-  ["business-analysis", /\b(business analyst|revenue operations|revops|salesops|sales operations|gtm planning|deal desk|deal pricing|pricing analyst|strategy analyst|operations analyst)\b/i],
+  ["frontend-engineering", /\b(front.?end|react developer|angular developer|ui engineer|ui developer|web developer)\b/i],
+  ["backend-engineering", /\b(back.?end|api engineer|api developer)\b/i],
+  ["qa-testing", /\b(qa(?!\s*\/\s*qc)|software quality|quality assurance|test(ing)? (engineer|analyst|automation|lead|manager|architect|specialist)|automation test(er|ing)?|test automation|software test(er|ing)?|sdet|quality automation|tester|validation engineer)\b/i],
+  // "software" with an engineering/developer/manager word anywhere in the
+  // title: "Staff Software Senior Engineer", "Manager, Software - Perception",
+  // "Senior Software  Engineer" (double space), "Software Enginering" (typo).
+  ["software-engineering", /\b(software\b.*\b(engineer\w*|enginering|developer|development|dev|architect|manager)|(engineer\w*|manager)\b.*\bsoftware|full.?stack|swe\b|sde\b|solutions? engineer|(solutions?|enterprise|technical|application|applications|it|integration|platform|principal) architect|forward deployed|android|ios|mobile (engineer|developer)|developer experience|developer relations|developer advocate|devrel|engineering manager|member of technical staff|programmer|mainframe|cobol|integration developer|mulesoft|developer)\b/i],
+  // Data center work that no technical family above claimed: technicians,
+  // operations, site roles. (SRE, software and network jobs at data centers
+  // stay in their own families.) The physical side (electrical, mechanical,
+  // construction, commissioning) is not IT and stays unresolved.
+  ["data-center", /\bdata\s?cent(er|re)s?\b/i, {
+    exclude: /\b(electrical|mechanical|structural|construction|commissioning|civil|hvac|surveyor|cost|scada|controls|power|design engineer|compensation|community|finance|accounting|marketing|communications|policy|real estate|energy)\b/i,
+    require: /\b(technician|operations|ops|support|deployment|site|hardware|infrastructure|engineer|supervisor|manager|lead|specialist|associate)\b/i,
+  }],
+  ["business-analysis", /\b(business analyst|business systems analyst|systems analyst|revenue operations|revops|salesops|sales operations|gtm planning|deal desk|deal pricing|pricing analyst|strategy analyst|operations analyst)\b/i],
+  // Broad fallbacks, ONLY for titles nothing above claimed. Written as
+  // early patterns they pulled "AI Software Engineer", "Software Engineer,
+  // Identity & Access Management" and "Software Engineer, Cloud
+  // Infrastructure" out of software-engineering; here they only pick up
+  // titles like "AI Evaluation Engineer", "Cybersecurity Analyst I" or
+  // "Cloud Systems Architect" that used to match nothing.
+  ["ai-ml", /\b(agentic|ai\b[\w\s/&,-]{0,25}\b(engineer\w*|scientist|architect|developer|researcher))\b/i],
+  ["security-engineering", /\b(cyber\w*|cloud security|iam (engineer|analyst|architect)|identity (and|&) access|vulnerability|threat|grc)\b/i],
+  ["cloud-engineering", /\bcloud\b[\w\s/&-]{0,20}\b(engineer\w*|architect\w*|administrator|developer|platform|infrastructure|consultant|solutions?)\b/i],
+  ["devops", /\bkubernetes\b/i],
 ];
+
+// Families the resume classifier (prompts.js ROLE_FAMILY_ENUM) cannot name.
+// For these the matcher reads the family from the resume's own headline
+// instead (matching.service.js getCandidateProfile).
+export const TITLE_ONLY_FAMILIES = new Set([
+  "sap", "salesforce", "servicenow", "workday", "erp", "database-administration",
+  "data-center", "it-support", "systems-administration", "embedded-engineering",
+  "project-management",
+]);
 
 // Exported so the matching service can turn a user's free-text preference
 // (e.g. "Backend Engineer" from Settings → Job Preferences) into the same
 // role-family slug the scorer compares against.
+// An entry may carry { exclude, require }: checked against the same line as
+// the match, so "Project Manager - Data Center Construction" is left out
+// without the pattern itself having to look at the whole text.
+function lineAround(text, index) {
+  const start = text.lastIndexOf("\n", index) + 1;
+  const end = text.indexOf("\n", index);
+  return text.slice(start, end === -1 ? text.length : end);
+}
+function familyMatch(re, opts, text) {
+  const m = re.exec(text);
+  if (!m) return null;
+  if (opts) {
+    const line = lineAround(text, m.index);
+    if (opts.exclude?.test(line)) return null;
+    if (opts.require && !opts.require.test(line)) return null;
+  }
+  return m;
+}
+
 export function inferRoleFamily(title = "") {
-  for (const [family, re] of TITLE_FAMILIES) {
-    if (re.test(title)) return family;
+  for (const [family, re, opts] of TITLE_FAMILIES) {
+    if (familyMatch(re, opts, title)) return family;
   }
   return "";
 }
@@ -426,8 +513,8 @@ export function jobFamily(job = {}) {
 export function inferRoleFamilyFromResume(text = "") {
   let best = "";
   let bestIdx = Infinity;
-  for (const [family, re] of TITLE_FAMILIES) {
-    const m = re.exec(text);
+  for (const [family, re, opts] of TITLE_FAMILIES) {
+    const m = familyMatch(re, opts, text);
     if (m && m.index < bestIdx) {
       best = family;
       bestIdx = m.index;
