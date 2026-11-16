@@ -35,6 +35,56 @@ export const DEFAULT_WEIGHTS = {
 };
 
 const EDU_RANK = { "": 0, highschool: 1, associate: 2, bachelors: 3, masters: 4, phd: 5 };
+// Resumes use the classifier's spelling ("bachelors", "masters"); the
+// collectors' extractor writes "bachelor" / "master" / "none". Without this,
+// every bachelor's- or master's-level job read as "no requirement".
+const EDU_ALIASES = {
+  bachelor: "bachelors", "bachelor's": "bachelors", master: "masters", "master's": "masters",
+  doctorate: "phd", "high school": "highschool", none: "",
+};
+export function eduRank(level) {
+  const k = String(level || "").toLowerCase().trim();
+  return EDU_RANK[EDU_ALIASES[k] ?? k] ?? 0;
+}
+
+// Remote, judged mainly on the LOCATION text. The stored is_remote_us /
+// work_mode come from scanning the whole description for "remote", which
+// flags on-site jobs that merely mention remote sites or tools (a SpaceX
+// sourcing job in Hawthorne, CA was stored as remote). Those flags are only
+// trusted when the location names no actual place.
+export function jobIsRemote(job = {}) {
+  const loc = String(job.location || "").trim();
+  if (/\bremote\b/i.test(loc)) return true;
+  const mode = String(job.profile?.work_mode || job.work_mode || "").toLowerCase();
+  if (/\bhybrid\b/i.test(loc) || mode === "hybrid" || mode === "onsite") return false;
+  const vague = !loc || /^(united states( of america)?|usa|us|u\.s\.?(a\.?)?|anywhere|nationwide)$/i.test(loc);
+  return vague && Boolean(job.is_remote_us || mode === "remote");
+}
+
+// Work authorization. Clearance / citizenship requirements are read from the
+// TITLE ("Active TS/SCI", "Top Secret Clearance Required"), which states them
+// reliably, or from an extracted text requirement. The collectors' boolean
+// work_auth_required=true means "must already be authorized / no visa
+// sponsorship" (processors/workAuthExtractor.js).
+const CLEARANCE_RE = /\b(clearance|cleared|ts\/sci|top secret|secret clearance|polygraph|ci poly|full scope poly|u\.?s\.? citizen(ship)?|public trust)\b/i;
+export function jobNeedsCitizenship(job = {}) {
+  return CLEARANCE_RE.test(job.title || "") || /citizen|clearance|secret/i.test(String(job.work_auth_required ?? ""));
+}
+function jobNoSponsorship(job = {}) {
+  const w = job.work_auth_required;
+  return w === true || w === "true";
+}
+// "citizen" | "permanent" | "sponsorship" | "authorized" | "" (unknown).
+export function candidateWorkStatus(candidate = {}) {
+  const t = String(candidate.work_auth || "").toLowerCase();
+  if (/\bnon[- ]?(us |u\.s\. )?citizen/.test(t)) {
+    // falls through to the visa checks below
+  } else if (/\bcitizen/.test(t)) return "citizen";
+  if (/green card|permanent resident|\bgc\b|\blpr\b/.test(t)) return "permanent";
+  if (candidate.needs_sponsorship === true || /h-?1b|\bopt\b|\bcpt\b|\bf-?1\b|h-?4|l-?1|\btn\b|visa|sponsor|\bead\b/.test(t)) return "sponsorship";
+  if (/authori[sz]ed/.test(t)) return "authorized";
+  return "";
+}
 
 // Seniority ladder. Used for level alignment — a documented technique at every
 // major matcher (LinkedIn/Indeed/JobRight all score or filter on seniority):
@@ -204,11 +254,12 @@ function gate(candidate, job) {
   // still won't match "citizen"/"clearance"/"secret" below (that's fine —
   // this hard gate is specifically about text mentioning those terms, not a
   // general auth-required flag).
-  const need = String(job.work_auth_required || "").toLowerCase();
-  const have = String(candidate.work_auth || "").toLowerCase();
-  const strict = need.includes("citizen") || need.includes("clearance") || need.includes("secret");
-  if (strict && have && !(have.includes("citizen") || have.includes("green") || have.includes("gc"))) {
-    return "Work authorization requirement not met";
+  // Citizenship / security clearance: only US citizens can hold a clearance,
+  // so a candidate KNOWN not to be one never sees these. Unknown status is a
+  // soft cap instead (softCap below), since most resumes don't say.
+  const status = candidateWorkStatus(candidate);
+  if (status && status !== "citizen" && jobNeedsCitizenship(job)) {
+    return "Requires US citizenship / security clearance";
   }
 
   // NOTE: years and seniority mismatches are no longer HARD gates — they are
@@ -414,6 +465,9 @@ const TITLE_FAMILIES = [
   ["frontend-engineering", /\b(front.?end|react developer|angular developer|ui engineer|ui developer|web developer)\b/i],
   ["backend-engineering", /\b(back.?end|api engineer|api developer)\b/i],
   ["qa-testing", /\b(qa(?!\s*\/\s*qc)|software quality|quality assurance|test(ing)? (engineer|analyst|automation|lead|manager|architect|specialist)|automation test(er|ing)?|test automation|software test(er|ing)?|sdet|quality automation|tester|validation engineer)\b/i],
+  // Pre-sales engineers demo and sell the product; they are not software
+  // engineering roles ("Sales Solutions Engineer" topped a new grad's feed).
+  ["sales-engineering", /\b((pre-?\s?)?sales (solutions? )?engineer\w*|presales|pre-sales|sales architect)\b/i],
   // "software" with an engineering/developer/manager word anywhere in the
   // title: "Staff Software Senior Engineer", "Manager, Software - Perception",
   // "Senior Software  Engineer" (double space), "Software Enginering" (typo).
@@ -560,7 +614,7 @@ function experienceScore(candidate, job) {
 }
 
 function locationScore(candidate, job) {
-  if (job.is_remote_us || /remote/i.test(job.location || "")) return 1;
+  if (jobIsRemote(job)) return 1;
   const targets = (candidate.target_locations || []).map((s) => s.toLowerCase());
   const loc = (job.location || "").toLowerCase();
   if (candidate.open_to_relocate) return 0.9;
@@ -569,8 +623,8 @@ function locationScore(candidate, job) {
 }
 
 function educationScore(candidate, job) {
-  const need = EDU_RANK[(job.education_min || "").toLowerCase()] ?? 0;
-  const have = EDU_RANK[(candidate.education_level || "").toLowerCase()] ?? 0;
+  const need = eduRank(job.education_min);
+  const have = eduRank(candidate.education_level);
   if (!need) return 1;
   if (have >= need) return 1;
   return need - have === 1 ? 0.6 : 0.3;
@@ -590,9 +644,26 @@ export function softCap(candidate, job) {
     else if (short > 2) caps.push({ cap: 45, reason: `Needs ~${min}y experience, you have ${yrs}y` });
   }
 
+  // Two levels apart (a new grad and a Senior role, or a senior candidate and
+  // a junior one) used to pass uncapped: a 0-year candidate saw "Data
+  // Scientist, Senior" at 81%.
   const senGap = seniorityGap(candidate, job);
-  if (senGap != null && senGap >= 3) {
-    caps.push({ cap: 40, reason: "Seniority level mismatch" });
+  if (senGap != null && senGap >= 2) {
+    const cLevel = SENIORITY_RANK[(candidate.seniority || "mid").toLowerCase()] ?? 2;
+    const jTitle = inferSeniorityFromTitle(job.title);
+    const jLevel = jTitle ? SENIORITY_RANK[jTitle] : SENIORITY_RANK[(job.seniority || "").toLowerCase()];
+    const reason = jLevel > cLevel ? "More senior than your experience" : "Below your experience level";
+    caps.push({ cap: senGap >= 3 ? 40 : 60, reason });
+  }
+
+  // Work authorization, when the candidate's status is unknown or they need a
+  // visa. (Known non-citizens never see clearance jobs: see gate.)
+  const status = candidateWorkStatus(candidate);
+  if (!status && jobNeedsCitizenship(job)) {
+    caps.push({ cap: 50, reason: "May require US citizenship or a security clearance" });
+  }
+  if (status === "sponsorship" && jobNoSponsorship(job)) {
+    caps.push({ cap: 45, reason: "Employer may not sponsor visas" });
   }
 
   if (!caps.length) return null;
@@ -618,7 +689,7 @@ export function adaptiveWeights(job) {
   const signals =
     ((job.skills_required || []).length >= 3 ? 1 : 0) +
     (Number(job.min_years || 0) > 0 ? 1 : 0) +
-    (job.education_min ? 1 : 0) +
+    (eduRank(job.education_min) > 0 ? 1 : 0) +
     (job.role_family && job.role_family !== "other" ? 1 : 0);
   return signals >= 2 ? DEFAULT_WEIGHTS : SPARSE_WEIGHTS;
 }
