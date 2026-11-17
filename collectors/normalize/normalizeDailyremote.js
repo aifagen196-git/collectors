@@ -1,4 +1,9 @@
 import { extractJobProfile } from "../processors/extractProfile.js";
+import { SKILLS, canonical } from "../../vendor/skills.js";
+
+// Tags are explicit skill labels here, so a tag that is a known skill counts
+// even when the prose-oriented dictionary would not read it ("workday" alone).
+const KNOWN_SKILLS = new Set(SKILLS.map(canonical));
 
 // DailyRemote's location "pill" is often a broad region (e.g. "North
 // America", "Worldwide") even when the title is explicit about the country
@@ -13,20 +18,38 @@ function resolveLocation(pillLocation, title) {
   return pillLocation || "";
 }
 
+// "2 hours ago" / "3 days ago" / "1 month ago" -> a date. The card shows
+// nothing more precise; collection time was stored before, so every job
+// looked brand new.
+function postedFromAgo(text = "") {
+  const m = /(\d+)\s*(minute|hour|day|week|month)s?\s+ago/i.exec(text);
+  if (!m) return /just now|today/i.test(text) ? new Date() : null;
+  const unit = { minute: 6e4, hour: 36e5, day: 864e5, week: 6048e5, month: 2592e6 }[m[2].toLowerCase()];
+  return new Date(Date.now() - Number(m[1]) * unit);
+}
+
+// DailyRemote hides the description and the employer from non-members; the
+// free card has the title, type, age, location and tags only. Tags are
+// hyphenated ("rest-api", "test-automation"), which the skill dictionary
+// never matched.
 export async function normalizeDailyremote(raw) {
-  const description = raw.tags?.length ? `Tags: ${raw.tags.join(", ")}.` : "";
+  const tags = (raw.tags || []).map((t) => String(t).replace(/-/g, " "));
+  const description = tags.length ? `Tags: ${tags.join(", ")}.` : "";
 
   const profile = await extractJobProfile(description, { title: raw.title });
 
-  const location = resolveLocation(raw.location, raw.title);
-  const isRemote = true; // every listing on this board is remote by definition
+  const resolved = resolveLocation(raw.location, raw.title);
+  // Every listing on this board is remote. Say so in the location, which is
+  // what the matcher and the job card read for remote work.
+  const location = resolved ? (/\bremote\b/i.test(resolved) ? resolved : `Remote - ${resolved}`) : "Remote";
+  const posted = postedFromAgo(raw.postedAgo);
 
   return {
     title: raw.title || "",
 
     company: raw.company || "",
 
-    location: location || "Remote",
+    location,
 
     employment_type: raw.employmentType || "",
 
@@ -42,9 +65,10 @@ export async function normalizeDailyremote(raw) {
 
     apply_url: raw.applyUrl || "",
 
-    posted_date: new Date().toISOString(),
+    posted_date: (posted || new Date()).toISOString(),
 
-    skills: raw.tags?.length ? raw.tags : profile.skills_required,
+    // One entry per skill: the dictionary's spelling wins over the tag's.
+    skills: [...new Map([...profile.skills_required, ...tags.filter((t) => KNOWN_SKILLS.has(canonical(t)))].reverse().map((s) => [canonical(s), s])).values()].reverse(),
 
     skills_required: profile.skills_required,
 

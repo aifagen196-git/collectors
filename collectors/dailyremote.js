@@ -146,6 +146,8 @@ async function fetchPage(page) {
       .get()
       .filter((t) => t && t !== "·");
     const employmentType = bylineSpans.find((t) => /full time|part time|contract|freelance/i.test(t)) || "";
+    // "2 hours ago", "3 days ago", "1 month ago": the posting's age.
+    const postedAgo = bylineSpans.find((t) => /\bago\b|just now|today/i.test(t)) || "";
 
     const tags = card
       .find(".lst-card__tags a.lst-tag")
@@ -162,6 +164,7 @@ async function fetchPage(page) {
       location,
       salary,
       employmentType,
+      postedAgo,
       tags,
       applyUrl: href.startsWith("http") ? href : `https://dailyremote.com${href}`,
     });
