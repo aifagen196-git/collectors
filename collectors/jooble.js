@@ -8,6 +8,7 @@ import { normalizeJooble } from "./normalize/normalizeJooble.js";
 import searches from "./config/joobleSearches.js";
 import { isUsJob } from "./lib/isUsJob.js";
 import { isDomainJob } from "./lib/isDomainJob.js";
+import { isResellerListing } from "./lib/isResellerListing.js";
 
 dotenv.config({ path: ".env" });
 
@@ -195,6 +196,12 @@ async function run() {
         }
         if (!isUsJob(normalizedJob)) {
           stats.nonUs++;
+          continue;
+        }
+        // Paid listing services and relays that hide or mislabel the
+        // employer (see lib/isResellerListing.js).
+        if (isResellerListing(normalizedJob)) {
+          stats.reseller = (stats.reseller || 0) + 1;
           continue;
         }
         normalized.push(normalizedJob);
