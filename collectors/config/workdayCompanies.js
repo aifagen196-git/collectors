@@ -81,6 +81,55 @@ const companies = [
   { company: "marvell", host: "wd1", siteId: "MarvellCareers", name: "Marvell" }, // 5/20
   { company: "sonyglobal", host: "wd1", siteId: "SonyGlobalCareers", name: "Sony" }, // 5/20
   { company: "warnerbros", host: "wd5", siteId: "global", name: "Warner Bros. Discovery" }, // 5/20
+
+  // Added 2026-11-18, verified with collectors/verifyWorkday.js: the cxs
+  // search answered on this host/siteId; counts are total postings and US IT
+  // jobs among the first 100. Boards under 5/100 were left out (AT&T, Labcorp,
+  // Amgen, FedEx, Prudential).
+  { company: "gdit", host: "wd5", siteId: "External_Career_Site", name: "General Dynamics Information Technology" }, // ~1,317, 67/100
+  { company: "fiserv", host: "wd5", siteId: "EXT", name: "Fiserv" }, // ~399, 41/100
+  { company: "equifax", host: "wd5", siteId: "External", name: "Equifax" }, // ~173, 34/100
+  { company: "fis", host: "wd5", siteId: "SearchJobs", name: "FIS" }, // ~504, 32/100
+  { company: "cadence", host: "wd1", siteId: "External_Careers", name: "Cadence Design Systems" }, // ~688, 30/100
+  { company: "globalhr", host: "wd5", siteId: "REC_RTX_Ext_Gateway", name: "RTX" }, // ~4,535, 29/100
+  { company: "hpe", host: "wd5", siteId: "Jobsathpe", name: "Hewlett Packard Enterprise" }, // ~1,769, 28/100
+  { company: "rockwellautomation", host: "wd1", siteId: "External_Rockwell_Automation", name: "Rockwell Automation" }, // ~459, 27/100
+  { company: "unisys", host: "wd5", siteId: "External", name: "Unisys" }, // ~437, 26/100
+  { company: "mckesson", host: "wd3", siteId: "External_Careers", name: "McKesson" }, // ~653, 25/100
+  { company: "relx", host: "wd3", siteId: "relx", name: "RELX" }, // ~759, 24/100
+  { company: "thomsonreuters", host: "wd5", siteId: "External_Career_Site", name: "Thomson Reuters" }, // ~529, 24/100
+  { company: "gehc", host: "wd5", siteId: "GEHC_ExternalSite", name: "GE HealthCare" }, // ~1,063, 23/100
+  { company: "gevernova", host: "wd5", siteId: "Vernova_ExternalSite", name: "GE Vernova" }, // ~2,165, 23/100
+  { company: "blueorigin", host: "wd5", siteId: "BlueOrigin", name: "Blue Origin" }, // ~1,901, 23/100
+  { company: "transunion", host: "wd5", siteId: "TransUnion", name: "TransUnion" }, // ~212, 22/100
+  { company: "kla", host: "wd1", siteId: "Search", name: "KLA" }, // ~1,143, 22/100
+  { company: "geaerospace", host: "wd5", siteId: "GE_ExternalSite", name: "GE Aerospace" }, // ~611, 21/100
+  { company: "parsons", host: "wd5", siteId: "Search", name: "Parsons" }, // ~1,896, 20/100
+  { company: "redhat", host: "wd5", siteId: "jobs", name: "Red Hat" }, // ~161, 20/100
+  { company: "broadcom", host: "wd1", siteId: "External_Career", name: "Broadcom" }, // ~414, 19/100
+  { company: "trendmicro", host: "wd3", siteId: "External", name: "Trend Micro" }, // ~179, 19/100
+  { company: "ptc", host: "wd1", siteId: "PTC", name: "PTC" }, // ~175, 19/100
+  { company: "medtronic", host: "wd1", siteId: "MedtronicCareers", name: "Medtronic" }, // ~955, 19/100
+  { company: "allstate", host: "wd5", siteId: "allstate_careers", name: "Allstate" }, // ~405, 18/100
+  { company: "usbank", host: "wd1", siteId: "US_Bank_Careers", name: "U.S. Bank" }, // ~1,182, 16/100
+  { company: "citi", host: "wd5", siteId: "2", name: "Citi" }, // ~2,000, 15/100
+  { company: "dxctechnology", host: "wd1", siteId: "DXCJobs", name: "DXC Technology" }, // ~1,341, 15/100
+  { company: "gilead", host: "wd1", siteId: "gileadcareers", name: "Gilead Sciences" }, // ~407, 15/100
+  { company: "nationwide", host: "wd1", siteId: "Nationwide_Career", name: "Nationwide" }, // ~144, 14/100
+  { company: "pnc", host: "wd5", siteId: "External", name: "PNC" }, // ~1,254, 12/100
+  { company: "elevancehealth", host: "wd1", siteId: "ANT", name: "Elevance Health" }, // ~258, 12/100
+  { company: "3m", host: "wd1", siteId: "Search", name: "3M" }, // ~792, 12/100
+  { company: "stryker", host: "wd1", siteId: "StrykerCareers", name: "Stryker" }, // ~1,478, 10/100
+  { company: "baxter", host: "wd1", siteId: "baxter", name: "Baxter" }, // ~520, 10/100
+  { company: "truist", host: "wd1", siteId: "Careers", name: "Truist" }, // ~1,383, 9/100
+  { company: "verizon", host: "wd12", siteId: "verizon-careers", name: "Verizon" }, // ~1,249, 8/100
+  { company: "ghr", host: "wd1", siteId: "Lateral-US", name: "Bank of America" }, // ~2,024, 8/100
+  { company: "abbott", host: "wd5", siteId: "abbottcareers", name: "Abbott" }, // ~2,000, 8/100
+  { company: "pwc", host: "wd3", siteId: "Global_Experienced_Careers", name: "PwC" }, // ~3,683, 7/100
+  { company: "nike", host: "wd1", siteId: "nke", name: "Nike" }, // ~694, 6/100
+  { company: "aig", host: "wd1", siteId: "aig", name: "AIG" }, // ~390, 6/100
+  { company: "iqvia", host: "wd1", siteId: "IQVIA", name: "IQVIA" }, // ~1,930, 6/100
+  { company: "gartner", host: "wd5", siteId: "EXT", name: "Gartner" }, // ~801, 5/100
 ];
 
 export default companies;

@@ -50,9 +50,19 @@ const ONLY_COMPANIES = (process.env.ONLY_COMPANIES || "")
   .map((c) => c.trim().toLowerCase())
   .filter(Boolean);
 
-const selectedCompanies = ONLY_COMPANIES.length
+// WORKDAY_PART=1/2 runs every other tenant (2/2 the rest), so the list can be
+// split across GitHub Actions steps that each fit their own time limit. It
+// narrows the deactivation pass exactly like ONLY_COMPANIES does.
+const PART = /^(\d+)\/(\d+)$/.exec(process.env.WORKDAY_PART || "");
+const partFilter = PART
+  ? (_, i) => i % Number(PART[2]) === Number(PART[1]) - 1
+  : () => true;
+
+const filtered = ONLY_COMPANIES.length > 0 || Boolean(PART);
+const selectedCompanies = (ONLY_COMPANIES.length
   ? companies.filter((c) => ONLY_COMPANIES.includes(c.company.toLowerCase()))
-  : companies;
+  : companies
+).filter(partFilter);
 
 // Optional cap on how many listings to collect per company, for trying a
 // large or newly-added tenant (CVS's ~19k reqs) on a small slice before
@@ -363,7 +373,7 @@ async function run() {
   // statement timeout, which left ~5,000 closed Workday jobs live.
   const { done: count, error: deErr } = await deactivateWhere((q) => {
     q = q.lt("last_seen", staleCutoff).eq("source", "workday");
-    return ONLY_COMPANIES.length
+    return filtered
       ? q.in("company", selectedCompanies.map((c) => c.name || c.company))
       : q;
   });
