@@ -1,4 +1,15 @@
 import { extractJobProfile } from "../processors/extractProfile.js";
+import { extractEmploymentType } from "../../processors/employmentTypeExtractor.js";
+
+// processors/salaryParser.js returns { min, max, period, currency }; show it
+// as text the way other sources store salary ("$90,000 - $110,000 a year").
+function salaryText(range) {
+  if (!range || typeof range !== "object" || !(range.min || range.max)) return null;
+  const sym = !range.currency || range.currency === "USD" ? "$" : `${range.currency} `;
+  const fmt = (n) => `${sym}${Number(n).toLocaleString("en-US", { maximumFractionDigits: 0 })}`;
+  const amount = range.min && range.max && range.min !== range.max ? `${fmt(range.min)} - ${fmt(range.max)}` : fmt(range.min || range.max);
+  return range.period ? `${amount} a ${range.period}` : amount;
+}
 
 /**
  * PostJobFree only exposes plain server-rendered HTML — no JSON API. Every
@@ -19,9 +30,11 @@ export async function normalizePostjobfree(raw) {
 
     location: raw.location || (isRemote ? "Remote" : ""),
 
-    employment_type: "",
+    // The card has no type field; titles and snippets often say it
+    // ("Java Developer (Contract)", "part-time").
+    employment_type: extractEmploymentType(`${raw.title || ""}\n${description}`),
 
-    salary: null,
+    salary: salaryText(profile.salary_range),
 
     description,
 

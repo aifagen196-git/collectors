@@ -37,8 +37,14 @@ const JOB_DEFAULTS = {
 // experience are derived PER-CALL from the actual text — extractRoleFamily
 // cannot live in the static JOB_DEFAULTS above (there is no `text` there; doing
 // so threw "text is not defined" at module load and crashed every collector).
-function heuristicProfile(text = "") {
-  const t = String(text);
+//
+// The title is read together with the text. Snippet-only sources (PostJobFree,
+// Jooble, Jobvertise, DailyRemote) carry a few hundred characters at most, and
+// the title is often where the skills are ("Senior SAP ABAP S/4HANA
+// Developer", "DevOps Engineer: Cloud, CI/CD"): 70% of PostJobFree jobs were
+// stored with no skills at all.
+function heuristicProfile(text = "", opts = {}) {
+  const t = [opts.title, text].filter(Boolean).map(String).join("\n");
   const skills = extractSkills(t);
   const isUS = /\b(USA|United States|U\.S\.|remote, us|remote \(us\))\b/i.test(
     t,
@@ -84,10 +90,10 @@ export async function extractJobProfile(text = "", opts = {}) {
 
   const llmEnabled =
     opts.strict || String(process.env.COLLECTOR_LLM).toLowerCase() === "on";
-  if (!llmEnabled) return heuristicProfile(text);
+  if (!llmEnabled) return heuristicProfile(text, opts);
   if (!process.env.ANTHROPIC_API_KEY) {
     if (opts.strict) throw new Error("ANTHROPIC_API_KEY not set");
-    return heuristicProfile(text);
+    return heuristicProfile(text, opts);
   }
 
   const client = new Anthropic();
@@ -114,6 +120,6 @@ export async function extractJobProfile(text = "", opts = {}) {
   } catch (e) {
     if (opts.strict) throw e;
     console.error("LLM job extraction failed, using fallback:", e.message);
-    return heuristicProfile(text);
+    return heuristicProfile(text, opts);
   }
 }
