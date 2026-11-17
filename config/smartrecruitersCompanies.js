@@ -1,28 +1,29 @@
 // config/smartrecruitersCompanies.js
 //
 // smartrecruiters board slugs (https://jobs.smartrecruiters.com/{slug}), checked by collectors/verifyBoards.js
-// on 2026-11-10. The number is the board's count of US IT jobs then.
+// on 2026-11-17. The number is the board's count of US IT jobs then.
 // SmartRecruiters answers any slug, so a slug with no US posting can't be told from a typo.
 //
-// 2590 boards.
+// 2684 boards.
 
 const companies = [
   "1password", // 0
   "a10networks", // 0
   "abacus", // 0
-  "abbvie", // 15
+  "abbvie", // 14
   "abbyy", // 0
   "ably", // 0
   "ablycloud", // 0
   "ablyio", // 0
   "abnormal", // 0
   "abnormalsecurity", // 0
-  "abramsonlaborgroup", // 58
+  "abramsonlaborgroup", // 2
   "acceldata", // 0
   "acceledata", // 0
   "accelq", // 0
   "accenture", // 0
-  "accenturefederalservices", // 20
+  "accenturefederalservices", // 21
+  "accionlabs", // 3
   "accolade", // 0
   "accruent", // 0
   "acornlabs", // 0
@@ -35,6 +36,7 @@ const companies = [
   "actiancloud", // 0
   "actifio", // 0
   "actimize", // 0
+  "activehours", // 5
   "actyx", // 0
   "actzero", // 0
   "acuant", // 0
@@ -65,7 +67,7 @@ const companies = [
   "agenta", // 0
   "agentops", // 0
   "agileengine", // 1
-  "agileit", // 2
+  "agileit", // 1
   "agiloft", // 0
   "agiloftinc", // 0
   "agora", // 0
@@ -101,6 +103,7 @@ const companies = [
   "algosec", // 0
   "alkami", // 0
   "alkira", // 0
+  "allianceit", // 5
   "alloy", // 0
   "alloyautomation", // 0
   "allstacks", // 0
@@ -142,6 +145,7 @@ const companies = [
   "anyscale", // 0
   "anysphere", // 0
   "apexai", // 0
+  "apexinformatics", // 1
   "apica", // 0
   "apollo", // 0
   "apollograph", // 0
@@ -161,6 +165,7 @@ const companies = [
   "appwritecloud", // 0
   "aptible", // 0
   "aptoslabs", // 0
+  "aptussolutionsinc", // 29
   "aquant", // 0
   "aquasec", // 0
   "aquasecurity", // 0
@@ -173,6 +178,7 @@ const companies = [
   "ardent", // 0
   "argoproj", // 0
   "arista", // 0
+  "aristontekinc", // 22
   "arize", // 0
   "armis", // 0
   "armissecurity", // 0
@@ -182,7 +188,7 @@ const companies = [
   "armosec", // 0
   "arrcus", // 0
   "arrikto", // 0
-  "artechinformationsystemllc", // 62
+  "artechinformationsystemllc", // 61
   "artechinfosystemsltd", // 5
   "articulate", // 0
   "artifact", // 0
@@ -192,7 +198,7 @@ const companies = [
   "asanahq", // 0
   "ascend", // 0
   "asciigroupllc", // 2
-  "ashburnconsulting", // 4
+  "ashburnconsulting", // 3
   "astradb", // 0
   "astranis", // 0
   "astranis-space", // 0
@@ -272,13 +278,14 @@ const companies = [
   "basetencloud", // 0
   "basetenhq", // 0
   "bastionzero", // 0
+  "bayside", // 15
   "beacon", // 0
   "beam", // 0
   "beamery", // 0
   "beehiiv", // 0
   "beekeeper", // 0
   "beeks", // 0
-  "beigene", // 2
+  "beigene", // 0
   "belvo", // 0
   "benchling", // 0
   "benchsci", // 0
@@ -317,6 +324,7 @@ const companies = [
   "blameless", // 0
   "blamelesshq", // 0
   "blend", // 0
+  "blend360", // 11
   "blinkist", // 0
   "blinkops", // 0
   "blitzy", // 0
@@ -325,7 +333,7 @@ const companies = [
   "blueground", // 0
   "bluehexagon", // 0
   "bluesky", // 0
-  "bluestone", // 77
+  "bluestone", // 79
   "bluevoyant", // 0
   "bluevoyantinc", // 0
   "bolt", // 0
@@ -363,6 +371,7 @@ const companies = [
   "buildopsinc", // 0
   "buildpulse", // 0
   "buildship", // 0
+  "bumblebeefoods", // 1
   "bun", // 0
   "bunnyshell", // 0
   "bunnyshellhq", // 0
@@ -395,6 +404,8 @@ const companies = [
   "carbonblack", // 0
   "carbonhealth", // 0
   "carbonrobotics", // 0
+  "careerguidant", // 61
+  "carlisle", // 2
   "carta", // 0
   "cartesia", // 0
   "cascade", // 0
@@ -408,12 +419,15 @@ const companies = [
   "celerdata", // 0
   "celestia", // 0
   "celonis", // 0
+  "cencora", // 4
   "censys", // 0
+  "centraprise", // 4
   "centrifuge", // 0
   "cerby", // 0
   "cerebras", // 0
   "cerebrium", // 0
   "certik", // 0
+  "chabeztech", // 1
   "chainalysis", // 0
   "chainbase", // 0
   "chainguard", // 0
@@ -427,6 +441,7 @@ const companies = [
   "checkhq", // 0
   "checkly", // 0
   "checkmarx", // 0
+  "checkpointsoftwaretechnologies", // 1
   "checkr", // 0
   "chime", // 0
   "choir", // 0
@@ -443,7 +458,7 @@ const companies = [
   "circlecihq", // 0
   "circleup", // 0
   "cirruslogic", // 0
-  "cityofphiladelphia", // 32
+  "cityofphiladelphia", // 30
   "clari", // 0
   "clarifai", // 0
   "claroty", // 0
@@ -502,6 +517,7 @@ const companies = [
   "compilerworks", // 0
   "complyadvantage", // 0
   "composio", // 0
+  "comprehensiveresourcesinc", // 4
   "conductorhq", // 0
   "conductorone", // 0
   "conductoronehq", // 0
@@ -509,6 +525,7 @@ const companies = [
   "confluent", // 0
   "connectly", // 0
   "connectwise", // 0
+  "connexionsdatainc", // 2
   "consensys", // 0
   "contentful", // 0
   "contentsquare", // 0
@@ -633,8 +650,8 @@ const companies = [
   "discord", // 0
   "dispel", // 0
   "distrokid", // 0
-  "disysoakbrook", // 6
-  "diverselynx3", // 8
+  "disysoakbrook", // 5
+  "diverselynx3", // 6
   "dnsfilter", // 0
   "docebo", // 0
   "docker", // 0
@@ -644,6 +661,8 @@ const companies = [
   "doit", // 0
   "domino", // 0
   "dominohq", // 0
+  "dominos", // 2
+  "donatech", // 2
   "doppler", // 0
   "dotproduct", // 0
   "doubleverify", // 0
@@ -706,17 +725,19 @@ const companies = [
   "emburse", // 0
   "emergent", // 0
   "emitwise", // 0
+  "emonicsllc", // 3
   "enable", // 0
   "enablecomp", // 0
   "enablecompass", // 0
   "encore", // 0
   "encoredev", // 0
-  "endava", // 3
+  "endava", // 5
   "endgame", // 0
   "endorlabs", // 0
   "endorlabsai", // 0
   "endorlabsinc", // 0
   "endorlabsio", // 0
+  "enduretechnologysolutions", // 1
   "energyhub", // 0
   "energyvault", // 0
   "engflow", // 0
@@ -731,6 +752,7 @@ const companies = [
   "epicor", // 0
   "epirus", // 0
   "eppo", // 0
+  "epro", // 3
   "epsagon", // 0
   "epsilon", // 0
   "epsilon3", // 0
@@ -739,7 +761,8 @@ const companies = [
   "equalexpertsinc", // 0
   "equilibrium", // 0
   "equinix", // 0
-  "equus", // 5
+  "equus", // 4
+  "erostechnologiesinc", // 64
   "esentire", // 0
   "esentireinc", // 0
   "esolutionsinc", // 26
@@ -757,7 +780,7 @@ const companies = [
   "everlaw", // 0
   "everlawhq", // 0
   "everquote", // 0
-  "evidation", // 8
+  "evidation", // 7
   "evidentlyai", // 0
   "evisort", // 0
   "evisorthq", // 0
@@ -886,6 +909,7 @@ const companies = [
   "fullstoryhq", // 0
   "fundguard", // 0
   "fusionauth", // 0
+  "fusionconsulting", // 4
   "gainsight", // 0
   "galaxy", // 0
   "galileo", // 0
@@ -900,6 +924,7 @@ const companies = [
   "genea", // 0
   "genesis", // 0
   "genies", // 0
+  "georgiaitinc", // 26
   "getaround", // 0
   "getdbt", // 0
   "getyourguide", // 0
@@ -933,7 +958,7 @@ const companies = [
   "gocomet", // 0
   "godaddy", // 0
   "goldbelly", // 0
-  "goldstonepartners", // 5
+  "goldstonepartners", // 2
   "gong", // 0
   "gongio", // 0
   "goodfire", // 0
@@ -984,6 +1009,7 @@ const companies = [
   "hackerone", // 0
   "hackerrank", // 3
   "hackthebox", // 0
+  "hadronts", // 15
   "haiku", // 0
   "hakimo", // 0
   "halcyon", // 0
@@ -1007,6 +1033,7 @@ const companies = [
   "haystack", // 0
   "hazelcast", // 0
   "hazelhealth", // 0
+  "hclamericainc", // 4
   "hclsoftware", // 0
   "headlamp", // 0
   "headway", // 0
@@ -1045,6 +1072,7 @@ const companies = [
   "hightouch", // 0
   "hightouchdata", // 0
   "hightouchhq", // 0
+  "hiredbymatrix", // 1
   "hirevue", // 0
   "hive", // 0
   "hiveai", // 0
@@ -1056,6 +1084,7 @@ const companies = [
   "honeycomb", // 0
   "honeycombio", // 0
   "honeyhive", // 0
+  "honorvettechnologies", // 4
   "hoodi", // 0
   "hopin", // 0
   "hopper", // 0
@@ -1112,6 +1141,7 @@ const companies = [
   "illumio", // 0
   "illumiohq", // 0
   "imagekit", // 0
+  "imcsgroup", // 11
   "immersive", // 0
   "immuta", // 0
   "impact", // 0
@@ -1133,6 +1163,7 @@ const companies = [
   "indee", // 0
   "indico", // 0
   "indigoag", // 0
+  "indsoftinc", // 25
   "inductiveautomation", // 0
   "inferless", // 0
   "infinera", // 0
@@ -1170,6 +1201,7 @@ const companies = [
   "integralads", // 0
   "integrate", // 0
   "integratehq", // 0
+  "integrationinternationalinc", // 2
   "integry", // 0
   "intellicheck", // 0
   "interactions", // 0
@@ -1179,9 +1211,11 @@ const companies = [
   "interfolio", // 0
   "interos", // 0
   "interplaylearning", // 0
+  "intersourcesinc", // 2
   "intersystems", // 0
   "interwell", // 0
   "intuit", // 0
+  "intuitive", // 17
   "inventa", // 0
   "invoca", // 0
   "inworld", // 0
@@ -1189,6 +1223,9 @@ const companies = [
   "iohk", // 0
   "ionic", // 0
   "ionq", // 0
+  "ipsoft", // 13
+  "ipstechnologyservices", // 8
+  "irissoftware", // 1
   "ironclad", // 0
   "ironfish", // 0
   "ironnet", // 0
@@ -1196,6 +1233,7 @@ const companies = [
   "isaralabs", // 0
   "isovalent", // 0
   "isovalenthq", // 0
+  "itconservices", // 1
   "iterable", // 0
   "iterative", // 0
   "iteris", // 0
@@ -1207,7 +1245,7 @@ const companies = [
   "janai", // 0
   "jasper", // 0
   "jasperai", // 0
-  "jeanmartininc", // 3
+  "jeanmartininc", // 1
   "jellyfish", // 0
   "jetbrains", // 0
   "jetstack", // 0
@@ -1220,7 +1258,7 @@ const companies = [
   "join", // 0
   "joinarc", // 0
   "journeyapps", // 0
-  "jsheldllc", // 13
+  "jsheldllc", // 12
   "julep", // 0
   "jumio", // 0
   "jump", // 0
@@ -1243,10 +1281,12 @@ const companies = [
   "karsunsolutionsllc", // 2
   "kasm", // 0
   "katonic", // 0
+  "keenfinity", // 17
   "keep", // 0
   "keepersecurity", // 0
   "keepit", // 0
   "keeptruckin", // 0
+  "kellyrecruiting", // 8
   "kepler", // 0
   "keploy", // 0
   "kestra", // 0
@@ -1259,7 +1299,9 @@ const companies = [
   "keylentinc", // 3
   "keyme", // 0
   "khealth", // 0
+  "kimballmidwest", // 1
   "kindred", // 0
+  "kitusystems", // 2
   "klarna", // 0
   "klasha", // 0
   "klaviyo", // 0
@@ -1271,7 +1313,7 @@ const companies = [
   "komodor", // 0
   "komodorhq", // 0
   "komodorinc", // 0
-  "konecranes", // 8
+  "konecranes", // 12
   "kong", // 0
   "konghq", // 0
   "konveyor", // 0
@@ -1281,6 +1323,7 @@ const companies = [
   "kubiya", // 0
   "kumo", // 0
   "kustomer", // 0
+  "kyybainc", // 2
   "labelbox", // 0
   "labelboxhq", // 0
   "lacework", // 0
@@ -1302,7 +1345,7 @@ const companies = [
   "langsmith", // 0
   "langwatch", // 0
   "lantern", // 0
-  "larabidachildrenshospital", // 3
+  "larabidachildrenshospital", // 2
   "last9", // 0
   "latacora", // 0
   "lattice", // 0
@@ -1344,6 +1387,7 @@ const companies = [
   "lightspin", // 0
   "lightstep", // 0
   "lightup", // 0
+  "line2", // 1
   "linear", // 0
   "linearb", // 0
   "linkerd", // 0
@@ -1359,6 +1403,7 @@ const companies = [
   "livepeer", // 0
   "liveperson", // 0
   "llamaindex", // 0
+  "llnl", // 22
   "loadsmart", // 0
   "localstack", // 0
   "logdna", // 0
@@ -1386,11 +1431,12 @@ const companies = [
   "lyzr", // 0
   "m1finance", // 1
   "m3ter", // 0
+  "maaniaconsultancyservices", // 80
   "mabl", // 0
   "machinify", // 0
   "madkudu", // 0
   "madrona", // 0
-  "magantiitresourcesllc", // 68
+  "magantiitresourcesllc", // 73
   "magic", // 0
   "magicbell", // 0
   "magiceden", // 0
@@ -1448,7 +1494,7 @@ const companies = [
   "metabase", // 0
   "metamap", // 0
   "metaplane", // 0
-  "metasys", // 23
+  "metasys", // 22
   "metaview", // 0
   "metoro", // 0
   "metricstream", // 0
@@ -1456,6 +1502,7 @@ const companies = [
   "mezmo", // 0
   "mezmohq", // 0
   "mgmresortsinternational", // 2
+  "microchip", // 4
   "microsoft", // 0
   "milvus", // 0
   "mindbody", // 0
@@ -1464,7 +1511,7 @@ const companies = [
   "mintlifyhq", // 0
   "minute", // 0
   "mirakl", // 0
-  "mirantis", // 30
+  "mirantis", // 31
   "miro", // 0
   "mirohq", // 0
   "missioncloud", // 0
@@ -1519,7 +1566,7 @@ const companies = [
   "mozartdata", // 0
   "mparticle", // 0
   "mparticlehq", // 0
-  "msysinc", // 5
+  "msysinc", // 6
   "multion", // 0
   "multiverse", // 0
   "mural", // 0
@@ -1528,6 +1575,7 @@ const companies = [
   "mutable", // 0
   "mux", // 0
   "muxhq", // 0
+  "my3tech", // 1
   "myfitnesspal", // 0
   "mynd", // 0
   "myrror", // 0
@@ -1580,8 +1628,9 @@ const companies = [
   "nexthinkhq", // 0
   "nextinsurance", // 0
   "nextmv", // 0
+  "nextstepsystems", // 7
   "ngrok", // 0
-  "nielseniq", // 4
+  "nielseniq", // 3
   "nightfall", // 0
   "nightfallai", // 0
   "nimble", // 0
@@ -1589,6 +1638,7 @@ const companies = [
   "ninjaone", // 0
   "nitric", // 0
   "nitro", // 0
+  "nocd", // 1
   "nocobase", // 0
   "nocobasehq", // 0
   "nocodb", // 0
@@ -1605,12 +1655,14 @@ const companies = [
   "northflank", // 0
   "northflankhq", // 0
   "northone", // 0
-  "northwesternmutual", // 35
+  "northwesternmutual", // 36
   "nosto", // 0
   "notion", // 0
+  "nousinfosystems", // 1
   "nova", // 0
   "novita", // 0
   "novu", // 0
+  "now100", // 8
   "ns1", // 0
   "nubank", // 0
   "nuclia", // 0
@@ -1682,7 +1734,7 @@ const companies = [
   "opslevel", // 0
   "opsmill", // 0
   "opswat", // 0
-  "optimizely", // 6
+  "optimizely", // 7
   "optiver", // 0
   "optoro", // 0
   "orb", // 0
@@ -1747,6 +1799,7 @@ const companies = [
   "paritytech", // 0
   "parloa", // 0
   "parloaai", // 0
+  "parraconsultinggroupinc", // 1
   "parseable", // 0
   "parseableio", // 0
   "parsec", // 0
@@ -1769,8 +1822,10 @@ const companies = [
   "pearlhealth", // 0
   "pearson", // 0
   "pebble", // 0
+  "peckhamindustriesinc", // 1
   "peerdb", // 0
   "peloton", // 0
+  "pennmedicine", // 1
   "peopleai", // 0
   "peoplelogic", // 0
   "pepperdata", // 0
@@ -1778,6 +1833,7 @@ const companies = [
   "percona", // 0
   "percy", // 0
   "perfectscale", // 0
+  "perfictglobal", // 1
   "perforce", // 0
   "perkbox", // 0
   "permit", // 0
@@ -1815,6 +1871,7 @@ const companies = [
   "planetscalecloud", // 0
   "planetscalehq", // 0
   "planhat", // 0
+  "planitgroupllc", // 4
   "plasmic", // 0
   "platform9", // 0
   "playco", // 0
@@ -1861,10 +1918,11 @@ const companies = [
   "presetio", // 0
   "presidio", // 0
   "preswald", // 0
-  "primark", // 1
+  "primark", // 0
   "primeintellect", // 0
   "primer", // 0
   "primerio", // 0
+  "primusglobalservices", // 7
   "printful", // 0
   "printify", // 0
   "prisma", // 0
@@ -1872,7 +1930,8 @@ const companies = [
   "privacysandbox", // 0
   "privitar", // 0
   "privy", // 0
-  "procon", // 3
+  "procomconsultantsgroup", // 75
+  "procon", // 2
   "procore", // 0
   "procurify", // 0
   "productboard", // 0
@@ -1887,6 +1946,7 @@ const companies = [
   "propeldata", // 0
   "prophecy", // 0
   "prophero", // 0
+  "prosidianconsulting", // 28
   "prosimo", // 0
   "prosper", // 0
   "protecht", // 0
@@ -1924,7 +1984,9 @@ const companies = [
   "quantumblack", // 0
   "quantumcircuits", // 0
   "quantummetric", // 0
+  "quantumworldtechnologies", // 1
   "quarkus", // 0
+  "queconinc", // 1
   "quickbase", // 0
   "quicknode", // 0
   "quickwit", // 0
@@ -2020,7 +2082,8 @@ const companies = [
   "rootly", // 0
   "rootlyhq", // 0
   "rootlyinc", // 0
-  "rrdonnelley", // 5
+  "rootshell", // 5
+  "rrdonnelley", // 7
   "rubicon", // 0
   "rubiconmd", // 0
   "rubrik", // 0
@@ -2052,10 +2115,11 @@ const companies = [
   "sanityhq", // 0
   "sanityio", // 0
   "saviynt", // 0
-  "saxonglobal", // 50
-  "scadeasolutionsinc", // 14
+  "saxonglobal", // 53
+  "scadeasolutionsinc", // 17
   "scaleai", // 0
   "scalegrid", // 0
+  "scaleops", // 1
   "scaleway", // 0
   "scandit", // 0
   "scanditai", // 0
@@ -2088,6 +2152,7 @@ const companies = [
   "sendoso", // 0
   "sense", // 0
   "sensehq", // 0
+  "sensia", // 4
   "sentinelone", // 0
   "sentry", // 0
   "seon", // 0
@@ -2095,10 +2160,10 @@ const companies = [
   "sequence", // 0
   "serverless", // 0
   "serverpod", // 0
-  "servicenow", // 28
+  "servicenow", // 35
   "servicetitan", // 4
   "sezzle", // 1
-  "sgs", // 7
+  "sgs", // 12
   "shadow", // 0
   "shadowserver", // 0
   "shakudo", // 0
@@ -2115,6 +2180,8 @@ const companies = [
   "shoreline", // 0
   "shortcut", // 0
   "shortwave", // 0
+  "sia", // 27
+  "sibitalentcorp", // 1
   "siglens", // 0
   "sigmacomputing", // 0
   "sigmacomputinghq", // 0
@@ -2127,6 +2194,7 @@ const companies = [
   "singlebasecloud", // 0
   "singleops", // 0
   "singlestore", // 0
+  "siriinfosolutionsinc", // 8
   "sitetracker", // 0
   "sketch", // 0
   "skiff", // 0
@@ -2136,6 +2204,7 @@ const companies = [
   "skyflow", // 0
   "skyhighsecurity", // 0
   "skyscanner", // 0
+  "skysolutionsllc", // 1
   "skyvern", // 0
   "skyvernai", // 0
   "slab", // 0
@@ -2143,9 +2212,11 @@ const companies = [
   "slingshot", // 0
   "sliplane", // 0
   "smallstep", // 0
+  "smart", // 1
   "smartasset", // 0
   "smartbear", // 0
   "smartcar", // 0
+  "smartitframellc", // 2
   "smartling", // 0
   "smartnews", // 0
   "smartsheet", // 0
@@ -2160,11 +2231,12 @@ const companies = [
   "socketdev", // 0
   "socotra", // 0
   "socure", // 0
+  "softekenterprises", // 1
   "solace", // 0
   "solaredge", // 0
   "solarwinds", // 1
   "solarwindscloud", // 0
-  "solidigm", // 13
+  "solidigm", // 15
   "solidroad", // 0
   "solo", // 0
   "soloio", // 0
@@ -2215,6 +2287,7 @@ const companies = [
   "starrocks", // 0
   "starrocksio", // 0
   "starry", // 0
+  "startekkinc", // 10
   "steampipe", // 0
   "steamship", // 0
   "stellar", // 0
@@ -2261,12 +2334,17 @@ const companies = [
   "swimlane", // 0
   "swimm", // 0
   "swimmio", // 0
+  "sygnasolutions", // 8
   "symphonyai", // 0
   "synack", // 0
+  "syncreonconsulting", // 6
+  "synecticsformanagementdecisionsinc", // 2
   "synthesia", // 0
+  "syntricatetechnologies", // 3
   "sysdig", // 0
   "sysdighq", // 0
   "sysdigsecure", // 0
+  "systemcanadatechnologies", // 69
   "tabbyml", // 0
   "tabnine", // 0
   "tackle", // 0
@@ -2274,16 +2352,21 @@ const companies = [
   "tailorbrands", // 0
   "tailscale", // 0
   "tailwarden", // 0
+  "talentsoftwareservices", // 3
   "talkdesk", // 0
   "talon", // 0
   "talonsecurity", // 0
+  "tanishasystems", // 17
   "tanium", // 0
   "tanstack", // 0
   "taskingai", // 0
+  "tbd040918iac", // 11
   "teamviewer", // 0
   "teamwork", // 0
+  "technoconsulting", // 9
+  "techolution", // 2
   "techsee", // 0
-  "techsursolutions", // 25
+  "techsursolutions", // 26
   "tecton", // 0
   "teleport", // 0
   "teleporthq", // 0
@@ -2308,7 +2391,7 @@ const companies = [
   "textkernel", // 0
   "thegraph", // 0
   "thegraphprotocol", // 0
-  "thejudgegroup1", // 1
+  "thejudgegroup1", // 0
   "thena", // 0
   "thenielsencompany", // 3
   "thetradeDesk", // 0
@@ -2352,6 +2435,8 @@ const companies = [
   "transcarent", // 0
   "transcend", // 0
   "transformco", // 0
+  "translations", // 8
+  "transperfect", // 6
   "transposit", // 0
   "travoom", // 6
   "treasuredata", // 0
@@ -2364,7 +2449,7 @@ const companies = [
   "trendminer", // 0
   "tribe", // 0
   "tribeai", // 0
-  "trigyntechnologies", // 2
+  "trigyntechnologies", // 0
   "trigyntechnologiesinc", // 4
   "trilogy", // 0
   "trinsic", // 0
@@ -2391,7 +2476,8 @@ const companies = [
   "turbopuffer", // 0
   "turborepo", // 0
   "turing", // 0
-  "turnertownsend", // 63
+  "turnertownsend", // 32
+  "turnitinllc", // 5
   "turso", // 0
   "tursohq", // 0
   "twelvelabs", // 0
@@ -2451,7 +2537,8 @@ const companies = [
   "vercel", // 0
   "vercelai", // 0
   "verdigris", // 0
-  "vericast", // 6
+  "veredusdc", // 78
+  "vericast", // 4
   "veritone", // 0
   "verkada", // 0
   "verkadahq", // 0
@@ -2473,6 +2560,7 @@ const companies = [
   "vistar", // 0
   "visuallayer", // 0
   "vitess", // 0
+  "vitol", // 3
   "vizai", // 0
   "vmray", // 0
   "vmware", // 0
@@ -2490,12 +2578,12 @@ const companies = [
   "vultr", // 0
   "vultrcloud", // 0
   "vultrcloudhq", // 0
-  "vuoriinc", // 22
+  "vuoriinc", // 19
   "wandb", // 0
   "wandbai", // 0
   "wandera", // 0
   "warp", // 0
-  "wearerosie", // 7
+  "wearerosie", // 6
   "weave", // 0
   "weaviate", // 0
   "weaviateio", // 0
@@ -2505,6 +2593,7 @@ const companies = [
   "wefox", // 0
   "weightsandbiases", // 0
   "weightsbiases", // 0
+  "wellmarkinc", // 22
   "wepay", // 0
   "werf", // 0
   "wework", // 0
@@ -2514,14 +2603,16 @@ const companies = [
   "windmill", // 0
   "windriver", // 0
   "winglang", // 0
-  "wingscreditunion", // 4
+  "wingscreditunion", // 0
+  "winmaxsystemscorporation", // 20
+  "winningedgesolutionsllc", // 1
   "wiremock", // 0
   "wise", // 5
   "wispr", // 0
   "wistia", // 0
   "wiz", // 0
   "workadventure", // 0
-  "workato", // 0
+  "workato", // 1
   "workatohq", // 0
   "workboard", // 0
   "workhuman", // 0
@@ -2539,10 +2630,11 @@ const companies = [
   "xendit", // 0
   "xepelin", // 0
   "xero", // 0
+  "xinnovit", // 79
   "xnor", // 0
   "xnorai", // 0
   "xometry", // 0
-  "xplor", // 4
+  "xplor", // 3
   "yalo", // 0
   "yellowai", // 0
   "yext", // 0
@@ -2582,6 +2674,7 @@ const companies = [
   "zlurihq", // 0
   "zocdoc", // 0
   "zoekt", // 0
+  "zogam", // 2
   "zonos", // 0
   "zoominfo", // 0
   "zoovu", // 0
@@ -2589,6 +2682,7 @@ const companies = [
   "zopa", // 0
   "zora", // 0
   "zoraai", // 0
+  "zoro", // 2
   "zotero", // 0
   "zscaler", // 0
   "zscalercloud", // 0

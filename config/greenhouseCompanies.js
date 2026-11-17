@@ -1,79 +1,91 @@
 // config/greenhouseCompanies.js
 //
 // greenhouse board slugs (https://boards.greenhouse.io/{slug}), checked by collectors/verifyBoards.js
-// on 2026-11-10. The number is the board's count of US IT jobs then.
+// on 2026-11-17. The number is the board's count of US IT jobs then.
 //
-// 793 boards.
+// 928 boards.
 
 const companies = [
-  "6sense", // 9
-  "84674th44metrea9999", // 18
+  "2k", // 21
+  "6sense", // 11
+  "84674th44metrea9999", // 13
   "8thlightrebuild", // 2
-  "a1msolutions", // 2
+  "a16z", // 11
+  "a1msolutions", // 1
   "abacus", // 20
   "abbyy", // 0
-  "abc", // 2
-  "abclegalservices", // 99
-  "abnormalsecurity", // 11
-  "accela", // 2
-  "accenturefederalservices", // 534
-  "aclu", // 7
-  "acluinternships", // 38
-  "acquia", // 0
-  "actblue", // 0
-  "acuitymd", // 7
+  "abc", // 1
+  "abclegalservices", // 9
+  "abnormalsecurity", // 12
+  "accela", // 1
+  "accenturefederalservices", // 543
+  "aclu", // 3
+  "acluinternships", // 2
+  "acquia", // 1
+  "actblue", // 2
+  "acuitymd", // 6
   "adahealth", // 0
-  "adyen", // 55
-  "aegisventures", // 5
+  "adyen", // 39
+  "aegisventures", // 6
   "affinipay", // 0
   "affirm", // 64
-  "afresh", // 6
-  "aftership", // 2
+  "afresh", // 7
+  "aftership", // 1
   "agero", // 1
-  "agilityrobotics", // 35
-  "airbnb", // 57
+  "agilityrobotics", // 37
+  "air", // 19
+  "airbnb", // 53
+  "aircallioinc", // 13
   "airship", // 2
+  "airspace", // 2
   "airtable", // 1
-  "akumeninc", // 7
+  "akumeninc", // 8
+  "alarmcom", // 31
   "albedo", // 1
-  "alertmedia", // 5
+  "alertmedia", // 7
   "algolia", // 0
-  "alloy", // 19
-  "alpaca", // 26
-  "alphasense", // 30
-  "altruist", // 40
-  "amarok", // 2
-  "americaninstitutesforresearch", // 2
+  "alloy", // 21
+  "alpaca", // 25
+  "alphasense", // 35
+  "altruist", // 39
+  "amarok", // 0
+  "americaninstitutesforresearch", // 4
   "amity", // 0
   "amount", // 2
-  "amperity", // 5
-  "amwell", // 2
+  "amperity", // 3
+  "amwell", // 1
   "anaplan", // 10
-  "andurilindustries", // 1153
-  "anthropic", // 297
+  "andurilindustries", // 1077
+  "anthropic", // 280
   "aperiatechnologies", // 2
+  "apiphani", // 4
   "apollo", // 0
-  "apolloio", // 15
+  "apolloio", // 12
   "appdirect", // 3
-  "appfire", // 0
-  "appian", // 39
-  "apptronik", // 35
+  "appfire", // 1
+  "appian", // 34
+  "apptronik", // 31
   "aptoslabs", // 5
   "arcadiascience", // 2
-  "arcesiumllc", // 7
+  "arcboatcompany", // 8
+  "arcesiumllc", // 6
+  "arco", // 61
   "arizeai", // 8
-  "armada", // 14
+  "armada", // 10
   "armissecurity", // 0
   "armorcode", // 0
   "array", // 6
-  "asana", // 13
-  "asm", // 108
-  "assemblyai", // 8
-  "astranis", // 60
-  "astspacemobile", // 46
+  "artofproblemsolving", // 10
+  "asana", // 12
+  "asigovernment", // 2
+  "asm", // 102
+  "assemblyai", // 6
+  "astranis", // 56
+  "astspacemobile", // 53
   "atomicobject", // 1
-  "attain", // 5
-  "attaintalent", // 7
+  "attain", // 4
+  "attainpartners", // 12
+  "attaintalent", // 8
   "attentive", // 16
   "augury", // 1
   "aura", // 1
@@ -81,722 +93,842 @@ const companies = [
   "avante", // 5
   "avathon", // 22
   "avetta", // 3
-  "aviatrix", // 7
-  "avride", // 23
-  "axiom", // 2
-  "axios", // 6
-  "axle", // 17
-  "axon", // 182
+  "aviatrix", // 8
+  "avride", // 24
+  "axiom", // 0
+  "axios", // 5
+  "axle", // 14
+  "axon", // 164
   "axonius", // 3
-  "babylist", // 8
-  "backblaze", // 14
-  "bandwidth", // 12
-  "banyansoftware", // 9
-  "baselayer", // 5
-  "baton", // 6
-  "beaconbiosignals", // 5
+  "babylist", // 9
+  "backblaze", // 13
+  "bandwidth", // 11
+  "banyansoftware", // 7
+  "baselayer", // 8
+  "baton", // 4
+  "beaconbiosignals", // 7
   "beam", // 0
-  "betterment", // 15
+  "bertramcapitalmanagement", // 3
+  "bestpass", // 1
+  "betterment", // 11
+  "beyondfinance", // 6
   "beyondidentity", // 0
-  "beyondtrust", // 15
+  "beyondtrust", // 18
   "bigid", // 2
-  "billcom", // 18
-  "billtrust", // 7
-  "binance", // 5
-  "bitgo", // 14
-  "bitmovin", // 3
-  "bitwarden", // 6
-  "blackduck", // 4
-  "blacksky", // 19
+  "billcom", // 16
+  "billtrust", // 4
+  "binance", // 1
+  "bitgo", // 13
+  "bitmovin", // 4
+  "bitwarden", // 4
+  "blackduck", // 3
+  "blacksky", // 17
   "blend", // 4
-  "block", // 45
-  "bloomerang", // 4
+  "block", // 44
+  "bloomerang", // 5
   "blueroseresearch", // 7
-  "bluestone", // 1
+  "bluestone", // 0
   "blumira", // 1
-  "boulevard", // 6
+  "bold", // 1
+  "boulevard", // 5
+  "brady", // 9
   "branch", // 1
-  "braze", // 90
-  "brex", // 108
+  "braze", // 85
+  "brex", // 86
   "bridgeway", // 5
+  "brightai", // 7
   "bringg", // 0
-  "broadwayventures", // 3
-  "bugcrowd", // 5
+  "broadwayventures", // 4
+  "bugcrowd", // 6
   "buildkite", // 2
   "buildops", // 4
-  "butterflynetwork", // 7
-  "calendly", // 5
+  "builtin", // 1
+  "butterflynetwork", // 6
+  "cais", // 5
+  "calendly", // 4
   "calm", // 2
   "cambridgemobiletelematics", // 13
-  "canonical", // 76
-  "capco", // 23
-  "careerteam", // 4
+  "canonical", // 73
+  "capco", // 16
+  "careerteam", // 8
   "cargurus", // 17
-  "carta", // 13
+  "carta", // 4
   "casa", // 1
   "caylent", // 7
   "celigo", // 5
-  "celonis", // 19
-  "censys", // 12
-  "centralreach", // 7
-  "centriaautism", // 1
-  "chainguard", // 32
+  "celonis", // 18
+  "censys", // 13
+  "centralreach", // 8
+  "centriaautism", // 0
+  "chainguard", // 33
+  "chaosindustries", // 79
   "chargepoint", // 8
-  "checkr", // 14
+  "checkbook", // 1
+  "checkr", // 13
   "chime", // 36
-  "chowbus", // 2
+  "chowbus", // 3
   "chronograph", // 4
   "cie", // 1
-  "circleci", // 7
-  "classpass", // 6
-  "clear", // 26
+  "circleci", // 8
+  "civicplus", // 2
+  "clear", // 24
   "clearwater", // 2
+  "cleo", // 8
   "clerkie", // 5
   "clever", // 2
+  "clicktherapeutics", // 1
   "cloudbeds", // 4
-  "cloudflare", // 249
-  "cloverhealth", // 10
+  "cloudflare", // 247
+  "cloverhealth", // 11
   "coalition", // 13
-  "coast", // 6
-  "cockroachlabs", // 5
+  "coast", // 5
+  "cockroachlabs", // 6
   "codeforamerica", // 6
-  "codepath", // 6
-  "coherehealth", // 11
-  "coinbase", // 115
-  "colabsoftware", // 9
-  "collibra", // 6
+  "codepath", // 4
+  "cognite", // 10
+  "coherehealth", // 10
+  "coinbase", // 122
+  "colabsoftware", // 6
+  "collibra", // 8
   "comet", // 0
-  "commercetools", // 2
+  "commercetools", // 0
   "commvault", // 4
   "complyadvantage", // 0
-  "conga", // 9
-  "connectwise", // 6
-  "consensys", // 2
-  "contentful", // 2
+  "conga", // 10
+  "connectwise", // 9
+  "consensys", // 3
+  "contentful", // 10
   "contentstack", // 2
   "convene", // 3
-  "conviva", // 3
+  "conviva", // 2
   "corelight", // 2
-  "coreweave", // 181
+  "coreweave", // 157
   "cortex", // 2
   "coursera", // 2
+  "covar", // 4
   "credible", // 6
-  "cresta", // 20
-  "cribl", // 26
+  "cresta", // 19
+  "crexi", // 8
+  "cribl", // 22
   "crowdbotics", // 0
-  "crunchyroll", // 21
-  "cultureamp", // 1
-  "current", // 4
-  "customerio", // 12
+  "crunchyroll", // 22
+  "css", // 1
+  "cultureamp", // 0
+  "current", // 1
+  "customcomputerspecialists", // 9
+  "customerio", // 10
   "cybersheath", // 5
   "cymulate", // 1
   "dagger", // 0
-  "darkwolfsolutions", // 45
+  "darkwolfsolutions", // 47
   "dashlane", // 1
-  "databento", // 8
-  "databricks", // 319
+  "databento", // 9
+  "databricks", // 314
   "datacamp", // 16
-  "datadog", // 77
-  "datagrail", // 1
-  "dataiku", // 0
+  "datadog", // 66
+  "datagrail", // 2
+  "dataiku", // 1
   "datarails", // 1
+  "datasystemsanalystsinc", // 19
   "degreed", // 0
+  "densityai", // 7
   "descope", // 0
-  "descript", // 4
-  "devrev", // 3
+  "descript", // 3
+  "devrev", // 0
+  "devtechnology", // 5
   "dfinity", // 0
-  "dialpad", // 2
+  "dforeferrals", // 6
+  "dialpad", // 1
   "didi", // 7
   "digible", // 2
-  "digicert", // 14
+  "digicert", // 13
+  "digitalhands", // 1
   "diligent", // 0
-  "discord", // 22
+  "diligentrobotics", // 3
+  "discord", // 18
   "distrokid", // 1
-  "divergehealth", // 1
-  "divergent", // 38
-  "doma", // 1
-  "dominodatalab", // 8
-  "doppel", // 7
+  "divergehealth", // 0
+  "divergent", // 36
+  "doma", // 2
+  "dominodatalab", // 4
+  "doppel", // 4
+  "dorsia", // 7
   "doubleverify", // 0
-  "doximity", // 6
-  "dragos", // 23
-  "dremio", // 1
-  "dropbox", // 7
-  "druva", // 6
-  "dscout", // 7
-  "duolingo", // 29
-  "edb", // 4
-  "elastic", // 53
-  "elationhealth", // 4
+  "doximity", // 4
+  "dragos", // 25
+  "dremio", // 2
+  "dropbox", // 8
+  "druva", // 2
+  "dscout", // 8
+  "duolingo", // 25
+  "dvtrading", // 15
+  "earnest", // 3
+  "echo", // 16
+  "edb", // 5
+  "efficientcomputer", // 9
+  "elastic", // 47
+  "elationhealth", // 3
+  "eleviassociates", // 32
   "encore", // 0
+  "encoura", // 2
   "endorlabs", // 7
   "energycx", // 2
-  "energyhub", // 7
-  "engine", // 17
-  "enova", // 9
+  "energyhub", // 6
+  "energysolutions", // 2
+  "engine", // 13
+  "enova", // 6
   "ensemble", // 0
-  "ensono", // 25
-  "epicgames", // 54
+  "ensono", // 23
+  "enterprisesolutions", // 2
+  "eositsolutions", // 90
+  "epicgames", // 59
   "epirus", // 13
-  "eplusinc", // 22
+  "eplusinc", // 21
   "equalexperts", // 0
   "espresa", // 0
   "esri", // 196
   "ethos", // 0
   "ethoslife", // 12
   "eucalyptus", // 6
-  "eulerity", // 7
-  "everlaw", // 17
-  "everquote", // 4
+  "eulerity", // 6
+  "eve", // 7
+  "everlaw", // 11
+  "everquote", // 3
   "evio", // 3
   "evolutioniq", // 18
   "exabeam", // 0
-  "exiger", // 27
-  "expel", // 4
+  "exiger", // 23
+  "expel", // 2
   "extend", // 7
   "faire", // 29
-  "falconx", // 4
-  "fanaticsfbg", // 43
-  "fanduel", // 45
-  "faradayfuture", // 21
-  "fastly", // 23
-  "fender", // 3
+  "falconx", // 3
+  "fanaticsfbg", // 47
+  "fanduel", // 43
+  "faradayfuture", // 15
+  "fastly", // 18
+  "fender", // 4
   "fetch", // 1
-  "fictiv", // 23
-  "fieldwire", // 6
-  "figma", // 50
-  "figure", // 5
-  "figureai", // 33
+  "fictiv", // 19
+  "fieldwire", // 7
+  "figma", // 49
+  "figure", // 8
+  "figureai", // 31
   "fingerprint", // 12
   "fireblocks", // 2
-  "five9", // 15
-  "fivetran", // 60
+  "five9", // 13
+  "fivetran", // 58
   "flatironhealth", // 9
-  "fleet", // 7
-  "fleetio", // 12
-  "flex", // 12
-  "flexe", // 1
-  "flexport", // 24
+  "fleet", // 4
+  "fleetio", // 10
+  "flex", // 13
+  "flexe", // 2
+  "flexport", // 28
   "flipdish", // 0
   "flipp", // 0
   "flowdesk", // 1
   "flowtraders", // 7
   "flumehealth", // 1
-  "fluxx", // 3
-  "flyzipline", // 104
+  "fluxx", // 2
+  "flyzipline", // 98
+  "focused", // 12
   "foliahealth", // 0
+  "forbes", // 1
+  "forcetherapeutics", // 1
   "form3", // 1
-  "formlabs", // 64
-  "forter", // 1
-  "forwardnetworks", // 6
+  "formlabs", // 59
+  "forter", // 0
+  "forwardnetworks", // 3
   "found", // 0
   "foundry", // 1
-  "fourkites", // 3
-  "freenome", // 8
+  "fourkites", // 2
+  "freenome", // 7
   "freenow", // 0
   "freestar", // 1
   "galaxy", // 0
   "galileo", // 0
-  "gapinternational", // 4
-  "garnerhealth", // 29
+  "gapinternational", // 3
+  "garnerhealth", // 25
   "gather", // 0
+  "gatherai", // 3
   "gelbergroup", // 2
-  "gemini", // 15
+  "gemini", // 14
   "genea", // 2
-  "generatebiomedicines", // 6
+  "generatebiomedicines", // 4
   "genesis", // 0
+  "genevatrading", // 6
   "getyourguide", // 0
   "ghost", // 0
-  "ginkgobioworks", // 11
-  "gitlab", // 59
+  "ginkgobioworks", // 9
+  "gitlab", // 47
   "givedirectly", // 6
   "glossier", // 1
-  "goatgroup", // 11
+  "goatgroup", // 8
   "gocardless", // 0
   "godaddy", // 6
   "gofundme", // 7
-  "gongio", // 4
-  "goodfire", // 12
+  "gongio", // 3
+  "goodfire", // 8
   "goodtime", // 0
-  "gradientai", // 1
-  "grafanalabs", // 27
+  "gradientai", // 2
+  "grafanalabs", // 25
   "graphcore", // 25
   "gravity", // 0
-  "greenhouse", // 2
+  "greenhouse", // 0
   "gremlin", // 3
-  "growthloop", // 3
-  "grvty", // 123
-  "guidepoint", // 6
-  "guidepointsecurity", // 35
-  "gusto", // 47
+  "growthloop", // 4
+  "grvty", // 124
+  "gtslivingfoods", // 2
+  "guidepoint", // 7
+  "guidepointsecurity", // 37
+  "gusto", // 43
+  "gyde", // 2
   "hackerrank", // 4
-  "halcyon", // 2
+  "halcyon", // 3
   "happymoney", // 1
   "harbor", // 0
-  "harnessinc", // 22
-  "hawkeye360", // 9
-  "healthie", // 12
+  "hark", // 41
+  "harnessinc", // 23
+  "hawkeye360", // 10
+  "healthie", // 11
   "helium", // 0
   "helloalice", // 0
   "hellofresh", // 18
-  "helloheart", // 3
+  "helloheart", // 4
+  "heygen", // 9
   "hiddenlayer", // 3
-  "highradius", // 5
+  "highradius", // 6
   "himarley", // 4
   "hive", // 1
-  "honeycomb", // 6
+  "honeycomb", // 7
   "hopscotch", // 0
   "hopskipdrive", // 3
   "horizen", // 0
-  "housecall", // 7
-  "hover", // 8
+  "housecall", // 8
+  "hover", // 6
   "hovercraft", // 2
-  "hpiq", // 26
-  "humaninterest", // 6
-  "hungryroot", // 2
+  "hp", // 20
+  "hpiq", // 21
+  "humaninterest", // 7
+  "humansignal", // 2
+  "hungryroot", // 1
+  "hunterdouglas", // 9
   "huntress", // 15
   "hyperproof", // 1
   "hypr", // 3
   "icon", // 0
+  "idme", // 26
   "idmeuniversityrecruiting", // 3
-  "imaginepediatrics", // 5
-  "imc", // 33
+  "ignitedigital", // 19
+  "imaginepediatrics", // 4
+  "imc", // 28
   "immersive", // 0
-  "impact", // 18
+  "impact", // 17
   "imply", // 3
   "incidentiq", // 4
-  "incode", // 3
+  "incode", // 2
+  "indigo", // 2
   "inflectionai", // 2
-  "inmarket", // 4
-  "inmobi", // 6
-  "innodatainc", // 75
-  "insight", // 2
+  "inmarket", // 3
+  "inmobi", // 7
+  "innodatainc", // 78
+  "innophaseiot", // 7
+  "insight", // 0
   "inspiraeducation", // 6
-  "instacart", // 30
-  "instawork", // 5
+  "instacart", // 23
+  "instawork", // 4
   "instridehealth", // 1
-  "intellidyne", // 4
-  "intercom", // 12
-  "intersystems", // 16
-  "ionq", // 26
-  "island", // 11
-  "isomorphiclabs", // 4
-  "itd", // 15
-  "iterable", // 0
+  "integra", // 6
+  "intellidyne", // 5
+  "intercom", // 10
+  "intersystems", // 17
+  "ionq", // 20
+  "iris", // 1
+  "island", // 7
+  "isomorphiclabs", // 2
+  "itd", // 25
   "ivalua", // 6
   "jamf", // 3
-  "janestreet", // 48
-  "jensenhughes", // 7
-  "jetbrains", // 1
-  "jfrog", // 14
+  "janestreet", // 43
+  "jensenhughes", // 6
+  "jetbrains", // 2
+  "jfrog", // 12
+  "judihealth", // 34
   "jumio", // 3
-  "justworks", // 40
-  "juullabs", // 2
-  "k2spacecorporation", // 75
-  "kairospower", // 18
-  "kapitus", // 11
-  "karat", // 1
+  "jumptrading", // 18
+  "justworks", // 39
+  "juullabs", // 1
+  "k2spacecorporation", // 71
+  "kairospower", // 16
+  "kalshi", // 12
+  "kapitus", // 10
+  "karat", // 2
   "karbon", // 0
-  "kaseya", // 11
-  "katalyst", // 11
-  "keepersecurity", // 41
+  "kargo", // 4
+  "kaseya", // 10
+  "katalyst", // 10
+  "keepersecurity", // 42
+  "kellerpostman", // 1
+  "kestramedicaltechnologiesinc", // 1
   "ketch", // 4
   "kettle", // 4
-  "keyfactorinc", // 4
-  "klaviyo", // 67
-  "knit", // 4
+  "keyfactorinc", // 3
+  "khanacademy", // 1
+  "kikoff", // 14
+  "klaviyo", // 59
+  "knit", // 2
   "knock", // 1
-  "knowbe4", // 7
-  "koalafi", // 5
-  "kodiak", // 22
-  "komodohealth", // 7
-  "labelbox", // 7
-  "later", // 10
-  "latitude", // 14
+  "knowbe4", // 5
+  "koalafi", // 6
+  "kodiak", // 23
+  "komodohealth", // 5
+  "labelbox", // 6
+  "lastpass", // 1
+  "later", // 9
+  "latitude", // 13
   "lattice", // 3
-  "launchdarkly", // 6
-  "launchpotato", // 7
+  "launchdarkly", // 4
+  "launchpotato", // 1
   "leaflink", // 1
-  "legalservicesnyc", // 13
+  "legalservicesnyc", // 0
   "legion", // 2
   "lendingtree", // 11
+  "lendzfinancial", // 2
   "levelaccess", // 1
-  "life360", // 16
-  "liftoff", // 8
-  "lightmatter", // 9
-  "lightningai", // 31
-  "lincoln", // 4
+  "leveltenenergy", // 1
+  "life360", // 15
+  "liftoff", // 9
+  "lightmatter", // 17
+  "lightningai", // 27
+  "lincoln", // 3
   "link", // 3
   "liquibase", // 2
-  "lithic", // 4
-  "litify", // 8
+  "lithic", // 6
+  "litify", // 5
   "liveperson", // 0
   "locusrobotics", // 1
-  "logicgate", // 4
-  "logicmonitor", // 4
+  "logicgate", // 3
+  "logicmonitor", // 3
   "lokalise", // 0
   "lookout", // 0
   "lovable", // 1
-  "lucidmotors", // 86
+  "lucidmotors", // 89
   "lunarenergy", // 6
-  "lyft", // 48
+  "lyft", // 29
+  "m9solutions", // 33
   "mabl", // 0
   "magic", // 0
+  "majorleaguebaseball", // 12
   "malbon", // 1
   "manifest", // 2
   "mantl", // 0
-  "mark43", // 21
+  "mark43", // 20
   "materialbank", // 4
-  "mattermost", // 4
+  "mattermost", // 5
   "mavenclinic", // 13
-  "maymobility", // 18
-  "medium", // 3
-  "medsien", // 1
+  "maymobility", // 19
+  "medium", // 2
+  "medsien", // 2
   "melio", // 0
-  "merceradvisors", // 8
-  "mercury", // 42
+  "memx", // 5
+  "merceradvisors", // 2
+  "mercury", // 36
   "merge", // 0
   "method", // 2
   "metronome", // 0
-  "metrostarsystems", // 52
+  "metropolis", // 34
+  "metrostarsystems", // 54
   "microsoftcorporation", // 30
-  "midihealth", // 12
+  "midihealth", // 8
   "mill", // 15
-  "mindbody", // 7
-  "mineralystherapeutics", // 4
+  "mineralystherapeutics", // 2
   "mirakl", // 0
-  "missionlane", // 3
+  "missionlane", // 4
   "mithril", // 3
-  "mixpanel", // 14
-  "mobius", // 5
-  "modernhealth", // 1
+  "mixpanel", // 13
+  "mobius", // 9
+  "modernhealth", // 0
   "moduscreate", // 2
-  "moloco", // 16
-  "momentus", // 4
-  "mongodb", // 54
+  "moloco", // 15
+  "momentus", // 2
+  "mongodb", // 56
   "monograph", // 0
   "monzo", // 0
-  "motional", // 47
+  "motional", // 44
   "motive", // 1
-  "movableink", // 5
-  "mozilla", // 11
-  "myfitnesspal", // 6
+  "movableink", // 4
+  "mozilla", // 15
+  "mthree", // 7
+  "muonspace", // 76
+  "myfitnesspal", // 1
+  "myome", // 5
   "nametag", // 7
   "nasuni", // 4
-  "natera", // 28
+  "natera", // 33
   "navapbc", // 12
   "nearform", // 4
-  "nebius", // 74
-  "neo4j", // 7
-  "netdocuments", // 6
-  "netlify", // 1
-  "netskope", // 19
-  "neuralink", // 35
-  "newrelic", // 6
+  "nebius", // 68
+  "neo4j", // 6
+  "nerostechnologies", // 26
+  "netdocuments", // 8
+  "netlify", // 2
+  "netskope", // 20
+  "neuraflash", // 24
+  "neuralink", // 29
+  "newrelic", // 5
   "newsbreak", // 24
   "newsela", // 1
-  "newtonresearch", // 9
-  "nexamp", // 5
+  "newtonresearch", // 8
+  "nexamp", // 2
   "nexhealth", // 18
   "nexla", // 2
   "nextdoor", // 10
   "nexus", // 1
-  "ninjaone", // 43
+  "nimblegravity", // 11
+  "ninjaone", // 52
+  "nintendo", // 40
+  "nisc", // 19
   "nmi", // 3
   "nomadhealth", // 0
-  "northbeam", // 12
+  "northbeam", // 13
+  "northpointtechnology", // 72
   "nubank", // 0
-  "nuro", // 79
-  "nuvem", // 2
-  "observeai", // 2
+  "nuro", // 83
+  "nuvem", // 3
+  "observeai", // 1
   "obsidiansecurity", // 4
   "ocrolusinc", // 2
-  "octave", // 3
-  "octus", // 5
+  "octave", // 2
+  "octus", // 4
   "oddball", // 9
-  "okta", // 73
-  "okx", // 20
-  "omadahealth", // 10
-  "ondofinance", // 12
-  "onespan", // 4
-  "onetrust", // 25
+  "okta", // 66
+  "okx", // 14
+  "omadahealth", // 11
+  "ondofinance", // 11
+  "oneimaging", // 9
+  "onemedical", // 5
+  "onespan", // 5
+  "onetrust", // 27
+  "onxmaps", // 10
   "onyx", // 0
-  "openspace", // 4
-  "opentable", // 3
-  "oportun", // 4
+  "openspace", // 6
+  "opentable", // 1
+  "oportun", // 3
   "opswat", // 14
   "optiver", // 0
+  "ora", // 1
   "orca", // 0
-  "orcasecurity", // 2
-  "orenda", // 8
+  "orcasecurity", // 1
+  "orenda", // 5
+  "orioninnovation", // 20
   "orkes", // 8
-  "osano", // 2
+  "osano", // 3
   "oscar", // 43
   "osmosis", // 0
   "otter", // 10
-  "otterai", // 14
-  "oura", // 46
-  "pagaya", // 2
-  "pagerduty", // 8
+  "otterai", // 11
+  "oura", // 47
+  "pacaso", // 1
+  "pacificfusion", // 2
+  "pagaya", // 1
+  "pagerduty", // 5
   "pagerhealth", // 2
   "pairwise", // 0
-  "pallet", // 11
-  "panthalassa", // 15
-  "pantheon", // 6
+  "pallet", // 10
+  "panthalassa", // 14
+  "pantheon", // 5
   "parachutehealth", // 6
-  "parallel", // 7
+  "parallel", // 5
+  "parsleyhealth", // 1
   "patch", // 0
-  "pathai", // 12
+  "pathai", // 13
   "payoneer", // 1
-  "paystand", // 0
+  "paystand", // 1
   "pelago", // 6
-  "peloton", // 6
-  "pendo", // 7
+  "peloton", // 8
+  "pendo", // 8
   "penninteractive", // 14
   "perfectserve", // 4
-  "phizenix", // 12
+  "phenogyinc", // 1
+  "phizenix", // 9
   "pingcap", // 0
-  "pingidentity", // 10
-  "pinterest", // 89
-  "planetlabs", // 30
-  "planetscale", // 7
-  "platformscience", // 5
-  "playlist", // 10
+  "pingidentity", // 11
+  "pinterest", // 86
+  "planetlabs", // 26
+  "planetscale", // 6
+  "platformscience", // 4
   "plume", // 3
+  "point72", // 51
   "pontera", // 1
   "postscript", // 2
-  "praxent", // 11
-  "precisionaq", // 4
-  "precisionmedicinegroup", // 6
+  "praxent", // 8
+  "precisionaq", // 6
+  "precisionmedicinegroup", // 10
+  "prenuvo", // 5
   "privacy", // 3
-  "prizepicks", // 18
-  "project44", // 4
-  "prolific", // 3
+  "privatehealthmanagement", // 1
+  "prizepicks", // 17
+  "project44", // 3
+  "prolific", // 4
   "prophero", // 0
-  "prophet", // 2
-  "propublica", // 2
-  "prove", // 3
-  "public", // 1
+  "prophet", // 1
+  "propublica", // 1
+  "protagonist", // 4
+  "prove", // 4
+  "psiquantum", // 28
+  "public", // 0
   "pubnub", // 0
-  "purestorage", // 105
+  "purestorage", // 103
   "qualio", // 1
   "qualtrics", // 28
-  "quince", // 37
-  "qventus", // 7
-  "radar", // 3
-  "rapidsos", // 2
-  "rcxsports", // 3
+  "quince", // 36
+  "qventus", // 6
+  "rackner", // 40
+  "radar", // 4
+  "rapidsos", // 1
+  "rcxsports", // 2
   "reactivate", // 1
-  "realchemistry", // 9
-  "rebuildmanufacturing", // 35
+  "realchemistry", // 7
+  "rebuildmanufacturing", // 37
+  "recidiviz", // 7
   "recordedfuture", // 12
-  "redcellpartners", // 20
-  "reddit", // 106
-  "redventures", // 13
-  "redwoodmaterials", // 34
-  "reflex", // 1
-  "relativity", // 77
+  "redcellpartners", // 19
+  "reddit", // 99
+  "redventures", // 14
+  "redwoodmaterials", // 27
+  "reflex", // 2
+  "relativity", // 66
   "remote", // 0
   "remotecom", // 0
-  "renttherunway", // 5
+  "renttherunway", // 3
   "resilience", // 1
-  "resolvetosavelives", // 1
-  "revolutionmedicines", // 32
-  "riotgames", // 60
-  "ripple", // 25
+  "resolvetosavelives", // 0
+  "revolutionmedicines", // 26
+  "riotgames", // 59
+  "ripple", // 23
   "riskified", // 0
-  "rithum", // 2
-  "roadie", // 3
-  "robinhood", // 67
-  "roblox", // 206
-  "roboforce", // 8
+  "rithum", // 4
+  "roadie", // 2
+  "robinhood", // 72
+  "roblox", // 202
+  "roboforce", // 7
+  "robotsandpencils", // 15
   "rocketchat", // 0
-  "rocketlab", // 160
-  "roku", // 52
-  "rstudio", // 2
-  "rubrik", // 35
-  "rushdownstudios", // 3
+  "rocketlab", // 147
+  "roku", // 50
+  "rstudio", // 1
+  "rubrik", // 33
+  "rushdownstudios", // 4
+  "rushstreetinteractive", // 1
+  "rvohealth", // 13
   "rxsense", // 3
   "safebreach", // 1
-  "salesloft", // 5
-  "sambanovasystems", // 24
-  "samsara", // 86
-  "samsungresearchamerica", // 16
-  "samsungsemiconductor", // 34
-  "scaleai", // 69
-  "scalellp", // 2
+  "salesloft", // 4
+  "sambanovasystems", // 25
+  "samsara", // 84
+  "samsungresearchamerica", // 12
+  "samsungresearchamericainternship", // 1
+  "samsungsemiconductor", // 36
+  "sbenergy", // 46
+  "scaleai", // 68
+  "scalellp", // 0
+  "scaleops", // 7
   "scandit", // 3
   "schrdinger", // 8
   "scopely", // 10
   "scowtt", // 3
-  "seatgeek", // 28
+  "seatgeek", // 25
   "securitycompass", // 0
   "securityscorecard", // 6
   "seekout", // 1
-  "selffinancial", // 5
-  "sendbird", // 0
-  "sezzle", // 23
-  "shadow", // 1
+  "selffinancial", // 7
+  "sendbird", // 2
+  "sezzle", // 18
+  "shadow", // 2
   "sharegate", // 0
-  "shopmy", // 10
+  "shopmy", // 7
   "showpad", // 5
-  "sidecarhealth", // 4
-  "sigmacomputing", // 45
+  "sidecarhealth", // 5
+  "sigmacomputing", // 42
   "similarweb", // 7
   "simplextrading", // 2
-  "singlestore", // 13
-  "skhynixmemorysolutionsamericainc", // 14
-  "smartasset", // 2
+  "singlestore", // 14
+  "sironamedical", // 8
+  "skhynixmemorysolutionsamericainc", // 13
+  "smartasset", // 0
   "smartbear", // 0
-  "smartling", // 2
+  "smartling", // 3
   "smartsheet", // 17
-  "snorkelai", // 23
+  "snorkelai", // 19
   "socket", // 0
-  "sofi", // 20
-  "solarwinds", // 16
-  "sothebys", // 9
-  "space", // 13
-  "spacex", // 1076
-  "speechify", // 246
+  "sofi", // 18
+  "solarwinds", // 17
+  "sothebys", // 7
+  "space", // 12
+  "spacex", // 966
+  "specterops", // 4
+  "speechify", // 646
   "sphinxdefense", // 12
-  "spire", // 10
-  "splashfinancial", // 3
+  "spire", // 8
+  "splashfinancial", // 2
   "splitero", // 2
   "spoileralert", // 1
-  "sproutsocial", // 1
-  "spycloud", // 4
-  "spyretherapeutics", // 1
-  "squarespace", // 8
+  "sproutsocial", // 0
+  "spycloud", // 5
+  "spyretherapeutics", // 0
+  "squarepointcapital", // 9
+  "squarespace", // 7
   "srm", // 1
-  "stackadapt", // 10
+  "stackadapt", // 13
   "stackblitz", // 3
   "stacklok", // 2
   "standardmetrics", // 1
-  "starburst", // 14
-  "step", // 12
-  "stitchfix", // 4
-  "stockx", // 2
-  "storyblok", // 5
+  "starburst", // 12
+  "step", // 10
+  "stitchfix", // 6
+  "stockx", // 4
+  "stone", // 20
+  "storyblok", // 6
   "streamnative", // 1
-  "stripe", // 209
-  "striveworks", // 29
-  "submittable", // 2
-  "suki", // 2
-  "summittherapeutics", // 11
-  "sumologic", // 2
+  "strike", // 2
+  "stripe", // 197
+  "striveworks", // 28
+  "submittable", // 1
+  "suki", // 1
+  "summittherapeutics", // 9
+  "sumologic", // 3
   "supplyhouse", // 8
-  "sureify", // 2
+  "sureify", // 3
   "surveymonkey", // 0
-  "swordhealth", // 5
-  "synack", // 5
+  "swordhealth", // 1
+  "synack", // 6
+  "syndigo", // 2
   "system", // 2
-  "tabapay", // 9
-  "taboola", // 5
-  "tailscale", // 21
-  "talkspace", // 5
-  "tanium", // 25
-  "taskrabbit", // 10
-  "tds", // 16
-  "tebra", // 4
+  "tabapay", // 7
+  "taboola", // 1
+  "tailscale", // 17
+  "talkspace", // 4
+  "tanium", // 27
+  "taskrabbit", // 8
+  "tds", // 18
+  "tebra", // 5
   "tekmetric", // 9
-  "testlio", // 4
-  "thatsnomoonentertainment", // 3
-  "themotleyfool", // 3
+  "tensordyne", // 3
+  "testlio", // 5
+  "thatsnomoonentertainment", // 1
+  "themotleyfool", // 1
   "thena", // 0
-  "thetradedesk", // 29
-  "thetradeDesk", // 29
+  "thenewyorktimes", // 30
+  "thetradedesk", // 22
+  "thetradeDesk", // 22
   "thewilshiregroup", // 2
-  "thoropass", // 2
-  "thoughtworks", // 2
+  "thoropass", // 3
   "thrive", // 2
-  "thrivemarket", // 9
-  "tia", // 1
+  "thrivemarket", // 8
+  "tia", // 0
   "tigera", // 1
-  "tines", // 4
-  "toast", // 30
-  "togetherai", // 36
-  "tomorrow", // 4
-  "torcrobotics", // 34
+  "tines", // 3
+  "toast", // 32
+  "togetherai", // 29
+  "tomorrow", // 3
+  "torcrobotics", // 31
   "torq", // 6
-  "trace3", // 50
+  "trace3", // 49
+  "transformationalhealthnetworkinc", // 3
   "treasuryprime", // 2
   "tribalscale", // 6
-  "tripactions", // 25
-  "triplelift", // 4
+  "tripactions", // 31
+  "triplelift", // 3
   "truecaller", // 0
   "truefoundry", // 5
-  "trumid", // 3
+  "trumid", // 0
   "trustpilot", // 3
   "truveta", // 7
-  "tulip", // 23
-  "turing", // 10
-  "twilio", // 20
+  "tulip", // 22
+  "turing", // 11
+  "twilio", // 18
   "twinhealth", // 13
   "twistbioscience", // 8
-  "twitch", // 32
-  "typeface", // 14
-  "udacity", // 10
+  "twitch", // 28
+  "typeface", // 13
+  "udacity", // 11
   "udemy", // 0
+  "unanet", // 4
   "underdog", // 3
   "uniteus", // 2
   "unqork", // 0
-  "upbound", // 2
-  "upstart", // 46
-  "ursamajor", // 29
+  "upbound", // 4
+  "upstart", // 41
+  "ursamajor", // 31
+  "usafacts", // 2
   "usergems", // 0
-  "vailexa", // 31
+  "vailexa", // 36
+  "valaratomics", // 19
   "valimail", // 1
-  "vannevarlabs", // 16
-  "vast", // 62
-  "vectara", // 2
-  "veeamsoftware", // 32
-  "veracode", // 2
-  "veracyte", // 5
-  "vercel", // 42
+  "vannevarlabs", // 18
+  "vantagescore", // 3
+  "vast", // 53
+  "vatnsystems", // 1
+  "vectara", // 3
+  "veeamsoftware", // 36
+  "veracode", // 3
+  "veracyte", // 3
+  "vercel", // 39
   "veriff", // 2
-  "verkada", // 149
-  "verramobility", // 30
+  "verisign", // 7
+  "verkada", // 136
+  "verramobility", // 34
   "versaterm", // 2
-  "vetto", // 3
-  "via", // 29
-  "vialogic", // 12
-  "virtru", // 6
+  "vestmark", // 3
+  "vetto", // 2
+  "via", // 20
+  "vialogic", // 13
+  "vibesllc", // 3
+  "virtru", // 4
+  "visualconcepts", // 3
   "vonage", // 0
-  "voyagertechnologiesinc", // 63
+  "voyagertechnologiesinc", // 61
+  "vulcanelements", // 9
   "vynyl", // 6
   "warp", // 5
   "wasabi", // 5
-  "watchmakergenomics", // 7
+  "watchmakergenomics", // 8
   "watershed", // 5
-  "waymo", // 191
+  "waymo", // 174
   "weave", // 0
   "webflow", // 0
-  "wikimedia", // 9
-  "wisetack", // 2
-  "wizinc", // 15
+  "welbehealth", // 5
+  "whisperaero", // 3
+  "whitetech", // 8
+  "wight", // 2
+  "wikimedia", // 8
+  "wing", // 19
+  "wisetack", // 1
+  "wizinc", // 16
   "wongdoody", // 2
-  "woolpert", // 31
+  "woolpert", // 25
   "workato", // 8
   "workboard", // 0
-  "workstream", // 2
-  "wrike", // 3
-  "xai", // 114
+  "workstream", // 3
+  "wrike", // 4
+  "xai", // 109
   "xairatherapeutics", // 13
+  "xantium", // 1
   "xendit", // 1
-  "xometry", // 129
+  "xometry", // 136
   "xphealth", // 1
-  "yext", // 9
-  "yipitdata", // 10
+  "yext", // 5
+  "yipitdata", // 8
   "yotpo", // 0
   "youcom", // 4
   "yubico", // 3
   "yugabyte", // 7
-  "zenoti", // 2
-  "zetaglobal", // 27
-  "ziprecruiter", // 48
-  "zocdoc", // 25
-  "zoominfo", // 30
-  "zscaler", // 79
+  "zenoti", // 1
+  "zetaglobal", // 28
+  "ziprecruiter", // 35
+  "zocdoc", // 24
+  "zoominfo", // 24
+  "zoro", // 8
+  "zscaler", // 93
   "zuora", // 13
   "zwift", // 2
 ];
