@@ -37,8 +37,9 @@ const MAX_PAGES = Number(process.env.DAILYREMOTE_MAX_PAGES || 60);
 const REQUEST_DELAY_MS = Number(process.env.DAILYREMOTE_REQUEST_DELAY_MS || 500);
 const MAX_RESULTS_TOTAL = Number(process.env.DAILYREMOTE_MAX_RESULTS || 0);
 
-const UA =
-  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36";
+// Identifies itself honestly (both sites answer it; robots.txt allows the
+// pages fetched here).
+const UA = "Mozilla/5.0 (compatible; JobCollectorBot/1.0)";
 
 // =============================================
 // STATS

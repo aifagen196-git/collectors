@@ -60,8 +60,12 @@ const selectedSearches = ONLY_QUERIES.length
   ? searches.filter(({ keywords }) => ONLY_QUERIES.some((q) => keywords.toLowerCase().includes(q)))
   : searches;
 
-const UA =
-  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36";
+// Identifies itself honestly (both sites answer it; robots.txt allows the
+// pages fetched here).
+const UA = "Mozilla/5.0 (compatible; JobCollectorBot/1.0)";
+
+// Pause between job-page requests, to stay gentle on the site.
+const DETAIL_DELAY_MS = Number(process.env.JOBVERTISE_DETAIL_DELAY_MS || 400);
 
 const CANADA_RE = /\bcanada\b|\b(ontario|quebec|british columbia|alberta|manitoba|saskatchewan|nova scotia|new brunswick)\b/i;
 const CA_PROVINCE_ABBR_RE = /,\s*(ON|QC|BC|AB|MB|SK|NS|NB|NL|PE|YT|NT|NU)\b/;
@@ -193,6 +197,76 @@ function parseRssItems(xml) {
   });
 }
 
+// The RSS item carries only a one-line teaser (avg 161 chars). Each job page
+// has the full posting as schema.org JobPosting JSON-LD (description,
+// employmentType, educationRequirements, validThrough). robots.txt allows
+// /job/ for general crawlers. Returns null on any failure: the job is then
+// saved with its teaser, as before.
+function htmlToText(html = "") {
+  return String(html)
+    // Some postings carry their markup escaped ("&lt;p&gt;"): unescape it
+    // first so the tags are removed below.
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/<\s*(br|\/p|\/div|\/li|\/h\d)\s*\/?>/gi, "\n")
+    .replace(/<\s*li[^>]*>/gi, "- ")
+    .replace(/<[^>]*>/g, " ")
+    .replace(/&nbsp;/g, " ")
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&#39;|&apos;|&rsquo;/g, "'")
+    .replace(/&quot;/g, '"')
+    .replace(/[ \t]+/g, " ")
+    .replace(/ *\n */g, "\n")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+}
+
+async function fetchDetail(url) {
+  if (!/^https:\/\/www\.jobvertise\.com\/job\//.test(url || "")) return null;
+  try {
+    // The pages are ISO-8859-1 (declared in the Content-Type header); read
+    // them as bytes and decode in that charset, or "Bachelor's" arrives as
+    // "Bachelor�s".
+    const res = await axios.get(url, {
+      timeout: 20000,
+      responseType: "arraybuffer",
+      headers: { "User-Agent": UA, Accept: "text/html" },
+    });
+    const charset = /charset=([\w-]+)/i.exec(res.headers["content-type"] || "")?.[1] || "utf-8";
+    let html;
+    try {
+      html = new TextDecoder(charset).decode(res.data);
+    } catch {
+      html = new TextDecoder("utf-8").decode(res.data);
+    }
+    const blocks = [...String(html).matchAll(/<script[^>]+application\/ld\+json[^>]*>([\s\S]*?)<\/script>/gi)];
+    for (const [, body] of blocks) {
+      let data;
+      try {
+        data = JSON.parse(body);
+      } catch {
+        continue;
+      }
+      const items = Array.isArray(data) ? data : data["@graph"] || [data];
+      const posting = items.find((it) => it && it["@type"] === "JobPosting");
+      if (posting?.description) {
+        return {
+          description: htmlToText(posting.description),
+          employmentType: [].concat(posting.employmentType || []).join(", "),
+          education: typeof posting.educationRequirements === "string" ? posting.educationRequirements : posting.educationRequirements?.credentialCategory || "",
+          validThrough: posting.validThrough || null,
+          datePosted: posting.datePosted || null,
+        };
+      }
+    }
+  } catch (err) {
+    stats.detailFailed = (stats.detailFailed || 0) + 1;
+  }
+  return null;
+}
+
 async function fetchFeed(keywords, state = "") {
   const { data: xml } = await axios.get(BASE_URL, {
     timeout: 25000,
@@ -253,6 +327,17 @@ async function run() {
           stats.offDomain++;
           continue;
         }
+
+        const detail = await fetchDetail(raw.applyUrl);
+        if (detail) {
+          stats.detailFetched = (stats.detailFetched || 0) + 1;
+          raw.description = detail.description;
+          raw.employmentType = detail.employmentType;
+          raw.education = detail.education;
+          raw.validThrough = detail.validThrough;
+          raw.postedDate = raw.postedDate || detail.datePosted;
+        }
+        await sleep(DETAIL_DELAY_MS);
 
         const normalizedJob = await normalizeJobvertise(raw);
         if (!isUsJob(normalizedJob)) {

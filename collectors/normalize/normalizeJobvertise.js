@@ -3,7 +3,16 @@ import { extractJobProfile } from "../processors/extractProfile.js";
 export async function normalizeJobvertise(raw) {
   const profile = await extractJobProfile(raw.description, { title: raw.title });
 
-  const isRemote = /\bremote\b/i.test(raw.title) || /\bremote\b/i.test(raw.description);
+  // Title and location only: the description is now the full posting, where
+  // "remote" is often just a passing mention.
+  const isRemote = /\bremote\b/i.test(raw.title || "") || /\bremote\b/i.test(raw.location || "");
+  // From the job page's JSON-LD when it was fetched ("FULL_TIME", "CONTRACTOR").
+  const TYPES = { FULL_TIME: "Full Time", PART_TIME: "Part Time", CONTRACTOR: "Contract", TEMPORARY: "Temporary", INTERN: "Internship" };
+  const employmentType = String(raw.employmentType || "")
+    .split(/,\s*/)
+    .map((t) => TYPES[t.trim().toUpperCase()] || "")
+    .find(Boolean) || "";
+  const validThrough = raw.validThrough && !Number.isNaN(Date.parse(raw.validThrough)) ? new Date(raw.validThrough) : null;
 
   return {
     title: raw.title || "",
@@ -12,7 +21,7 @@ export async function normalizeJobvertise(raw) {
 
     location: raw.location || (isRemote ? "Remote" : ""),
 
-    employment_type: "",
+    employment_type: employmentType,
 
     salary: null,
 
@@ -52,6 +61,7 @@ export async function normalizeJobvertise(raw) {
 
     last_seen: new Date().toISOString(),
 
-    expires_at: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
+    // The page's own validThrough when it is in the future, else 30 days.
+    expires_at: (validThrough && validThrough > new Date() ? validThrough : new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)).toISOString(),
   };
 }
