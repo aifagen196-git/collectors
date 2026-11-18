@@ -24,11 +24,11 @@ name: job-engine collectors
 #   BRIGHTDATA_API_KEY, BRIGHTDATA_MONSTER_DATASET_ID
 # See .env.example for what each of these is and where to get it.
 #
-# simplyhired/dice/jobright need NO secrets — all three scrape directly
-# (simplyhired/dice via Playwright, jobright via plain HTTP — no browser at
-# all) and are folded into `npm run all` below, same as every other source
-# that doesn't need a paid account. All three now search the 13 target
-# domains for real.
+# Off the schedule (2026-11-18): SimplyHired, Indeed and Jobright answer an
+# honestly identified bot with a bot-protection challenge (they only worked
+# by presenting themselves as Chrome), and Dice's robots.txt disallows the
+# search and job pages its collector read. Their code stays in collectors/;
+# Dice can return through Dice's partner program.
 #
 # More sources (Comeet, TeamTailor, BreezyHR, WeWorkRemotely, HackerNews,
 # Jobvite, Recruitee, Pinpoint, Personio, Remotive, Kforce, BambooHR, UKG,
@@ -39,14 +39,6 @@ name: job-engine collectors
 # own step below. Off the schedule (2026-11-10): Muse (public API shut down),
 # HiringCafe (Cloudflare challenge; robots.txt disallows its search pages),
 # SuccessFactors (SAP left it; sap.js replaces it).
-#
-# Indeed needs Playwright (already installed above for simplyhired/dice) but
-# no API key. It's NOT folded into `npm run all` — its detail-page fetch
-# relies on a slow click-through-from-search trick to dodge Cloudflare (see
-# the comment at the top of collectors/indeed.js), so it's given its own
-# step with `if: always()` and a timeout, same reasoning as the Workday step
-# below: one fragile source shouldn't be able to block the other 43 or the
-# cleanup pass.
 #
 # 6 more (Adzuna, Careerjet, Findwork, Jooble, JSearch, USAJobs) need a
 # free-tier API key each; `npm run all-new-paid` (package.json) already
@@ -114,20 +106,8 @@ jobs:
 
       - run: npm ci
 
-      # Indeed, SimplyHired and Dice all drive a real headless browser now
-      # (Cloudflare/anti-bot walls on those sites need one) — install just
-      # Chromium rather than every engine Playwright supports.
-      - run: npx playwright install --with-deps chromium
-
       - name: Run all collectors
         run: npm run all
-
-      - name: Run Indeed (isolated — slow click-through detail fetch, Cloudflare-fragile)
-        # Kept out of `npm run all` on purpose (see the top-of-file comment).
-        # `if: always()` and `|| true` so a block/timeout here can't stop the
-        # cleanup pass or the Workday step below, same pattern as those two.
-        if: always()
-        run: timeout 20m npm run indeed || true
 
       - name: Run sources that need a paid third-party account (ziprecruiter/monster)
         # Not folded into `npm run all` — both need a paid account this repo
